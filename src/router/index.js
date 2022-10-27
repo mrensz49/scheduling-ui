@@ -1,5 +1,5 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -19,7 +19,26 @@ const routes = [
         name: 'Login',
         component: () => import('@/views/auth/Login'),
       },
-
+      {
+        path: 'register',
+        name: 'Register',
+        component: () => import('@/views/auth/Register'),
+      },
+      {
+        path: 'forgot-password',
+        name: 'ForgotPassword',
+        component: () => import('@/views/auth/ForgotPassword'),
+      },
+      {
+        path: 'password-reset/:token/:email',
+        name: 'ResetPassword',
+        component: () => import('@/views/auth/ResetPassword'),
+      },
+      {
+        path: 'verify-email/:id/:hash',
+        name: 'VerifyEmail',
+        component: () => import('@/views/auth/VerifyEmail'),
+      },
     ],
   },
   {
@@ -306,7 +325,7 @@ const routes = [
       },
       {
         path: 'register',
-        name: 'Register',
+        name: 'Register Pages',
         component: () => import('@/views/pages/Register'),
       },
     ],
@@ -314,7 +333,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
+  hash: false,
   // history: createWebHashHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {

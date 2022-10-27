@@ -269,6 +269,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import avatar1 from '@/assets/images/avatars/1.jpg'
 import avatar2 from '@/assets/images/avatars/2.jpg'
 import avatar3 from '@/assets/images/avatars/3.jpg'
@@ -281,6 +283,48 @@ import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
 
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      users: '',
+      token: localStorage.getItem('scheduling_token')
+    }
+  },
+  mounted() {
+
+    axios.interceptors.request.use(function(config) {
+        const token = localStorage.getItem('scheduling_token');
+        console.log('token', token)
+        if(token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    }, function(err) {
+        return Promise.reject(err);
+    });
+
+    axios.get('/api/secrets', this.formData).then(response => {
+      this.users = response.data;
+    }).catch((errors) => {
+      this.errors = errors.response.data
+      // console.log(errors)
+    });
+
+
+    axios.get('/api/user', this.formData).then(response => {
+      this.users = response.data;
+    }).catch((errors) => {
+      this.errors = errors.response.data.errors
+    });
+
+
+    // apiClient.interceptors.request.use(function (config) {
+    //     config.headers.Authorization = `Beared ${this.token}`;
+    //     return config;
+    // }, null, { synchronous: true });
+
+    // apiClient.axios.defaults.header.common['Authorization'] = `Beared ${this.token}`
+
+  },
   components: {
     MainChartExample,
     WidgetsStatsA,

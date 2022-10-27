@@ -43,7 +43,7 @@
                       <CButton color="primary" type="submit" class="px-4"> Login </CButton>
                     </CCol>
                     <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0">
+                      <CButton color="link" class="px-0"  @click="handleForgotPasswordLink">
                         Forgot password?
                       </CButton>
                     </CCol>
@@ -60,7 +60,7 @@
                     sed do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </p>
-                  <CButton color="light" variant="outline" class="mt-3">
+                  <CButton color="light" variant="outline" class="mt-3" @click="handleRegisterLink()">
                     Register Now!
                   </CButton>
                 </div>
@@ -103,16 +103,26 @@ export default {
     handleLogin() {
 
       axios.get('/sanctum/csrf-cookie').then(response => {
-          // Login...
+
           console.log('response', response)
           axios.post('/api/login', this.formData).then(response => {
 
               localStorage.setItem('scheduling_token', response.data)
               this.$router.push('/')
-          }).catch((errors) => {
-            this.errors = errors.response.data.errors
+            }).catch((errors) => {
+              this.errors = errors.response.data.errors
           });
       });
+    },
+
+    handleRegisterLink() {
+
+      this.$router.push('/auth/register')
+    },
+
+    handleForgotPasswordLink() {
+
+      this.$router.push('/auth/forgot-password')
     }
   },
 

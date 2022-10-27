@@ -61,8 +61,24 @@ export default {
 
   methods: {
     handleLogout() {
-console.log('test')
-      axios.post('/api/logout', this.formData).then(response => {
+
+    axios.interceptors.request.use(function(config) {
+            const token = localStorage.getItem('scheduling_token');
+            console.log('token', token)
+            if(token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        }, function(err) {
+            return Promise.reject(err);
+        });
+
+      axios.post('/api/logout', this.formData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+        ).then(response => {
 
         localStorage.removeItem('scheduling_token')
         this.$router.push('/auth/login')
