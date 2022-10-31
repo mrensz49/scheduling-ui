@@ -11,7 +11,6 @@
                   :validated="validatedCustom01"
                   @submit.prevent="handleLogin"
                 >
-                  <!-- @submit="handleSubmitCustom01" -->
                   <h1>Login</h1>
                   <p class="text-medium-emphasis">Sign In to your account</p>
                   <CInputGroup class="mb-3">
@@ -20,7 +19,6 @@
                     </CInputGroupText>
                     <CFormInput
                       placeholder="Email"
-                      autocomplete="email"
                       v-model="formData.email"
                       required
                       feedbackValid="Looks good!"
@@ -36,6 +34,7 @@
                       placeholder="Password"
                       autocomplete="current-password"
                       v-model="formData.password"
+                      required
                     />
                   </CInputGroup>
                   <CRow>
@@ -84,8 +83,8 @@ export default {
     return {
         secrets: [],
         formData: {
-          email: '',
-          password: '',
+          email: 'asd',
+          password: null,
           device_name: 'browser',
         },
         errors: {}
@@ -98,6 +97,7 @@ export default {
     validatedCustom01() {
 
       return true;
+
     },
 
     handleLogin() {

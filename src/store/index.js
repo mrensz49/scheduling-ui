@@ -1,5 +1,7 @@
 import { createStore } from 'vuex'
 
+import * as auth from '@/store/modules/auth.js'
+
 export default createStore({
   state: {
     sidebarVisible: '',
@@ -17,5 +19,9 @@ export default createStore({
     },
   },
   actions: {},
-  modules: {},
+  modules: {
+    auth,
+  },
 })
+
+
