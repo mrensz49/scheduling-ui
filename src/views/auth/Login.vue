@@ -6,43 +6,58 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
+
+                <CAlert color="warning" v-if="Object.keys(authStore.errors_login).length && !this.v$.$error">
+                  <span v-for="error in authStore.errors_login" :key="error"> * {{ error[0] }}<br/></span>
+                </CAlert>
+
                 <CForm
                   novalidate
-                  :validated="validatedCustom01"
                   @submit.prevent="handleLogin"
                 >
                   <h1>Login</h1>
                   <p class="text-medium-emphasis">Sign In to your account</p>
-                  <CInputGroup class="mb-3">
+                  <CInputGroup>
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
                     <CFormInput
                       placeholder="Email"
-                      v-model="formData.email"
                       required
-                      feedbackValid="Looks good!"
-                      id="validationCustom01"
+                      v-model="state.formData.email"
+                      :invalid="v$.formData.email.$error"
                     />
                   </CInputGroup>
-                  <CInputGroup class="mb-4">
+                  <div v-if="v$.formData.email.$error" class="text-danger">
+                    {{ v$.formData.email.$errors[0].$message }}
+                  </div>
+
+                  <CInputGroup class="mt-3">
                     <CInputGroupText>
                       <CIcon icon="cil-lock-locked" />
                     </CInputGroupText>
                     <CFormInput
                       type="password"
                       placeholder="Password"
-                      autocomplete="current-password"
-                      v-model="formData.password"
                       required
+                      v-model="state.formData.password"
+                      :invalid="v$.formData.password.$error"
                     />
                   </CInputGroup>
-                  <CRow>
+                  <div v-if="v$.formData.password.$error" class="text-danger">
+                    {{ v$.formData.password.$errors[0].$message }}
+                  </div>
+
+                  <CRow class="mt-4">
                     <CCol :xs="6">
-                      <CButton color="primary" type="submit" class="px-4"> Login </CButton>
+                      <CButton disabled v-if="authStore.user_loading">
+                        <CSpinner component="span" size="sm" aria-hidden="true"/>
+                        Logging In...
+                      </CButton>
+                      <CButton color="primary" type="submit" class="px-4" :disabled="authStore.user_loading" v-else> Login </CButton>
                     </CCol>
                     <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0"  @click="handleForgotPasswordLink">
+                      <CButton color="link" class="px-0" :disabled="authStore.user_loading" @click="handleForgotPasswordLink">
                         Forgot password?
                       </CButton>
                     </CCol>
@@ -59,7 +74,7 @@
                     sed do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </p>
-                  <CButton color="light" variant="outline" class="mt-3" @click="handleRegisterLink()">
+                  <CButton color="light" variant="outline" class="mt-3" :disabled="authStore.user_loading" @click="handleRegisterLink()">
                     Register Now!
                   </CButton>
                 </div>
@@ -74,46 +89,69 @@
 
 <script>
 
-import axios from 'axios';
+  import { reactive } from 'vue'
+  import { useVuelidate } from '@vuelidate/core'
+  import { email, required } from '@vuelidate/validators'
+
+  import { useAuthStore } from '@/store/auth'
+
+  const authStore = useAuthStore()
 
 export default {
   name: 'Login',
 
   data() {
     return {
-        secrets: [],
-        formData: {
-          email: 'asd',
-          password: null,
-          device_name: 'browser',
-        },
-        errors: {}
+      authStore: authStore
     }
   },
+
+  setup () {
+
+    const state = reactive({
+      formData: {
+        email: 'asd@yahoo.com',
+        password: '',
+        device_name: 'browser',
+      },
+    })
+    const rules = {
+      formData: {
+        email: { required, email },
+        password: { required },
+        device_name: { required },
+      }
+    }
+
+    const v$ = useVuelidate(rules, state)
+
+    return { state, v$ }
+  },
+
 
   methods: {
 
 
-    validatedCustom01() {
-
-      return true;
-
-    },
-
     handleLogin() {
 
-      axios.get('/sanctum/csrf-cookie').then(response => {
+      this.v$.$validate()
 
-          console.log('response', response)
-          axios.post('/api/login', this.formData).then(response => {
+      if (!this.v$.$error) {
+        authStore.handleLogin(this.state.formData)
+      }
 
-              localStorage.setItem('scheduling_token', response.data)
-              this.$router.push('/')
-            }).catch((errors) => {
-              this.errors = errors.response.data.errors
-          });
-      });
     },
+    //   axios.get('/sanctum/csrf-cookie').then(response => {
+
+    //       console.log('response', response)
+    //       axios.post('/api/login', this.formData).then(response => {
+
+    //           localStorage.setItem('scheduling_token', response.data)
+    //           this.$router.push('/')
+    //         }).catch((errors) => {
+    //           this.errors = errors.response.data.errors
+    //       });
+    //   });
 
     handleRegisterLink() {
 

@@ -21,8 +21,12 @@ apiClient.interceptors.request.use(function (config) {
 
 export default {
 
-    login(payloads) {
+    register(payloads) {
         return apiClient.post(`/api/register`, payloads)
+    },
+
+    login(payloads) {
+        return apiClient.post(`/api/login`, payloads)
     },
 
 }
