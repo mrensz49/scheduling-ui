@@ -29,4 +29,12 @@ export default {
         return apiClient.post(`/api/login`, payloads)
     },
 
+    logout() {
+        return apiClient.post(`/api/logout`)
+    },
+
+    resendVerification() {
+        return apiClient.post(`/api/email/verification-notification`)
+    },
+
 }

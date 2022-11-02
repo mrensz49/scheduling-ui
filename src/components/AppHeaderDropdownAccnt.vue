@@ -40,54 +40,14 @@
       <CDropdownItem>
         <CIcon icon="cil-shield-alt" /> Lock Account
       </CDropdownItem>
-      <CDropdownItem @click="handleLogout()"> <CIcon icon="cil-lock-locked"/> Logout </CDropdownItem>
+      <CDropdownItem @click="authStore.handleLogout()"> <CIcon icon="cil-lock-locked"/> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
 
-<script>
+<script setup>
+  import avatar from '@/assets/images/avatars/8.jpg'
+  import { useAuthStore } from '@/store/auth'
 
-import axios from 'axios';
-
-import avatar from '@/assets/images/avatars/8.jpg'
-export default {
-  name: 'AppHeaderDropdownAccnt',
-  setup() {
-    return {
-      avatar: avatar,
-      itemsCount: 42,
-    }
-  },
-
-  methods: {
-    handleLogout() {
-
-    axios.interceptors.request.use(function(config) {
-            const token = localStorage.getItem('scheduling_token');
-            console.log('token', token)
-            if(token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-            return config;
-        }, function(err) {
-            return Promise.reject(err);
-        });
-
-      axios.post('/api/logout', this.formData, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
-        ).then(response => {
-
-        localStorage.removeItem('scheduling_token')
-        this.$router.push('/auth/login')
-        console.log(response)
-      }).catch((errors) => {
-        this.errors = errors.response.data.errors
-      });
-
-    }
-  }
-}
+  const authStore = useAuthStore()
 </script>

@@ -139,22 +139,9 @@ export default {
       if (!this.v$.$error) {
         authStore.handleLogin(this.state.formData)
       }
-
     },
-    //   axios.get('/sanctum/csrf-cookie').then(response => {
-
-    //       console.log('response', response)
-    //       axios.post('/api/login', this.formData).then(response => {
-
-    //           localStorage.setItem('scheduling_token', response.data)
-    //           this.$router.push('/')
-    //         }).catch((errors) => {
-    //           this.errors = errors.response.data.errors
-    //       });
-    //   });
 
     handleRegisterLink() {
-
       this.$router.push('/auth/register')
     },
 

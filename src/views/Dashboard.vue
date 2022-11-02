@@ -1,5 +1,7 @@
 <template>
   <div>
+
+    <VerifyEmailNotification />
     <WidgetsStatsA />
     <CRow>
       <CCol :md="12">
@@ -280,6 +282,7 @@ import avatar6 from '@/assets/images/avatars/6.jpg'
 import MainChartExample from './charts/MainChartExample'
 import WidgetsStatsA from './widgets/WidgetsStatsTypeA.vue'
 import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
+import VerifyEmailNotification from '@/components/VerifyEmailNotification.vue'
 
 export default {
   name: 'Dashboard',
@@ -316,18 +319,12 @@ export default {
     });
 
 
-    // apiClient.interceptors.request.use(function (config) {
-    //     config.headers.Authorization = `Beared ${this.token}`;
-    //     return config;
-    // }, null, { synchronous: true });
-
-    // apiClient.axios.defaults.header.common['Authorization'] = `Beared ${this.token}`
-
   },
   components: {
     MainChartExample,
     WidgetsStatsA,
     WidgetsStatsD,
+    VerifyEmailNotification,
   },
   setup() {
     const progressGroupExample1 = [
