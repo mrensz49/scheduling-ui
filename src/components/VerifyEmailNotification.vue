@@ -1,5 +1,5 @@
 <template>
-    <CAlert color="warning">
+    <CAlert color="warning" v-if="authStore.isLoggedIn && !authStore.user.email_verified_at">
         Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? <br />
         If you didn't receive the email, we will gladly send you another.
 
@@ -14,7 +14,9 @@
 </template>
 
 <script setup>
-  import { useAuthStore } from '@/store/auth'
+    import { useAuthStore } from '@/store/auth'
 
-  const authStore = useAuthStore()
+    const authStore = useAuthStore()
+
+    authStore.getUser()
 </script>

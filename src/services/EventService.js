@@ -37,4 +37,8 @@ export default {
         return apiClient.post(`/api/email/verification-notification`)
     },
 
+    getUser() {
+        return apiClient.get(`/api/user`)
+    },
+
 }
