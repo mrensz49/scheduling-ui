@@ -9,6 +9,38 @@ export default [
       text: 'NEW',
     },
   },
+
+  {
+    component: 'CNavTitle',
+    name: 'Members',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Add',
+    to: '/member/add',
+    icon: 'cil-user-follow',
+  },
+  {
+    component: 'CNavItem',
+    name: 'View',
+    to: '/members/view',
+    icon: 'cil-people',
+  },
+
+
+  {
+    component: 'CNavTitle',
+    name: 'Schedule',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Midweek',
+    to: '/schedule/midweek',
+    icon: 'cil-notes',
+  },
+
+
+
   {
     component: 'CNavTitle',
     name: 'Theme',

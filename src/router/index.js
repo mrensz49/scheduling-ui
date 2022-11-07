@@ -1,5 +1,5 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -41,6 +41,36 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/member',
+    redirect: '/pages/404',
+    name: 'Member',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'add',
+        name: 'Add Member',
+        component: () => import('@/views/members/Add'),
+      },
+    ]
+  },
+
+  {
+    path: '/schedule',
+    redirect: '/pages/404',
+    name: 'Schedule',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'midweek',
+        name: 'Midweek',
+        component: () => import('@/views/schedule/Midweek'),
+      },
+    ]
+  },
+
+
   {
     path: '/',
     name: 'Home',
@@ -333,9 +363,9 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // history: createWebHistory(),
   hash: false,
-  // history: createWebHashHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {
     // always scroll to top

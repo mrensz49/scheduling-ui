@@ -48,7 +48,7 @@ export const useAuthStore = defineStore({
             .then(response => {
                 this.user = response.data.user
                 this.user_loading = false
-                console.log('token', response.data.token)
+
                 localStorage.setItem('scheduling_token', response.data.token)
                 localStorage.setItem('scheduling_id', response.data.user.id)
                 router.push({name: 'Dashboard'})
@@ -61,6 +61,7 @@ export const useAuthStore = defineStore({
         },
 
         handleLogout() {
+            this.errors_login = ''
             this.user_loading = true
 
             EventService.logout()
@@ -80,7 +81,7 @@ export const useAuthStore = defineStore({
 
         handleResendVerification() {
 
-            this.user_loading = true
+            this.verification_loading = true
             EventService.resendVerification()
             .then(response => {
                 this.verification_loading = false
