@@ -41,16 +41,28 @@ export default {
         return apiClient.get(`/api/user`)
     },
 
-    getPosition() {
+    getPositions() {
         return apiClient.get(`/api/positions`)
     },
 
-    getCongregation() {
+    getPosition(payload) {
+        return apiClient.get(`/api/positions/${payload}`)
+    },
+
+    getCongregations() {
         return apiClient.get(`/api/congregations`)
     },
 
     addMember(payloads) {
         return apiClient.post(`/api/members`, payloads)
+    },
+
+    getMembers(page) {
+        return apiClient.get(`/api/members?page=`+page)
+    },
+
+    search(payload) {
+        return apiClient.get(`/api/search?q=`+payload)
     },
 
 

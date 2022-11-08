@@ -37,6 +37,7 @@
     "pinia": "^2.0.23",
     "select-philippines-address": "^1.0.6",
     "vue": "^3.2.23",
+    "vue-moment": "^4.1.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },

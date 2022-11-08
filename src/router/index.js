@@ -53,6 +53,11 @@ const routes = [
         name: 'Add Member',
         component: () => import('@/views/members/Add'),
       },
+      {
+        path: 'view',
+        name: 'View Member',
+        component: () => import('@/views/members/View'),
+      },
     ]
   },
 

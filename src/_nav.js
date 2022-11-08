@@ -23,7 +23,7 @@ export default [
   {
     component: 'CNavItem',
     name: 'View',
-    to: '/members/view',
+    to: '/member/view',
     icon: 'cil-people',
   },
 

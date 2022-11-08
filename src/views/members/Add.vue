@@ -178,13 +178,13 @@
                             required
                             feedbackInvalid="This is required!"
                             v-model="formData.congregation_id"
+                            @change="selectBrgy($event)"
                         >
                         <option value="" @click="this.totalGroups=''">Choose...</option>
                             <option
                                 v-for="congregation in congregationStore.congregations"
                                 :key="congregation"
                                 :value="congregation.id"
-                                @click="this.totalGroups=congregation.total_groups"
                             >{{ congregation.name }}</option>
                         </CFormSelect>
                     </CCol>
@@ -251,12 +251,14 @@
             regions().then((region) => this.regions = region);
             provinces('07').then((province) => this.provinces = province);
             cities("0712").then((city) => this.cities = city);
+            barangays("071230").then((barangay) => this.barangays = barangay);
 
             this.formData.region_code = '07' // selected location
             this.formData.province_code = '0712' // selected location
+            this.formData.city_town_code = '071230' // selected location
 
-            positionStore.getPosition()
-            congregationStore.getCongregation()
+            positionStore.getPositions()
+            congregationStore.getCongregations()
         },
 
         data() {
@@ -312,8 +314,8 @@
                 else {
 
                     // console.log('success', this.formData)
+                    memberStore.addMember(this.formData)
                 }
-                memberStore.addMember(this.formData)
 
             },
         }

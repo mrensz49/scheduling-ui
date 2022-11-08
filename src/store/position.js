@@ -13,8 +13,8 @@ export const usePositionStore = defineStore({
 
     actions: {
 
-        getPosition() {
-            EventService.getPosition()
+        getPositions() {
+            EventService.getPositions()
             .then(response => {
                 this.positions = response.data
                 this.loading = false
@@ -23,6 +23,7 @@ export const usePositionStore = defineStore({
                 this.errors = error.response.data.message
                 this.loading = false
             })
-        }
+        },
+
     }
 })

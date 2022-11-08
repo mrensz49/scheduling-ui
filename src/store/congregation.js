@@ -13,8 +13,8 @@ export const useCongregationStore = defineStore({
 
     actions: {
 
-        getCongregation() {
-            EventService.getCongregation()
+        getCongregations() {
+            EventService.getCongregations()
             .then(response => {
                 this.congregations = response.data
                 this.loading = false
