@@ -33,8 +33,8 @@ export const useMemberStore = defineStore({
                     if (member.address) {
                         member.brgy = this.locateAddress(member.address.brgy_code)
                     }
-                    if (member.position_id) {
-                        member.position = this.getPosition(member.position_id)
+                    if (member.designates.length) {
+                        member.positions = this.getPosition(member.designates)
                     }
                     return member
                 })
@@ -91,9 +91,8 @@ export const useMemberStore = defineStore({
             this.loading_search = true
             EventService.search(event.target.value)
             .then(response => {
-                console.log(response)
                 this.members = response.data
-                this.loading = false
+                this.loading_search = false
             })
             .catch(error => {
                 this.errors = error.response.data.errors
@@ -101,12 +100,34 @@ export const useMemberStore = defineStore({
             })
         },
 
-        getPosition(id) {
-
-            const foundPosition = positionStore.positions.find((position) => {
-                return position.id === id
+        getPosition(designates) {
+            const foundPosition = designates.map((designate) => {
+                return positionStore.positions.find((position) => {
+                    return position.id === designate.position_id
+                })
             })
+
             return foundPosition
+        },
+
+        deleteMember(id) {
+
+            const index = this.members.data.findIndex(member => member.id === id);
+            if (index !== -1) {
+                this.members.data.splice(index, 1);
+            }
+
+            // // this.loading = true
+            // EventService.deleteMember(id)
+            // .then(response => {
+            //     console.log(response)
+            //     // this.members = response.data
+            //     // this.loading = false
+            // })
+            // .catch(error => {
+            //     this.errors = error.response.data.errors
+            //     // this.loading = false
+            // })
         }
 
     }

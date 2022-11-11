@@ -11,30 +11,50 @@
                     :validated="validationAdd"
                     @submit="handleAdd"
                 >
-                <!-- v-if="Object.keys(authStore.errors_register).length && !this.v$.$error" -->
-
                     <CCallout color="danger" v-if="Object.keys(memberStore.errors).length" class="bg-warning bg-opacity-10 border-start-5">
                         <ul>
                             <li v-for="error in memberStore.errors" :key="error" class="text-danger">{{ error[0] }}<br/></li>
                         </ul>
                     </CCallout>
 
-
-
+                    <p class="text-end "><span class="text-danger">* - Required fields</span>  </p>
                     <h5>Personal Information</h5>
+
                     <CCol :md="4">
                         <CFormLabel for="validationTextarea" class="form-label"
-                        >Full Name</CFormLabel>
+                        ><sup class="text-danger">*</sup> Last Name</CFormLabel>
                         <CFormInput
-                        placeholder="Full Name"
+                        placeholder="Last Name"
                         required
                         feedbackInvalid="This is required!"
-                        v-model="formData.name"
+                        v-model="formData.last_name"
                         />
                     </CCol>
 
                     <CCol :md="4">
-                        <CFormLabel>Gender</CFormLabel>
+                        <CFormLabel for="validationTextarea" class="form-label"
+                        ><sup class="text-danger">*</sup> First Name</CFormLabel>
+                        <CFormInput
+                        placeholder="First Name"
+                        required
+                        feedbackInvalid="This is required!"
+                        v-model="formData.first_name"
+                        />
+                    </CCol>
+
+                    <CCol :md="4">
+                        <CFormLabel for="validationTextarea" class="form-label"
+                        >Middle Initial (optional)</CFormLabel>
+                        <CFormInput
+                        placeholder="Middle Initial (optional)"
+                        feedbackInvalid="This is required!"
+                        v-model="formData.middle_name"
+                        />
+                    </CCol>
+
+
+                    <CCol :md="4">
+                        <CFormLabel><sup class="text-danger">*</sup> Gender</CFormLabel>
                         <CFormSelect required feedbackInvalid="This is required!" v-model="formData.gender">
                             <option value="">Choose...</option>
                             <option value="Male">Male</option>
@@ -43,16 +63,16 @@
                     </CCol>
 
                     <CCol :md="4">
-                        <CFormLabel>Designate</CFormLabel>
-                        <CFormSelect required feedbackInvalid="This is required!" v-model="formData.position_id">
-                            <option value="">Choose...</option>
-                            <option
-                                v-for="position in positionStore.positions"
-                                :key="position"
-                                :value="position.id"
-                            >{{ position.name }}</option>
-                            <option value="0">To be followed</option>
-                        </CFormSelect>
+                        <CFormLabel><sup class="text-danger">*</sup> Designate</CFormLabel>
+                        <Multiselect required feedbackInvalid="This is required!"
+                            v-model="formData.position_id"
+                            placeholder="Choose"
+                            label="name"
+                            trackBy="name"
+                            :options="positionStore.getDesignates"
+                            :searchable="true"
+                            mode="tags"
+                        ></Multiselect>
                     </CCol>
 
                     <CCol :md="4">
@@ -88,7 +108,7 @@
 
                     <CCol :md="4">
                         <CFormLabel for="validationTextarea" class="form-label"
-                        >Country</CFormLabel>
+                        ><sup class="text-danger">*</sup> Country</CFormLabel>
                         <CFormInput
                             placeholder="Country"
                             disabled
@@ -98,7 +118,7 @@
                     </CCol>
 
                     <CCol :md="4">
-                        <CFormLabel>Region</CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> Region</CFormLabel>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
@@ -117,7 +137,7 @@
                     </CCol>
 
                     <CCol :md="4">
-                        <CFormLabel>Province</CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> Province</CFormLabel>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
@@ -136,7 +156,7 @@
 
 
                     <CCol :md="4">
-                        <CFormLabel>City/Town</CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> City/Town</CFormLabel>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
@@ -155,7 +175,7 @@
                     </CCol>
 
                     <CCol :md="4">
-                        <CFormLabel>Brgy. </CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> Brgy. </CFormLabel>
                         <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="loading.brgys"/>
                         <CFormSelect
                             required
@@ -173,24 +193,24 @@
 
                     <h5>Congregation</h5>
                     <CCol :md="4" class="mb-3">
-                        <CFormLabel>Congregation</CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> Congregation</CFormLabel>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
                             v-model="formData.congregation_id"
-                            @change="selectBrgy($event)"
+                            @change="totalGroups=parseInt($event.target.value)"
                         >
-                        <option value="" @click="this.totalGroups=''">Choose...</option>
+                        <option value="">Choose...</option>
                             <option
                                 v-for="congregation in congregationStore.congregations"
                                 :key="congregation"
-                                :value="congregation.id"
+                                :value="congregation.total_groups"
                             >{{ congregation.name }}</option>
                         </CFormSelect>
                     </CCol>
 
                     <CCol :md="4" class="mb-4">
-                        <CFormLabel>Group </CFormLabel>
+                        <CFormLabel><sup class="text-danger">*</sup> Group </CFormLabel>
                         <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="loading.brgys"/>
                         <CFormSelect
                             required
@@ -206,7 +226,6 @@
                             <option value="0">To be followed</option>
                         </CFormSelect>
                     </CCol>
-
                     <CCol :xs="12" class="mb-3">
                         <CButton disabled v-if="memberStore.loading">
                             <CSpinner component="span" size="sm" aria-hidden="true"/>
@@ -216,7 +235,6 @@
                             Submit form
                         </CButton>
                     </CCol>
-
                 </CForm>
             </CRow>
           </CCardBody>
@@ -227,6 +245,10 @@
 
   <script>
 
+
+    import { usePositionStore } from '@/store/position'
+    import { useCongregationStore } from '@/store/congregation'
+    import { useMemberStore } from '@/store/member'
     import {
         regions,
         provinces,
@@ -234,10 +256,7 @@
         barangays,
     } from "select-philippines-address";
 
-
-    import { usePositionStore } from '@/store/position'
-    import { useCongregationStore } from '@/store/congregation'
-    import { useMemberStore } from '@/store/member'
+    import Multiselect from '@vueform/multiselect'
 
     const positionStore = usePositionStore()
     const congregationStore = useCongregationStore()
@@ -260,12 +279,17 @@
             positionStore.getPositions()
             congregationStore.getCongregations()
         },
-
+        components: {
+            Multiselect,
+        },
         data() {
             return {
                 positionStore: positionStore,
                 congregationStore: congregationStore,
                 memberStore: memberStore,
+                value: null,
+
+                options: positionStore.positions,
                 totalGroups: 0,
                 validationAdd: null,
                 regions: {},
@@ -279,9 +303,11 @@
                     brgys: false,
                 },
                 formData: {
-                    name: '',
+                    last_name: '',
+                    first_name: '',
+                    middle_name: '',
                     gender: '',
-                    position_id: '',
+                    position_id: [],
                     dobirth: '',
                     dobap: '',
                     phone: '',
@@ -312,13 +338,14 @@
                     event.stopPropagation()
                 }
                 else {
-
-                    // console.log('success', this.formData)
-                    memberStore.addMember(this.formData)
+                    console.log('1')
                 }
+                memberStore.addMember(this.formData)
 
             },
         }
 
     }
   </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

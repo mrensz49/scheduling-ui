@@ -11,6 +11,17 @@ export const usePositionStore = defineStore({
         errors: {},
     }),
 
+    getters: {
+
+        getDesignates() {
+            const listPositions = this.positions.map((position) => {
+                position.value = position.id
+                return position
+            })
+            return listPositions;
+        }
+    },
+
     actions: {
 
         getPositions() {

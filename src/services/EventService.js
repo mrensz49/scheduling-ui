@@ -61,6 +61,10 @@ export default {
         return apiClient.get(`/api/members?page=`+page)
     },
 
+    deleteMember(id) {
+        return apiClient.delete(`/api/members/`+id)
+    },
+
     search(payload) {
         return apiClient.get(`/api/search?q=`+payload)
     },
