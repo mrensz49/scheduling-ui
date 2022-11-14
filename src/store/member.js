@@ -9,7 +9,10 @@ import {
 } from "select-philippines-address";
 
 import { usePositionStore } from '@/store/position'
+import { useHelperStore } from '@/services/helper'
+
 const positionStore = usePositionStore()
+const helperStore = useHelperStore()
 
 export const useMemberStore = defineStore({
 
@@ -21,6 +24,7 @@ export const useMemberStore = defineStore({
         members: [],
         loading: false,
         loading_search: false,
+        loading_delete: 0,
         errors: {},
     }),
 
@@ -39,6 +43,13 @@ export const useMemberStore = defineStore({
                     return member
                 })
                 return listMembers;
+            }
+        },
+
+        removeMember: state => id =>  {
+           const index = state.members.data.findIndex(member => member.id === id);
+            if (index !== -1) {
+                state.members.data.splice(index, 1);
             }
         }
     },
@@ -112,22 +123,22 @@ export const useMemberStore = defineStore({
 
         deleteMember(id) {
 
-            const index = this.members.data.findIndex(member => member.id === id);
-            if (index !== -1) {
-                this.members.data.splice(index, 1);
-            }
+            this.loading_delete = id
+            setTimeout(() => {
+                EventService.deleteMember(id)
+                .then(() => {
+                    this.loading_delete = 0
+                    helperStore.confirm = 0
+                    this.removeMember(id)
+                    notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors
+                    this.loading_delete = 0
+                    helperStore.confirm = 0
 
-            // // this.loading = true
-            // EventService.deleteMember(id)
-            // .then(response => {
-            //     console.log(response)
-            //     // this.members = response.data
-            //     // this.loading = false
-            // })
-            // .catch(error => {
-            //     this.errors = error.response.data.errors
-            //     // this.loading = false
-            // })
+                })
+            },1000)
         }
 
     }

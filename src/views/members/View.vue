@@ -36,7 +36,7 @@
                     <CTableBody>
                         <CTableRow v-for="(member, index) in memberStore.showMembers" :key="member.id">
                             <CTableDataCell>{{ index+1 }}</CTableDataCell>
-                            <CTableDataCell>{{ member.last_name + ' ' + member.first_name + ' ' + member.middle_name}}</CTableDataCell>
+                            <CTableDataCell>{{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}</CTableDataCell>
                             <CTableDataCell>{{ member.group_no }}</CTableDataCell>
                             <CTableDataCell>
                                 <template v-if="typeof member.positions !== 'undefined'">
@@ -60,12 +60,22 @@
                             </CTableDataCell>
                             <CTableDataCell>
                                 <CButton color="primary" shape="rounded-pill" class="btn-sm"><CIcon icon="cil-user" /></CButton> |
+                                <!-- @click="memberStore.deleteMember(member.id)" -->
                                 <CButton
-                                    color="warning"
-                                    shape="rounded-pill"
-                                    class="btn-sm"
-                                    @click="memberStore.deleteMember(member.id)"
-                                >Delete - {{ member.id }}</CButton>
+                                color="warning"
+                                shape="rounded-pill"
+                                class="btn-sm"
+                                @click="helperStore.confirmDelete(member.id)"
+                                :disabled="memberStore.loading_delete && memberStore.loading_delete == member.id"
+                                >
+                                    <span v-if="memberStore.loading_delete && memberStore.loading_delete == member.id">
+                                        <CSpinner color="primary" component="span" size="sm" aria-hidden="true"/>&nbsp;
+                                        deleting...
+                                    </span>
+                                    <span v-else>
+                                        Delete
+                                    </span>
+                                </CButton>
                             </CTableDataCell>
                         </CTableRow>
                         <CTableRow v-if="typeof memberStore.showMembers !== 'undefined' && !memberStore.showMembers.length">
@@ -74,8 +84,8 @@
                     </CTableBody>
                     </CTable>
                 </CCol>
-
                 <Pagination type="members" :items="memberStore.members"/>
+                <ModalConfirmation data="Are you sure you want to delete this?" type="members" />
             </CRow>
           </CCardBody>
         </CCard>
@@ -85,13 +95,17 @@
 
   <script>
 
-    import Pagination from '@/components/Pagination.vue'
     import moment from 'moment'
+    import Pagination from '@/components/Pagination.vue'
+    import ModalConfirmation from '@/components/ModalConfirmation.vue'
+
     import { useMemberStore } from '@/store/member'
     import { usePositionStore } from '@/store/position'
+    import { useHelperStore } from '@/services/helper'
 
     const positionStore = usePositionStore()
     const memberStore = useMemberStore()
+    const helperStore = useHelperStore()
 
     export default {
 
@@ -102,10 +116,11 @@
             return {
                 positionStore: positionStore,
                 memberStore: memberStore,
+                helperStore: helperStore,
             }
         },
         components: {
-            Pagination,
+            Pagination, ModalConfirmation,
         },
         mounted() {
             memberStore.loadDefBrgys('071230') // temporary
