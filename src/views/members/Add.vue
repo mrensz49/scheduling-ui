@@ -334,8 +334,8 @@
                 }
                 else {
                     // console.log('s - ', this.formData)
+                    memberStore.addMember(this.formData)
                 }
-                memberStore.addMember(this.formData)
 
             },
         }

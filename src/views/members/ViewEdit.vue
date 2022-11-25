@@ -269,8 +269,6 @@
                                     </span>
                                 </CCol>
                             </CRow>
-
-                                {{ authStore.user.congregation.total_groups }}
                         </CCol>
                     </CRow>
                 </CCardBody>
