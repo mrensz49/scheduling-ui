@@ -39,8 +39,12 @@
                             <CTableDataCell>{{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}</CTableDataCell>
                             <CTableDataCell>{{ member.group_no }}</CTableDataCell>
                             <CTableDataCell>
-                                <template v-if="typeof member.positions !== 'undefined'">
-                                    <CBadge color="success" class="m-1" v-for="position in member.positions" :key="position.id"> {{ position.name }}</CBadge>
+                                <template v-if="typeof member.positions !== 'undefined' && member.positions.length">
+                                    <template v-for="(position, index) in member.positions" :key="index">
+                                        <CBadge v-if="typeof position !== 'undefined'" color="success" class="m-1">
+                                            {{ position.name }}
+                                        </CBadge>
+                                    </template>
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
@@ -59,8 +63,7 @@
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
-                                <CButton color="primary" shape="rounded-pill" class="btn-sm"><CIcon icon="cil-user" /></CButton> |
-                                <!-- @click="memberStore.deleteMember(member.id)" -->
+                                <CButton color="primary" shape="rounded-pill" class="btn-sm" @click="viewedit(member.id)"><CIcon icon="cil-user" /></CButton> |
                                 <CButton
                                 color="warning"
                                 shape="rounded-pill"
@@ -95,6 +98,7 @@
 
   <script>
 
+    import router from '@/router'
     import moment from 'moment'
     import Pagination from '@/components/Pagination.vue'
     import ModalConfirmation from '@/components/ModalConfirmation.vue'
@@ -109,7 +113,7 @@
 
     export default {
 
-        name: 'View Member',
+        name: 'View Members',
 
         data() {
 
@@ -123,13 +127,16 @@
             Pagination, ModalConfirmation,
         },
         mounted() {
-            memberStore.loadDefBrgys('071230') // temporary
             positionStore.getPositions()
             memberStore.getMembers()
         },
         methods: {
             getHumanDate(date) {
                 return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY - dd');
+            },
+
+            viewedit(id) {
+                router.push({name: 'View Member', params: { id: id } })
             }
         }
     }

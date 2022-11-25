@@ -55,8 +55,13 @@ const routes = [
       },
       {
         path: 'view',
-        name: 'View Member',
+        name: 'View Members',
         component: () => import('@/views/members/View'),
+      },
+      {
+        path: 'view-edit/:id',
+        name: 'View Member',
+        component: () => import('@/views/members/ViewEdit'),
       },
     ]
   },

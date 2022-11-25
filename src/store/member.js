@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import EventService from "@/services/EventService.js";
-import { notify } from "@kyvg/vue3-notification";
+import EventService from "@/services/EventService.js"
+import { notify } from "@kyvg/vue3-notification"
 import {
     // regions,
     // provinces,
     // cities,
     barangays,
-} from "select-philippines-address";
+} from "select-philippines-address"
+import router from '@/router'
 
 import { usePositionStore } from '@/store/position'
 import { useHelperStore } from '@/services/helper'
@@ -25,6 +26,8 @@ export const useMemberStore = defineStore({
         loading: false,
         loading_search: false,
         loading_delete: 0,
+        loading_update: false,
+        edit: 0,
         errors: {},
     }),
 
@@ -46,6 +49,22 @@ export const useMemberStore = defineStore({
             }
         },
 
+        showMember() {
+
+            if (Object.keys(this.member).length) {
+                this.member.brgy = this.locateAddress(this.member.address.brgy_code)
+                this.member.positions = this.getPosition(this.member.designates)
+                return this.member
+            }
+        },
+
+        defPosition() {
+            const listPositions = this.member.positions.map((position) => {
+                return position.id
+            })
+            return listPositions;
+        },
+
         removeMember: state => id =>  {
            const index = state.members.data.findIndex(member => member.id === id);
             if (index !== -1) {
@@ -63,13 +82,34 @@ export const useMemberStore = defineStore({
             .then(response => {
                 this.member = response.data
                 this.loading = false
-                this.errors = ''
+                this.errors = {}
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY ADDED" });
                 // redirect this to view user
+                router.push({name: 'View Member', params: { id: response.data.id } })
+            })
+            .catch(error => {
+                if (typeof error.response !== 'undefined') {
+                    this.errors = error.response.data.errors
+                }
+
+                this.loading = false
+            })
+        },
+
+        updateMember(payloads) {
+
+            this.loading_update = true
+            EventService.updateMember(payloads)
+            .then(response => {
+                this.member = response.data
+                this.loading_update = false
+                this.errors = ''
+                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
+                this.edit=0
             })
             .catch(error => {
                 this.errors = error.response.data.errors
-                this.loading = false
+                this.loading_update = false
             })
         },
 
@@ -78,6 +118,19 @@ export const useMemberStore = defineStore({
             EventService.getMembers(page)
             .then(response => {
                 this.members = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading = false
+            })
+        },
+
+        getMember(id) {
+            this.loading = true
+            EventService.getMember(id)
+            .then(response => {
+                this.member = response.data
                 this.loading = false
             })
             .catch(error => {

@@ -57,8 +57,16 @@ export default {
         return apiClient.post(`/api/members`, payloads)
     },
 
+    updateMember(payloads) {
+        return apiClient.put(`/api/members/${payloads.id}`, payloads)
+    },
+
     getMembers(page) {
         return apiClient.get(`/api/members?page=`+page)
+    },
+
+    getMember(id) {
+        return apiClient.get(`/api/members/${id}`)
     },
 
     deleteMember(id) {

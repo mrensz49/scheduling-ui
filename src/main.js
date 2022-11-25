@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// import user from './services/User'
 import { createPinia } from 'pinia'
 import Notifications from '@kyvg/vue3-notification'
 
@@ -24,5 +25,8 @@ app.provide('icons', icons)
 app.component('CIcon', CIcon)
 app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
+
+
+// user.fetchUser()
 
 app.mount('#app')

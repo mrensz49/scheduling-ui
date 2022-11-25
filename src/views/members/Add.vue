@@ -11,7 +11,7 @@
                     :validated="validationAdd"
                     @submit="handleAdd"
                 >
-                    <CCallout color="danger" v-if="Object.keys(memberStore.errors).length" class="bg-warning bg-opacity-10 border-start-5">
+                    <CCallout color="danger" v-if="Object.keys(memberStore.errors).length" class="bg-warning bg-opacity-10 border-start-5 ms-2">
                         <ul>
                             <li v-for="error in memberStore.errors" :key="error" class="text-danger">{{ error[0] }}<br/></li>
                         </ul>
@@ -126,10 +126,10 @@
                         >
                         <option disabled value="">Choose...</option>
                         <option
-                            v-for="region in regions" :key="region"
+                            v-for="region in addressStore.regions" :key="region"
                             :value="region.region_code"
-                            :disabled="region.region_code == '07' ? false:true"
-                            :selected="region.region_code == '07' ? true:false"
+                            :disabled="region.region_code == authStore.showCongregation.region_code ? false:true"
+                            :selected="region.region_code == authStore.showCongregation.region_code ? true:false"
                         >
                             {{ region.region_name }}
                         </option>
@@ -145,9 +145,9 @@
                         >
                         <option value="">Choose...</option>
                         <option
-                            v-for="province in provinces" :key="province" :value="province.province_code"
-                            :disabled="province.province_code == '0712' ? false:true"
-                            :selected="province.province_code == '0712' ? true:false"
+                            v-for="province in addressStore.provinces" :key="province" :value="province.province_code"
+                            :disabled="province.province_code == authStore.showCongregation.province_code ? false:true"
+                            :selected="province.province_code == authStore.showCongregation.province_code ? true:false"
                         >
                             {{ province.province_name }}
                         </option>
@@ -161,13 +161,12 @@
                             required
                             feedbackInvalid="This is required!"
                             v-model="formData.city_town_code"
-                            @change="selectBrgy($event)"
                         >
                         <option value="">Choose...</option>
                         <option
-                            v-for="city in cities" :key="city" :value="city.city_code"
-                            :disabled="city.city_code == '071230' ? false:true"
-                            :selected="city.city_code == '071230' ? true:false"
+                        v-for="city in addressStore.cities" :key="city" :value="city.city_code"
+                            :disabled="city.city_code == authStore.showCongregation.city_town_code ? false:true"
+                            :selected="city.city_code == authStore.showCongregation.city_town_code ? true:false"
                         >
                             {{ city.city_name }}
                         </option>
@@ -176,7 +175,6 @@
 
                     <CCol :md="4">
                         <CFormLabel><sup class="text-danger">*</sup> Brgy. </CFormLabel>
-                        <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="loading.brgys"/>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
@@ -184,7 +182,7 @@
                         >
                         <option value="">Choose...</option>
                         <option
-                            v-for="barangay in barangays" :key="barangay" :value="barangay.brgy_code"
+                            v-for="barangay in addressStore.barangays" :key="barangay" :value="barangay.brgy_code"
                         >
                             {{ barangay.brgy_name }}
                         </option>
@@ -197,21 +195,20 @@
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
-                            v-model="formData.congregation_id"
-                            @change="totalGroups=parseInt($event.target.value)"
+                            v-model="congregation_id"
+                            @change="showTotalGroup($event)"
                         >
                         <option value="">Choose...</option>
                             <option
                                 v-for="congregation in congregationStore.congregations"
                                 :key="congregation"
-                                :value="congregation.total_groups"
+                                :value="congregation.id+','+congregation.total_groups"
                             >{{ congregation.name }}</option>
                         </CFormSelect>
                     </CCol>
 
                     <CCol :md="4" class="mb-4">
                         <CFormLabel><sup class="text-danger">*</sup> Group </CFormLabel>
-                        <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="loading.brgys"/>
                         <CFormSelect
                             required
                             feedbackInvalid="This is required!"
@@ -249,36 +246,39 @@
     import { usePositionStore } from '@/store/position'
     import { useCongregationStore } from '@/store/congregation'
     import { useMemberStore } from '@/store/member'
-    import {
-        regions,
-        provinces,
-        cities,
-        barangays,
-    } from "select-philippines-address";
+    import { useAuthStore } from '@/store/auth'
+    import { useAddressStore } from '@/store/address'
 
     import Multiselect from '@vueform/multiselect'
 
     const positionStore = usePositionStore()
     const congregationStore = useCongregationStore()
     const memberStore = useMemberStore()
+    const authStore = useAuthStore()
+    const addressStore = useAddressStore()
 
     export default {
         name: 'Add Member',
 
-        mounted() {
-
-            regions().then((region) => this.regions = region);
-            provinces('07').then((province) => this.provinces = province);
-            cities("0712").then((city) => this.cities = city);
-            barangays("071230").then((barangay) => this.barangays = barangay);
-
-            this.formData.region_code = '07' // selected location
-            this.formData.province_code = '0712' // selected location
-            this.formData.city_town_code = '071230' // selected location
-
+        async created() {
+            await authStore.getUser()
             positionStore.getPositions()
             congregationStore.getCongregations()
+
+            addressStore.fetchRegions()
+            addressStore.fetchProvinces(authStore.showCongregation.region_code)
+            addressStore.fetchCities(authStore.showCongregation.province_code)
+            addressStore.fetchBrgys(authStore.showCongregation.city_town_code)
+
+            this.formData.region_code = authStore.showCongregation.region_code
+            this.formData.province_code = authStore.showCongregation.province_code
+            this.formData.city_town_code = authStore.showCongregation.city_town_code
         },
+
+        mounted() {
+            memberStore.errors = {}
+        },
+
         components: {
             Multiselect,
         },
@@ -287,21 +287,15 @@
                 positionStore: positionStore,
                 congregationStore: congregationStore,
                 memberStore: memberStore,
+                authStore: authStore,
+                addressStore: addressStore,
                 value: null,
 
                 options: positionStore.positions,
                 totalGroups: 0,
+                congregation_id: '',
                 validationAdd: null,
-                regions: {},
-                provinces: {},
-                cities: {},
-                barangays: {},
-                loading: {
-                    regions: false,
-                    provinces: false,
-                    cities: false,
-                    brgys: false,
-                },
+
                 formData: {
                     last_name: '',
                     first_name: '',
@@ -311,7 +305,7 @@
                     dobirth: '',
                     dobap: '',
                     phone: '',
-                    country_code: 'Philippnes',
+                    country_code: 'Philippines',
                     region_code: '',
                     province_code: '',
                     city_town_code: '',
@@ -324,11 +318,12 @@
 
         methods: {
 
-            selectBrgy(event) {
-                this.loading.brgys = true
-                barangays(event.target.value).then((barangay) => this.barangays = barangay, this.loading.brgys = false );
+            showTotalGroup(event) {
+                var c = event.target.value.split(',')
+                this.formData.congregation_id=parseInt(c[0])
+                this.totalGroups=parseInt(c[1])
+                console.log(parseInt(parseInt(c[0])))
             },
-
 
             handleAdd(event) {
                 const form = event.currentTarget
@@ -338,7 +333,7 @@
                     event.stopPropagation()
                 }
                 else {
-                    console.log('1')
+                    // console.log('s - ', this.formData)
                 }
                 memberStore.addMember(this.formData)
 

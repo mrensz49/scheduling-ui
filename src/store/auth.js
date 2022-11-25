@@ -18,7 +18,12 @@ export const useAuthStore = defineStore({
     getters: {
         isLoggedIn(state) {
             return Object.keys(state.user || {}).length ? Object.keys(state.user).length : 0
+        },
+
+        showCongregation(state) {
+           return  Object.keys(state.user || {}).length ? state.user.congregation : []
         }
+
     },
 
     actions: {
@@ -93,9 +98,9 @@ export const useAuthStore = defineStore({
             })
         },
 
-        getUser() {
+        async getUser() {
 
-            EventService.getUser()
+            await EventService.getUser()
             .then(response => {
                 this.user = response.data
                 this.verification_loading = false
