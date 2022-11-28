@@ -62,7 +62,8 @@ export default {
     },
 
     getMembers(page) {
-        return apiClient.get(`/api/members?page=`+page)
+        // return apiClient.get(`/api/members?page=`+page)
+        return apiClient.get(`/api/congregation/members?page=`+page)
     },
 
     getMember(id) {

@@ -248,14 +248,16 @@
                                 <CCol :md="3" :sm="6">Brgy</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit">
-                                        - {{ memberStore.showMember.brgy.brgy_name}}
+                                        <template v-if="typeof memberStore.showMember.brgy !== 'undefined'">
+                                            - {{ memberStore.showMember.brgy.brgy_name}}
+                                        </template>
                                     </span>
                                     <span v-else>
                                         <CFormSelect
                                             required
                                             feedbackInvalid="This is required!"
-                                            v-model="formData.brgy_code"
                                             @change="changeBrgy($event)"
+                                            v-model="formData.brgy_code"
                                         >
                                         <option value="">Choose...</option>
                                         <option
