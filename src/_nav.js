@@ -40,6 +40,24 @@ export default [
   },
 
 
+  {
+    component: 'CNavTitle',
+    name: 'Setup',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Meeting Songs',
+    to: '/setup/songs-meeting',
+    icon: 'cil-notes',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Treasures F.G.W.',
+    to: '/setup/treasures',
+    icon: 'cil-notes',
+  },
+
+
 
   {
     component: 'CNavTitle',

@@ -10,9 +10,9 @@
             <CButton
                 color="primary"
                 @click="comfirmedDelete(helperStore.confirm)"
-                :disabled="memberStore.loading_delete && memberStore.loading_delete == helperStore.confirm"
+                :disabled="helperStore.loading_delete"
             >
-                <span v-if="memberStore.loading_delete && memberStore.loading_delete == helperStore.confirm">
+                <span v-if="helperStore.loading_delete">
                     <CSpinner color="danger" component="span" size="sm" aria-hidden="true"/>&nbsp;
                     deleting...
                 </span>
@@ -26,9 +26,11 @@
 
     import { useHelperStore } from '@/services/helper'
     import { useMemberStore } from '@/store/member'
+    import { useSongStore } from '@/store/song'
 
     const helperStore = useHelperStore()
     const memberStore = useMemberStore()
+    const songStore = useSongStore()
 
     export default {
 
@@ -38,6 +40,7 @@
             return {
                 helperStore: helperStore,
                 memberStore: memberStore,
+                songStore: songStore,
             }
         },
 
@@ -46,6 +49,9 @@
 
                 if (this.type == 'members') {
                     memberStore.deleteMember(id)
+                }
+                else if (this.type == 'meeting-song') {
+                    songStore.deleteMeetingSong(id)
                 }
             }
         }

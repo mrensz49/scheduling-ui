@@ -27,6 +27,4 @@ app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
 
 
-// user.fetchUser()
-
 app.mount('#app')

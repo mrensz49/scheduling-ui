@@ -80,6 +80,19 @@ const routes = [
     ]
   },
 
+  {
+    path: '/setup',
+    name: 'Setup',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'songs-meeting',
+        name: 'Meetings Song',
+        component: () => import('@/views/setup/SongsMeeting'),
+      },
+    ]
+  },
+
 
   {
     path: '/',

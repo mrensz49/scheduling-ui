@@ -62,7 +62,6 @@ export default {
     },
 
     getMembers(page) {
-        // return apiClient.get(`/api/members?page=`+page)
         return apiClient.get(`/api/congregation/members?page=`+page)
     },
 
@@ -78,5 +77,20 @@ export default {
         return apiClient.get(`/api/search?q=`+payload)
     },
 
+    addSongMeeting(payloads) {
+        return apiClient.post(`/api/song-meeting`, payloads)
+    },
 
+    fetchSongsMeeting() {
+        return apiClient.get(`/api/song-meeting`)
+    },
+
+
+    deleteMeetingSong(id) {
+        return apiClient.delete(`/api/song-meeting/`+id)
+    },
+
+    editSongMeeting(payload) {
+        return apiClient.put(`/api/song-meeting/${payload.id}`, payload.formData)
+    },
 }

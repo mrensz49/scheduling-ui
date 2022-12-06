@@ -176,18 +176,18 @@ export const useMemberStore = defineStore({
 
         deleteMember(id) {
 
-            this.loading_delete = id
+            helperStore.loading_delete = true
             setTimeout(() => {
                 EventService.deleteMember(id)
                 .then(() => {
-                    this.loading_delete = 0
+                    helperStore.loading_delete = false
                     helperStore.confirm = 0
                     this.removeMember(id)
                     notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
-                    this.loading_delete = 0
+                    helperStore.loading_delete = false
                     helperStore.confirm = 0
 
                 })

@@ -65,20 +65,11 @@
                             <CTableDataCell>
                                 <CButton color="primary" shape="rounded-pill" class="btn-sm" @click="viewedit(member.id)"><CIcon icon="cil-user" /></CButton> |
                                 <CButton
-                                color="warning"
-                                shape="rounded-pill"
-                                class="btn-sm"
-                                @click="helperStore.confirmDelete(member.id)"
-                                :disabled="memberStore.loading_delete && memberStore.loading_delete == member.id"
-                                >
-                                    <span v-if="memberStore.loading_delete && memberStore.loading_delete == member.id">
-                                        <CSpinner color="primary" component="span" size="sm" aria-hidden="true"/>&nbsp;
-                                        deleting...
-                                    </span>
-                                    <span v-else>
-                                        Delete
-                                    </span>
-                                </CButton>
+                                    color="warning"
+                                    shape="rounded-pill"
+                                    class="btn-sm"
+                                    @click="helperStore.confirmDelete(member.id)"
+                                >Delete</CButton>
                             </CTableDataCell>
                         </CTableRow>
                         <CTableRow v-if="typeof memberStore.showMembers !== 'undefined' && !memberStore.showMembers.length">
