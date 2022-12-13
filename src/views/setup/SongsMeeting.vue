@@ -47,7 +47,7 @@
       </CCol>
     </CRow>
 
-    <ModalForm
+    <ModalFormMeetingSong
         :type="type"
         title="Malipayong Mag-awit—Tigom"
         :data=formData
@@ -58,7 +58,7 @@
 <script>
 
     import ModalConfirmation from '@/components/ModalConfirmation.vue'
-    import ModalForm from '@/components/modal/ModalForm.vue'
+    import ModalFormMeetingSong from '@/components/modal/ModalFormMeetingSong.vue'
 
     import { useSongStore } from '@/store/song'
     import { useHelperStore } from '@/services/helper'
@@ -88,7 +88,7 @@
       }
     },
     components: {
-        ModalConfirmation, ModalForm
+        ModalConfirmation, ModalFormMeetingSong
     },
     methods: {
 
@@ -101,6 +101,7 @@
 
         handleEditSong(song) {
 
+            helperStore.errors = {}
             helperStore.visibleModalSongsMeeting = true
             this.type = "EditSongMeeting"
             this.formData.id = song.id

@@ -71,7 +71,7 @@
 
     export default {
 
-        name: 'ModalForm',
+        name: 'ModalFormMeetingSong.vue',
 
         props: ['type', 'title', 'data'],
 

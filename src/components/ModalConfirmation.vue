@@ -27,10 +27,12 @@
     import { useHelperStore } from '@/services/helper'
     import { useMemberStore } from '@/store/member'
     import { useSongStore } from '@/store/song'
+    import { useTreasureStore } from '@/store/treasure'
 
     const helperStore = useHelperStore()
     const memberStore = useMemberStore()
     const songStore = useSongStore()
+    const treasureStore = useTreasureStore()
 
     export default {
 
@@ -52,6 +54,9 @@
                 }
                 else if (this.type == 'meeting-song') {
                     songStore.deleteMeetingSong(id)
+                }
+                else if (this.type == 'treasure') {
+                    treasureStore.deleteMeetingTreasure(id)
                 }
             }
         }

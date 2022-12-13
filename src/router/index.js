@@ -90,6 +90,11 @@ const routes = [
         name: 'Meetings Song',
         component: () => import('@/views/setup/SongsMeeting'),
       },
+      {
+        path: 'treasures',
+        name: 'Bahandi Gikan sa Pulong sa Diyos',
+        component: () => import('@/views/setup/Treasures'),
+      },
     ]
   },
 

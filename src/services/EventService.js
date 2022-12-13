@@ -85,7 +85,6 @@ export default {
         return apiClient.get(`/api/song-meeting`)
     },
 
-
     deleteMeetingSong(id) {
         return apiClient.delete(`/api/song-meeting/`+id)
     },
@@ -93,4 +92,29 @@ export default {
     editSongMeeting(payload) {
         return apiClient.put(`/api/song-meeting/${payload.id}`, payload.formData)
     },
+
+    addTreasure(payloads) {
+        return apiClient.post(`/api/meeting-treasure`, payloads)
+    },
+
+    fetchMeetingTreasures() {
+        return apiClient.get(`/api/meeting-treasure`)
+    },
+
+    editTreasure(payload) {
+        return apiClient.put(`/api/meeting-treasure/${payload.id}`, payload.formData)
+    },
+
+    deleteMeetingTreasure(id) {
+        return apiClient.delete(`/api/meeting-treasure/`+id)
+    },
+
+
+    //helper
+    fetchWeeks() {
+        return apiClient.get(`/api/weeks`)
+    },
+
+
+
 }
