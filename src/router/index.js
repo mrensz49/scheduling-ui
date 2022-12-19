@@ -63,6 +63,11 @@ const routes = [
         name: 'View Member',
         component: () => import('@/views/members/ViewEdit'),
       },
+      {
+        path: 'group',
+        name: 'Group',
+        component: () => import('@/views/members/Group'),
+      },
     ]
   },
 

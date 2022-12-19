@@ -26,6 +26,12 @@ export default [
     to: '/member/view',
     icon: 'cil-people',
   },
+  {
+    component: 'CNavItem',
+    name: 'Group',
+    to: '/member/group',
+    icon: 'cil-people',
+  },
 
 
   {
@@ -36,6 +42,17 @@ export default [
     component: 'CNavItem',
     name: 'Midweek',
     to: '/schedule/midweek',
+    icon: 'cil-notes',
+  },
+
+  {
+    component: 'CNavTitle',
+    name: 'Reports',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Midweek',
+    to: '/reports/field-service',
     icon: 'cil-notes',
   },
 

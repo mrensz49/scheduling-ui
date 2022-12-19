@@ -109,6 +109,9 @@ export default {
         return apiClient.delete(`/api/meeting-treasure/`+id)
     },
 
+    getGroups() {
+        return apiClient.get(`/api/congregation/groups`)
+    },
 
     //helper
     fetchWeeks() {
