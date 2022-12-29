@@ -51,8 +51,8 @@ export default [
   },
   {
     component: 'CNavItem',
-    name: 'Midweek',
-    to: '/reports/field-service',
+    name: 'Field Service',
+    to: '/reports/monthly-reports',
     icon: 'cil-notes',
   },
 

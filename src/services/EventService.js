@@ -109,13 +109,30 @@ export default {
         return apiClient.delete(`/api/meeting-treasure/`+id)
     },
 
-    getGroups() {
-        return apiClient.get(`/api/congregation/groups`)
+    getGroups(payload) {
+        return apiClient.get(`/api/congregation/groups/${payload}`)
     },
+
+    saveReport(payload, id){
+        return apiClient.put(`/api/report-field-services/${id}`, payload)
+    },
+
+    storeReport(payload){
+        return apiClient.post(`/api/report-field-services`, payload)
+    },
+
+    fetchMonthlyReport(payloads){
+        return apiClient.get(`/api/monthly-reports/${payloads.year}/${payloads.month}`)
+    },
+
 
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)
+    },
+
+    fetchMonthYear() {
+        return apiClient.get(`/api/month-year`)
     },
 
 

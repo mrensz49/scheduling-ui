@@ -86,6 +86,25 @@ const routes = [
   },
 
   {
+    path: '/reports',
+    redirect: '/pages/404',
+    name: 'Schedule',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'monthly-reports',
+        name: 'Monthly Reports',
+        component: () => import('@/views/reports/MonthlyReportsFS.vue'),
+      },
+      {
+        path: 'field-service/:year/:month',
+        name: 'Field Service',
+        component: () => import('@/views/reports/FieldService'),
+      },
+    ]
+  },
+
+  {
     path: '/setup',
     name: 'Setup',
     component: DefaultLayout,

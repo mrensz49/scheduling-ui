@@ -11,5 +11,5 @@ module.exports = {
   publicPath: '/',
   devServer: {
       proxy: 'http://scheduling.test',
-  }
+  },
 }

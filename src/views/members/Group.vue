@@ -19,7 +19,6 @@
                 </CRow>
                 <CRow>
                     <template v-for="group in congregationStore.showGroups" :key="group.group">
-
                         <CCol :md="6">
                             <CCard class="mb-4 mt-2">
                                 <CCardImage orientation="top" />
@@ -46,8 +45,6 @@
                 </CRow>
             </CCardBody>
             </CCard>
-            <!-- {{ congregationStore.groups }} -->
-            <!-- {{ congregationStore.countGroupPosition}} -->
         </CCol>
     </CRow>
 </template>
@@ -65,13 +62,12 @@
 
         async created() {
             await congregationStore.getGroups()
-            // congregationStore.loadGroupPosition()
         },
+
         data() {
 
             return {
                 congregationStore: congregationStore,
-                countPosition: []
             }
         },
 

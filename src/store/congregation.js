@@ -44,9 +44,9 @@ export const useCongregationStore = defineStore({
             })
         },
 
-        async getGroups() {
+        async getGroups(payload) {
             this.loading = true
-            await EventService.getGroups()
+            await EventService.getGroups(payload)
             .then(response => {
                 this.groups = response.data
                 this.loading = false
@@ -103,7 +103,6 @@ export const useCongregationStore = defineStore({
             //     return position
             // })
 
-            console.log(positions)
             return positions
             // this.countGroupPosition
         }
