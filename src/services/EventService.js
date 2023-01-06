@@ -125,6 +125,10 @@ export default {
         return apiClient.get(`/api/monthly-reports/${payloads.year}/${payloads.month}`)
     },
 
+    grandTotalReports(date){
+        return apiClient.get(`/api/grand-total-reports/${date}`)
+    },
+
 
     //helper
     fetchWeeks() {

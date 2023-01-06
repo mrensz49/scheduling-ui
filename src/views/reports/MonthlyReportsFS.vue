@@ -2,7 +2,7 @@
     <CRow>
         <CCol>
             <CCard>
-                <CCardHeader> <CIcon icon="cil-people" />
+                <CCardHeader> <CIcon icon="cil-notes" />
                     {{ helperStore.year }} Service Year
                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.loading"/>
                 </CCardHeader>

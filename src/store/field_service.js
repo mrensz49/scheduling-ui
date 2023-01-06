@@ -8,36 +8,61 @@ export const useFieldServiceStore = defineStore({
     state: () => ({
         all_reports: [],
         monthly_reports: [],
-        data: [],
+        data: {
+            stats: {},
+            reports: {
+                regular_pioneer: {},
+                auxillary_pioneer: {},
+            },
+            placements: 0,
+            video_showings: 0,
+            hours: 0,
+            return_visits: 0,
+            bible_studies: 0,
+        },
         loading: false,
+        calc_loading: false,
         errors: {},
     }),
 
     actions: {
 
         storeReport(payload) {
-            this.loading = true
+            this.calc_loading = true
             EventService.storeReport(payload)
             .then(response => {
                 this.data = response.data
-                this.loading = false
+                this.calc_loading = false
             })
             .catch(error => {
                 this.errors = error.response.data.message
-                this.loading = false
+                this.calc_loading = false
             })
         },
 
         saveReport(payload, id) {
-            this.loading = true
+            this.calc_loading = true
             EventService.saveReport(payload, id)
             .then(response => {
                 this.data = response.data
-                this.loading = false
+                this.calc_loading = false
             })
             .catch(error => {
                 this.errors = error.response.data.message
-                this.loading = false
+                this.calc_loading = false
+            })
+        },
+
+        grandTotalReports(date) {
+            this.calc_loading = true
+            EventService.grandTotalReports(date)
+            .then(response => {
+                this.data = response.data
+                this.calc_loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.calc_loading = false
             })
         },
 
@@ -57,12 +82,17 @@ export const useFieldServiceStore = defineStore({
 
         sumTotalReport(report) {
             if (this.all_reports.length) {
-                const total = this.all_reports.reduce((currentTotal, all_report) => {
-                    return isNaN(parseInt(all_report[report]))  ? 0 + currentTotal : all_report[report]  + currentTotal
-                }, 0)
+                // var total = this.all_reports.reduce((currentTotal=0, all_report) => {
+                //     return isNaN(parseInt(all_report[report]))  ? 0 + currentTotal : all_report[report]  + currentTotal
+                // }, 0)
+                let sum = 0
+                for (const n of this.all_reports) {
+                    console.log(report,' - ', parseInt(n[report]))
+                    isNaN(parseInt(n[report])) ? sum+=0 : sum += n[report]
+                    console.log('total - ', report , ' - ' ,sum)
+                }
 
-
-                return total
+                return sum
             }
         },
 

@@ -11,6 +11,7 @@ export default {
     defaultData() {
       return {
         labels: [
+
           'January',
           'February',
           'March',
