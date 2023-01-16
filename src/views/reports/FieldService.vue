@@ -62,7 +62,7 @@
         </CCard>
 
         <CRow v-show = "activeBtn === 'ar'">
-            <CCol :sm="3">
+            <CCol :sm="4">
                 <CInputGroup class="mt-3 mb-2">
                 <CButton type="button" color="secondary" >Show</CButton>
                 <CFormSelect>
@@ -195,7 +195,7 @@
 
                                 </CTableRow>
                             </CTableBody>
-                            <CTableFoot>
+                            <CTableFoot color="dark">
                                 <CTableRow>
                                     <CTableDataCell colspan="2" class="text-end"><b >Total : </b> </CTableDataCell>
                                     <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'placements']) }}</i></CTableDataCell>
