@@ -23,6 +23,7 @@ export const useMemberStore = defineStore({
         def_brgys: [], // default brgy to avoid multiple query
         member: [],
         members: [],
+        phones: [],
         loading: false,
         loading_search: false,
         loading_delete: 0,
@@ -102,6 +103,7 @@ export const useMemberStore = defineStore({
             EventService.updateMember(payloads)
             .then(response => {
                 this.member = response.data
+                this.phones = response.data.numbers
                 this.loading_update = false
                 this.errors = ''
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
@@ -126,11 +128,13 @@ export const useMemberStore = defineStore({
             })
         },
 
-        getMember(id) {
+        async getMember(id) {
             this.loading = true
-            EventService.getMember(id)
+            await EventService.getMember(id)
             .then(response => {
                 this.member = response.data
+                console.log('numbers - ', response.data.numbers)
+                this.phones = response.data.numbers
                 this.loading = false
             })
             .catch(error => {

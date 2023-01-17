@@ -129,6 +129,9 @@ export default {
         return apiClient.get(`/api/grand-total-reports/${date}`)
     },
 
+    deleteMemberPhone(id){
+        return apiClient.delete(`/api/numbers/${id}`)
+    },
 
     //helper
     fetchWeeks() {

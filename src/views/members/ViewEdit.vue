@@ -29,10 +29,12 @@
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
                 </CCardHeader>
                 <CCardBody>
+                    <CAlert color="warning" v-if="Object.keys(memberStore.errors).length">
+                        <span v-for="error in memberStore.errors" :key="error"> * {{ error[0] }}<br/></span>
+                    </CAlert>
                     <CRow class="mt-3 mb-4" v-if="typeof memberStore.showMember !== 'undefined'">
                         <CCol :md="6">
                             <h2>Personal Information</h2>
-
                             <CRow class="mt-3">
                                 <CCol :md="3" :sm="6">Last Name</CCol>
                                 <CCol :md="9" :sm="6">
@@ -119,8 +121,7 @@
                                             :options="positionStore.getDesignates"
                                             :searchable="true"
                                             mode="tags"
-                                            :value="memberStore.defPosition"
-                                        ></Multiselect>
+                                            ></Multiselect>
                                     </span>
                                 </CCol>
                             </CRow>
@@ -160,15 +161,51 @@
                             <CRow class="mb-4">
                                 <CCol :md="3" :sm="6">Phone</CCol>
                                 <CCol :md="9" :sm="6">
-                                    <span v-if="!memberStore.edit"> - {{ memberStore.showMember.phone }}</span>
-                                    <span v-else>
-                                        <CFormInput
-                                            class="mb-2"
-                                            placeholder="Phone"
-                                            v-model="formData.phone"
-                                            :value="memberStore.showMember.phone"
-                                        />
-                                    </span>
+                                    <table width="100%">
+
+
+                                        <template v-for="(phone, index) in memberStore.phones" :key="index">
+                                            <tr v-show="!rows[index]">
+                                                <td width="97%">
+                                                    <span v-if="!memberStore.edit">
+                                                        <CBadge color="success" class="m-1">
+                                                            {{ phone.number }}
+                                                        </CBadge>
+                                                    </span>
+                                                    <span v-else>
+                                                        <CFormInput
+                                                            class="mb-2"
+                                                            placeholder="Phone"
+                                                            v-model="phone.number"
+                                                        />
+
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        v-show="memberStore.edit"
+                                                        @click="numberStore.deleteMemberPhone(phone.id); rows[index]=1"
+                                                        class="ms-2 fw-bolder text-decoration-none text-danger"
+                                                        href="javascript:void"
+                                                    >
+                                                        <span v-c-tooltip="{content: 'Delete this number? ', placement: 'top'}">x</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </table>
+                                    <CFormInput
+                                        v-if="showAddPhone"
+                                        class="mb-2"
+                                        placeholder="Add phone number..."
+                                        v-model="addPhone"
+                                    />
+                                    <small v-show = "memberStore.edit" @click="showAddPhone == 1 ? showAddPhone=0:showAddPhone=1, addPhone=''">
+                                      <a href="javascript:void" class="text-decoration-none">
+                                          <span v-if="!showAddPhone">+ add phone number</span>
+                                          <span v-else>cancel</span>
+                                        </a>
+                                    </small>
                                 </CCol>
                             </CRow>
 
@@ -234,15 +271,15 @@
                             </CRow>
                             <CRow>
                                 <CCol :md="3" :sm="6">Region</CCol>
-                                <CCol :md="9" :sm="6">- </CCol>
+                                <CCol :md="9" :sm="6">- VII</CCol>
                             </CRow>
                             <CRow>
                                 <CCol :md="3" :sm="6">Province</CCol>
-                                <CCol :md="9" :sm="6">- </CCol>
+                                <CCol :md="9" :sm="6">- Bohol</CCol>
                             </CRow>
                             <CRow>
                                 <CCol :md="3" :sm="6">City/Town</CCol>
-                                <CCol :md="9" :sm="6">- </CCol>
+                                <CCol :md="9" :sm="6">- Loon</CCol>
                             </CRow>
                             <CRow>
                                 <CCol :md="3" :sm="6">Brgy</CCol>
@@ -288,6 +325,7 @@
     import { usePositionStore } from '@/store/position'
     import { useAuthStore } from '@/store/auth'
     import { useAddressStore } from '@/store/address'
+    import { useNumberStore } from '@/store/number'
 
     import Multiselect from '@vueform/multiselect'
 
@@ -296,6 +334,7 @@
     const congregationStore = useCongregationStore()
     const authStore = useAuthStore()
     const addressStore = useAddressStore()
+    const numberStore = useNumberStore()
 
     export default {
 
@@ -310,9 +349,10 @@
             addressStore.fetchBrgys(authStore.showCongregation.city_town_code)
         },
 
-        mounted() {
-            memberStore.getMember(this.$route.params.id)
+        async mounted() {
+            await memberStore.getMember(this.$route.params.id)
             memberStore.edit=0;
+            this.formData.position_id = memberStore.defPosition
 
         },
         components: { Multiselect, },
@@ -321,9 +361,13 @@
                 memberStore: memberStore,
                 positionStore: positionStore,
                 congregationStore: congregationStore,
+                numberStore: numberStore,
                 authStore: authStore,
+                rows: [], // hide phone rows when deleted
                 edit: 0,
+                showAddPhone: 0,
                 validationUpdate: null,
+                addPhone: '',
                 formData: {},
             }
         },
@@ -344,6 +388,7 @@
                 memberStore.edit = val
                 if (val) {
                     this.formData = memberStore.member
+                    this.formData.position_id = memberStore.defPosition
                 }
             },
 
@@ -361,9 +406,11 @@
                     event.stopPropagation()
                 }
                 else {
-                    console.log(this.formData)
+                    // console.log(this.formData)
+                    this.formData.addPhone = this.addPhone
+                    memberStore.updateMember(this.formData)
+                    this.showAddPhone = 0
                 }
-                memberStore.updateMember(this.formData)
 
             }
         }
