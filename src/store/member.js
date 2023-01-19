@@ -133,7 +133,6 @@ export const useMemberStore = defineStore({
             await EventService.getMember(id)
             .then(response => {
                 this.member = response.data
-                console.log('numbers - ', response.data.numbers)
                 this.phones = response.data.numbers
                 this.loading = false
             })

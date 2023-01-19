@@ -29,7 +29,7 @@
                     class="border-start border-start-4 border-start-info py-1 px-3 mb-2"
                     :sm="4"
                     :md="2"
-                v-for="(report, key, index) in fieldServiceStore.data.reports" :key="index"
+                    v-for="(report, key, index) in fieldServiceStore.data.reports" :key="index"
                 >
                     <div class="text-medium-emphasis small">{{ changeText(key)  }}</div>
                     <div class="fw-semibold" style="font-size:12px;border-spacing: 0px;">
@@ -132,7 +132,7 @@
                                         <span v-if="!edit">{{ member.placements ?? 0 }}</span>
                                         <span v-else>
                                             <CFormInput
-                                                style="width:25%"
+                                                style="width:35%"
                                                 size="sm"
                                                 @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'placements', group.group, index)"
                                                 v-model="member.placements"
@@ -145,7 +145,7 @@
                                         <span v-if="!edit">{{ member.video_showings ?? 0 }}</span>
                                         <span v-else>
                                             <CFormInput
-                                                style="width:25%"
+                                                style="width:35%"
                                                 size="sm"
                                                 @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'video_showings', group.group, index)"
                                                 v-model="member.video_showings"
@@ -158,7 +158,7 @@
                                         <span v-if="!edit">{{ member.hours ?? 0 }}</span>
                                         <span v-else>
                                             <CFormInput
-                                                style="width:25%"
+                                                style="width:35%"
                                                 size="sm"
                                                 @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', group.group, index)"
                                                 v-model="member.hours"
@@ -171,7 +171,7 @@
                                         <span v-if="!edit">{{ member.return_visits ?? 0 }}</span>
                                         <span v-else>
                                             <CFormInput
-                                                style="width:25%"
+                                                style="width:35%"
                                                 size="sm"
                                                 @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'return_visits', group.group, index)"
                                                 v-model="member.return_visits"
@@ -184,7 +184,7 @@
                                         <span v-if="!edit">{{ member.bible_studies ?? 0 }}</span>
                                         <span v-else>
                                             <CFormInput
-                                                style="width:25%"
+                                                style="width:35%"
                                                 size="sm"
                                                 @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'bible_studies', group.group, index)"
                                                 v-model="member.bible_studies"

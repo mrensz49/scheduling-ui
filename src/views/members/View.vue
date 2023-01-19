@@ -24,7 +24,7 @@
                                 <CTableHeaderCell scope="col">No</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Group</CTableHeaderCell>
-                                <CTableHeaderCell scope="col">Designate</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="18%">Designate</CTableHeaderCell>
                                 <!-- <CTableHeaderCell scope="col">Gender</CTableHeaderCell> -->
                                 <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Date of Baptized</CTableHeaderCell>

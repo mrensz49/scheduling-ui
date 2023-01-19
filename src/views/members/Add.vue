@@ -202,6 +202,8 @@
                             <option
                                 v-for="congregation in congregationStore.congregations"
                                 :key="congregation"
+                                :disabled="congregation.id == authStore.user.current_congregation_id ? false:true"
+                                :selected="congregation.id == authStore.user.current_congregation_id ? true:false"
                                 :value="congregation.id+','+congregation.total_groups"
                             >{{ congregation.name }}</option>
                         </CFormSelect>
@@ -220,7 +222,6 @@
                                 :key="index"
                                 :value="index"
                             >{{ index }}</option>
-                            <option value="0">To be followed</option>
                         </CFormSelect>
                     </CCol>
                     <CCol :xs="12" class="mb-3">
@@ -273,6 +274,10 @@
             this.formData.region_code = authStore.showCongregation.region_code
             this.formData.province_code = authStore.showCongregation.province_code
             this.formData.city_town_code = authStore.showCongregation.city_town_code
+            this.formData.congregation_id = authStore.user.current_congregation_id
+
+            this.totalGroups = authStore.user.congregation.total_groups
+
         },
 
         mounted() {
@@ -322,7 +327,6 @@
                 var c = event.target.value.split(',')
                 this.formData.congregation_id=parseInt(c[0])
                 this.totalGroups=parseInt(c[1])
-                console.log(parseInt(parseInt(c[0])))
             },
 
             handleAdd(event) {
