@@ -67,145 +67,36 @@
                 <CButton type="button" color="secondary" >Show</CButton>
                 <CFormSelect>
                     <option
-                        v-for="group in forms"
-                        :key="group.group"
-                        @click="defShowGroup=group.group"
-                        :selected="defShowGroup == group.group ? true : false"
-                    > Group {{ group.group }}</option>
+                        v-for="n in total_groups"
+                        :key="n"
+                        @click="defShowGroup=n"
+                        :selected="defShowGroup == n ? true : false"
+                    > Group {{ n }}</option>
                 </CFormSelect>
-                <CButton type="button" color="secondary">
-                    <a href="javascript:void" @click="edit=1" v-if="!edit" class="ms-2">
-                        <CIcon icon="cil-pencil" class="me-2 ms-1" />
-                    </a>
-                    <a href="javascript:void" @click="edit=0" v-else class="ms-2">
-                        <small>close</small>
-                    </a>
+                <CButton type="button" color="secondary" @click="edit == 1 ? edit=0 : edit=1">
+                    <span v-if="!edit" class="text-primary"><CIcon icon="cil-pencil" class="me-2 ms-1" /></span>
+                    <span class="text-primary" v-else>close</span>
                 </CButton>
                 </CInputGroup>
             </CCol>
         </CRow>
 
-        <div class="accordion" v-show = "activeBtn === 'ar'">
-            <div class="accordion-item" v-for="group in forms" :key="group.group" :item-key="group.group">
-                <h2 class="accordion-header" @click="defShowGroup == group.group ? defShowGroup : defShowGroup = group.group">
-                    <button
-                        class="accordion-button"
-                        type="button"
-                        data-coreui-toggle="collapse"
-                        :class="defShowGroup == group.group ? '' : 'collapsed'"
-                        :aria-expanded="defShowGroup == group.group ? true : false"
-                    >
-                        <CIcon class="me-2" icon="cil-people" /> <strong> Group {{ group.group }} </strong>
-                    </button>
-                </h2>
-                <div class = "accordion-collapse collapse" :class="defShowGroup == group.group ? 'show' : ''">
+        <div class="accordion mt-3" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
+                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
-                        <CTable striped hover responsive class="mb-5">
-                            <CTableHead color="dark">
-                                <CTableRow>
-                                    <CTableHeaderCell scope="col" width="20%">Name</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="17.5%">Designate</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%">
-                                        <span v-c-tooltip="{content: 'Printed and Electronic', placement: 'top'}">Placements</span>
-                                    </CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%">Video Showings</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%">Hours</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%">Return Visits</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%">Bible Studies</CTableHeaderCell>
-                                </CTableRow>
-                            </CTableHead>
-                            <CTableBody>
-                                <CTableRow v-for="(member, index) in group.members" :key="member">
-                                    <CTableDataCell>
-                                        <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
-                                            {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
-                                        </a>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                        <template v-for="designate in member.designates" :key= "designate">
-                                            <CBadge v-if="designate.position" color="success" class="m-1">
-                                                {{ designate.position.name }}
-                                            </CBadge>
-                                        </template>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                        <span v-if="!edit">{{ member.placements ?? 0 }}</span>
-                                        <span v-else>
-                                            <CFormInput
-                                                style="width:35%"
-                                                size="sm"
-                                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'placements', group.group, index)"
-                                                v-model="member.placements"
-                                                :placeholder="!member.placements ? 0 : ''"
-                                            />
-                                        </span>
-                                    </CTableDataCell>
+                        <FieldServiceTable :group="group" :edit="edit" designate="Publisher"/>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                    <CTableDataCell>
-                                        <span v-if="!edit">{{ member.video_showings ?? 0 }}</span>
-                                        <span v-else>
-                                            <CFormInput
-                                                style="width:35%"
-                                                size="sm"
-                                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'video_showings', group.group, index)"
-                                                v-model="member.video_showings"
-                                                :placeholder="!member.video_showings ? 0 : ''"
-                                            />
-                                        </span>
-                                    </CTableDataCell>
+        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
 
-                                    <CTableDataCell>
-                                        <span v-if="!edit">{{ member.hours ?? 0 }}</span>
-                                        <span v-else>
-                                            <CFormInput
-                                                style="width:35%"
-                                                size="sm"
-                                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', group.group, index)"
-                                                v-model="member.hours"
-                                                :placeholder="!member.hours ? 0 : ''"
-                                            />
-                                        </span>
-                                    </CTableDataCell>
-
-                                    <CTableDataCell>
-                                        <span v-if="!edit">{{ member.return_visits ?? 0 }}</span>
-                                        <span v-else>
-                                            <CFormInput
-                                                style="width:35%"
-                                                size="sm"
-                                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'return_visits', group.group, index)"
-                                                v-model="member.return_visits"
-                                                :placeholder="!member.return_visits ? 0 : ''"
-                                            />
-                                        </span>
-                                    </CTableDataCell>
-
-                                    <CTableDataCell>
-                                        <span v-if="!edit">{{ member.bible_studies ?? 0 }}</span>
-                                        <span v-else>
-                                            <CFormInput
-                                                style="width:35%"
-                                                size="sm"
-                                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'bible_studies', group.group, index)"
-                                                v-model="member.bible_studies"
-                                                :placeholder="!member.bible_studies ? 0 : ''"
-                                            />
-                                        </span>
-                                    </CTableDataCell>
-
-                                </CTableRow>
-                            </CTableBody>
-                            <CTableFoot color="dark">
-                                <CTableRow>
-                                    <CTableDataCell colspan="2" class="text-end"><b >Total : </b> </CTableDataCell>
-                                    <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'placements']) }}</i></CTableDataCell>
-                                    <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'video_showings']) }}</i></CTableDataCell>
-                                    <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'hours']) }}</i></CTableDataCell>
-                                    <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'return_visits']) }}</i></CTableDataCell>
-                                    <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group.members, 'bible_studies']) }}</i></CTableDataCell>
-                                </CTableRow>
-                            </CTableFoot>
-                    </CTable>
+                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                    <div class="accordion-body">
+                        <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer"/>
                     </div>
                 </div>
             </div>
@@ -345,6 +236,8 @@
 
 <script>
 
+    import FieldServiceTable from '@/components/reports/FieldServiceTable.vue'
+
     import { CChartBar } from '@coreui/vue-chartjs'
 
     import router from '@/router'
@@ -364,6 +257,7 @@
 
             this.date_rendered = this.$route.params.year+'-'+this.$route.params.month+'-01'
             await congregationStore.getGroups(this.date_rendered)
+            this.total_groups = congregationStore.groups.congregation.total_groups
             fieldServiceStore.grandTotalReports(this.date_rendered)
             this.forms = congregationStore.showGroups
             fieldServiceStore.all_reports=[] // reset all the total reports
@@ -378,6 +272,7 @@
                 activeBtn: 'ar', // default value
                 edit: 0,
                 date_rendered: '',
+                total_groups: 0,
                 forms: {},
                 formData: {},
                 placements: [],
@@ -387,7 +282,7 @@
                 bible_studies: [],
             }
         },
-        components: { CChartBar },
+        components: { CChartBar, FieldServiceTable },
         computed: {
 
         },
@@ -411,25 +306,6 @@
 
             viewedit(id) {
                 router.push({name: 'View Member', params: { id: id } })
-            },
-
-            saveReport(id, stat, type, group, index)
-            {
-                group = group-=1
-
-                this.formData = {} // reset all objects
-
-                this.formData.date_rendered = this.date_rendered
-                this.formData[type] = this.forms[group].members[index][type] * 1
-
-                if (stat == 'exist') {
-                    fieldServiceStore.saveReport(this.formData, id)
-                }
-                else {
-                    this.formData.member_id = id
-                    fieldServiceStore.storeReport(this.formData)
-                }
-
             },
 
             getHumanDate() {

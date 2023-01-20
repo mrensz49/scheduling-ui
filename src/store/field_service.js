@@ -82,14 +82,12 @@ export const useFieldServiceStore = defineStore({
 
         sumTotalReport(report) {
             if (this.all_reports.length) {
-                // var total = this.all_reports.reduce((currentTotal=0, all_report) => {
-                //     return isNaN(parseInt(all_report[report]))  ? 0 + currentTotal : all_report[report]  + currentTotal
-                // }, 0)
+
                 let sum = 0
                 for (const n of this.all_reports) {
                     console.log(report,' - ', parseInt(n[report]))
                     isNaN(parseInt(n[report])) ? sum+=0 : sum += n[report]
-                    console.log('total - ', report , ' - ' ,sum)
+                    // console.log('total - ', report , ' - ' ,sum)
                 }
 
                 return sum

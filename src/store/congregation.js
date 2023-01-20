@@ -14,19 +14,6 @@ export const useCongregationStore = defineStore({
 
     getters: {
 
-        showGroups() {
-            if (typeof this.groups.congregation !== 'undefined') {
-
-                let arr_group=[];
-                for(let g=1; g <=  this.groups.congregation.total_groups; g++) {
-                    const filteredGroups = this.groups.members.filter((group) => {
-                        return group.group_no == g
-                    })
-                    arr_group.push({'group': g, 'members': filteredGroups})
-                }
-                return arr_group
-            }
-        },
     },
 
     actions: {
@@ -77,22 +64,6 @@ export const useCongregationStore = defineStore({
                         }
                         return foundPosition
                     })
-
-                    // let countPosition = 0
-                    // if (members.length) {
-
-                    //     // console.log('c - ', members.designates.length)
-                    //     // if (typeof members.designates !== 'undefined') {
-                    //     // }
-                    //     try {
-                    //         countPosition = members.designates.filter((member) => {
-                    //             console.log(member.group_no , ' == ' , position.id)
-                    //             return member.group_no == position.id
-                    //         })
-                    //     }catch (err) {
-                    //         console.log('error -  ', err)
-                    //     }
-                    // }
 
                     return {'group': c, 'position': position.name, 'count': members}
                 })
