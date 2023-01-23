@@ -14,10 +14,10 @@
             </CTableRow>
         </CTableHead>
         <CTableBody>
-            <CTableRow v-for="member in group" :key="member">
+            <CTableRow v-for="(member, index) in group" :key="member">
                 <CTableDataCell>
                     <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
-                        {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
+                        {{ index + 1}}. {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
                     </a>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -110,6 +110,7 @@
 <script>
 
     import { useFieldServiceStore } from '@/store/field_service'
+    import router from '@/router'
 
     const fieldServiceStore = useFieldServiceStore()
 
@@ -117,7 +118,7 @@
 
         name: 'FieldService',
 
-        props: ['group', 'edit', 'designate'],
+        props: ['group', 'edit', 'designate', 'date_rendered'],
 
         data() {
 
@@ -132,7 +133,6 @@
                 group = group-=1
 
                 this.formData = {} // reset all objects
-
                 this.formData.date_rendered = this.date_rendered
                 this.formData[type] = val * 1
                 // this.formData[type] = this.forms[group].members[index][type] * 1
@@ -145,6 +145,11 @@
                     fieldServiceStore.storeReport(this.formData)
                 }
             },
+
+            viewedit(id) {
+                router.push({name: 'View Member', params: { id: id } })
+            },
+
         }
     }
 

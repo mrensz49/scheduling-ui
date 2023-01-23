@@ -27,14 +27,24 @@
                                     <CCardText>
                                         <ul>
                                             <li v-for="member in group.members" :key="member">
-                                                <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
-                                                    {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
-                                                </a>
-                                                <template v-for="designate in member.designates" :key= "designate">
-                                                        <CBadge v-if="designate.position" color="success" class="m-1">
-                                                            {{ designate.position.name }}
-                                                        </CBadge>
-                                                </template>
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="50%">
+                                                            <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
+                                                                {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
+                                                            </a>
+
+                                                        </td>
+                                                        <td>
+                                                            <template v-for="designate in member.designates" :key= "designate">
+                                                                    <CBadge v-if="designate.position" color="success" class="m-1">
+                                                                        {{ designate.position.name }}
+                                                                    </CBadge>
+                                                            </template>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </li>
                                         </ul>
                                     </CCardText>
@@ -68,6 +78,12 @@
 
             return {
                 congregationStore: congregationStore,
+            }
+        },
+
+        computed: {
+            countPosition(position) {
+                return position
             }
         },
 

@@ -109,7 +109,7 @@ export default {
         return apiClient.delete(`/api/meeting-treasure/`+id)
     },
 
-    getGroups(payload) {
+    getGroups(payload='default') {
         return apiClient.get(`/api/congregation/groups/${payload}`)
     },
 

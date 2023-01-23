@@ -16,7 +16,7 @@
                 aria-label="Basic outlined example"
             >
                 <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
-                <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Reports Only</CButton>
+                <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
                 <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
             </CButtonGroup>
             </CCol>
@@ -85,7 +85,7 @@
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Publisher"/>
+                        <FieldServiceTable :group="group" :edit="edit" designate="Publisher" :date_rendered="date_rendered"/>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
 
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer"/>
+                        <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer" :date_rendered="date_rendered"/>
                     </div>
                 </div>
             </div>
@@ -240,7 +240,6 @@
 
     import { CChartBar } from '@coreui/vue-chartjs'
 
-    import router from '@/router'
     import moment from 'moment'
 
     import { useCongregationStore } from '@/store/congregation'
@@ -302,10 +301,6 @@
             changeText(val) {
                 let v = val.replace(/_/g, ' ')
                 return v[0].toUpperCase() + v.slice(1)
-            },
-
-            viewedit(id) {
-                router.push({name: 'View Member', params: { id: id } })
             },
 
             getHumanDate() {
