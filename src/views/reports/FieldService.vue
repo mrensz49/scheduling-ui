@@ -4,23 +4,7 @@
         <h1>{{ getHumanDate() }} Reports</h1>
         <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="congregationStore.loading"/>
 
-        <CRow>
-            <CCol :sm="5"></CCol>
-            <CCol :sm="7" class="d-none d-md-block">
-            <CButton color="primary" class="float-end">
-                <CIcon icon="cil-cloud-download" />
-            </CButton>
-            <CButtonGroup
-                class="float-end me-3"
-                role="group"
-                aria-label="Basic outlined example"
-            >
-                <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
-                <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
-                <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
-            </CButtonGroup>
-            </CCol>
-        </CRow>
+
 
         <CCard class="mt-2">
             <CCardBody>
@@ -61,9 +45,24 @@
         </CCardBody>
         </CCard>
 
-        <CRow v-show = "activeBtn === 'ar'">
+        <CRow class="mt-4 mb-2">
+            <CCol :sm="8">
+                <CButtonGroup
+                class="mb-2"
+                role="group"
+                aria-label="Basic outlined example"
+                >
+                <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
+                <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
+                <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
+                <CButton color="primary">
+                    <CIcon icon="cil-cloud-download" />
+                </CButton>
+                </CButtonGroup>
+
+            </CCol>
             <CCol :sm="4">
-                <CInputGroup class="mt-3 mb-2">
+                <CInputGroup v-show = "activeBtn === 'ar'">
                 <CButton type="button" color="secondary" >Show</CButton>
                 <CFormSelect>
                     <option
@@ -80,6 +79,7 @@
                 </CInputGroup>
             </CCol>
         </CRow>
+
 
         <div class="accordion mt-3" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
@@ -291,7 +291,7 @@
                     datasets: [
                         {
                             label: this.changeText(datas.key),
-                            backgroundColor: '#A'+ (12 * datas.colorIndex) +'A' + (datas.colorIndex + 2) + 'A',
+                            backgroundColor: this.changeColor(datas.colorIndex),
                             data: datas.datasets,
                         },
                     ],
@@ -301,6 +301,24 @@
             changeText(val) {
                 let v = val.replace(/_/g, ' ')
                 return v[0].toUpperCase() + v.slice(1)
+            },
+
+            changeColor(index) {
+                console.log(index)
+                switch(index) {
+                    case 1:
+                        return '#36A2EB'
+                    case 2:
+                        return '#FFCE56'
+                    case 3:
+                        return '#4BC0C0'
+                    case 4:
+                        return '#E7E9ED'
+                    default:
+                        // code block
+                        return '#FF6384'
+                }
+
             },
 
             getHumanDate() {

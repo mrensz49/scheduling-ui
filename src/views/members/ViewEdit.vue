@@ -26,6 +26,8 @@
                     </CButton>
                 </span>
 
+                <a href="javascript:void" class="text-decoration-none" style="float:right" @click="this.$router.go(-1)">back</a>
+
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
                 </CCardHeader>
                 <CCardBody>
@@ -315,6 +317,11 @@
         </CCard>
       </CCol>
     </CRow>
+
+    <MemberFieldServiceReport
+        :member_id="this.$route.params.id"
+    />
+
   </template>
 
 <script>
@@ -326,8 +333,10 @@
     import { useAuthStore } from '@/store/auth'
     import { useAddressStore } from '@/store/address'
     import { useNumberStore } from '@/store/number'
+    import { useFieldServiceStore } from '@/store/field_service'
 
     import Multiselect from '@vueform/multiselect'
+    import MemberFieldServiceReport from '@/components/reports/MemberFieldServiceReport.vue'
 
     const memberStore = useMemberStore()
     const positionStore = usePositionStore()
@@ -335,6 +344,7 @@
     const authStore = useAuthStore()
     const addressStore = useAddressStore()
     const numberStore = useNumberStore()
+    const fieldServiceStore = useFieldServiceStore()
 
     export default {
 
@@ -351,11 +361,12 @@
 
         async mounted() {
             await memberStore.getMember(this.$route.params.id)
+
             memberStore.edit=0;
             this.formData.position_id = memberStore.defPosition
 
         },
-        components: { Multiselect, },
+        components: { Multiselect, MemberFieldServiceReport, },
         data() {
             return {
                 memberStore: memberStore,
@@ -363,6 +374,8 @@
                 congregationStore: congregationStore,
                 numberStore: numberStore,
                 authStore: authStore,
+                fieldServiceStore: fieldServiceStore,
+
                 rows: [], // hide phone rows when deleted
                 edit: 0,
                 showAddPhone: 0,

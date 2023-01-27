@@ -7,6 +7,7 @@ export const usePositionStore = defineStore({
 
     state: () => ({
         positions: [],
+        members: [],
         loading: false,
         errors: {},
     }),
@@ -28,6 +29,19 @@ export const usePositionStore = defineStore({
             EventService.getPositions()
             .then(response => {
                 this.positions = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
+
+        getPosition(id) {
+            this.loading = true
+            EventService.getPosition(id)
+            .then(response => {
+                this.members = response.data
                 this.loading = false
             })
             .catch(error => {

@@ -14,7 +14,11 @@
                         v-for="position in congregationStore.groups.positions" :key="position.id"
                     >
                     <div class="text-medium-emphasis small">{{  position.name }}</div>
-                    <div class="fs-5 fw-semibold">{{  position.congregation_designates_count }}</div>
+                    <div class="fs-5 fw-semibold">
+                        <a href="javascript:void" class="text-decoration-none" @click="viewposition(position.id)">
+                            {{  position.congregation_designates_count }}
+                        </a>
+                    </div>
                     </CCol>
                 </CRow>
                 <CRow>
@@ -92,6 +96,9 @@
                 router.push({name: 'View Member', params: { id: id } })
             },
 
+            viewposition(id) {
+                router.push({name: 'Position', params: { id: id } })
+            },
         }
 
     }

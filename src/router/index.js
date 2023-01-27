@@ -68,6 +68,11 @@ const routes = [
         name: 'Group',
         component: () => import('@/views/members/Group'),
       },
+      {
+        path: 'position/:id',
+        name: 'Position',
+        component: () => import('@/views/members/Position'),
+      },
     ]
   },
 

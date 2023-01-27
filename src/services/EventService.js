@@ -45,8 +45,8 @@ export default {
         return apiClient.get(`/api/positions`)
     },
 
-    getPosition(payload) {
-        return apiClient.get(`/api/positions/${payload}`)
+    getPosition(id) {
+        return apiClient.get(`/api/positions/${id}`)
     },
 
     getCongregations() {
@@ -132,6 +132,11 @@ export default {
     deleteMemberPhone(id){
         return apiClient.delete(`/api/numbers/${id}`)
     },
+
+    memberReports(id) {
+        return apiClient.get(`/api/member-reports/${id}`)
+    },
+
 
     //helper
     fetchWeeks() {
