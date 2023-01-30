@@ -36,7 +36,7 @@
                     <CTableBody>
                         <CTableRow v-for="(member, index) in memberStore.showMembers" :key="member.id">
                             <CTableDataCell>{{ index+1 }}</CTableDataCell>
-                            <CTableDataCell>{{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}</CTableDataCell>
+                            <CTableDataCell>{{ member.full_name }}</CTableDataCell>
                             <CTableDataCell>{{ member.group_no }}</CTableDataCell>
                             <CTableDataCell>
                                 <template v-if="typeof member.positions !== 'undefined' && member.positions.length">
@@ -49,12 +49,12 @@
                             </CTableDataCell>
                             <CTableDataCell>
                                 <template v-if="member.dobirth">
-                                    {{ getHumanDate(member.dobirth) }}
+                                    {{ getHumanDate(member.dobirth.date) }} / {{ member.dobirth.age }} <sup>yrs. old</sup>
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
                                 <template v-if="member.dobap">
-                                    {{ getHumanDate(member.dobap) }}
+                                    {{ getHumanDate(member.dobap.date) }} / {{ member.dobap.human }}
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>

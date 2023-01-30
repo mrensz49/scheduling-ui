@@ -102,8 +102,8 @@ export const useMemberStore = defineStore({
             this.loading_update = true
             EventService.updateMember(payloads)
             .then(response => {
-                this.member = response.data
-                this.phones = response.data.numbers
+                this.member = response.data.data
+                this.phones = response.data.data.numbers
                 this.loading_update = false
                 this.errors = ''
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
@@ -132,8 +132,8 @@ export const useMemberStore = defineStore({
             this.loading = true
             await EventService.getMember(id)
             .then(response => {
-                this.member = response.data
-                this.phones = response.data.numbers
+                this.member = response.data.data
+                this.phones = response.data.data.numbers
                 this.loading = false
             })
             .catch(error => {

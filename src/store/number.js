@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js"
 import { notify } from "@kyvg/vue3-notification"
 
+import { useMemberStore } from '@/store/member'
+const memberStore = useMemberStore()
+
 export const useNumberStore = defineStore({
 
     id: 'numbers',
@@ -18,7 +21,7 @@ export const useNumberStore = defineStore({
             this.loading = true
             EventService.deleteMemberPhone(id)
             .then(response => {
-                this.data = response.data
+                memberStore.member.numbers = response.data
                 this.loading = false
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
                 this.errors = {}

@@ -131,32 +131,44 @@
                             <CRow>
                                 <CCol :md="3" :sm="6">Date of Birth</CCol>
                                 <CCol :md="9" :sm="6">
-                                    <span v-if="!memberStore.edit"> - {{ getHumanDate(memberStore.showMember.dobirth) }}</span>
-                                    <span v-else>
+                                    <template v-if="!memberStore.edit">
+                                            -
+                                            <template v-if="memberStore.showMember.dobirth.date">
+                                                {{ getHumanDate(memberStore.showMember.dobirth.date) }} /
+                                                {{ memberStore.showMember.dobirth.age }} <sup>yrs. old</sup>
+                                            </template>
+                                    </template>
+                                    <template v-else>
                                         <CFormInput
                                             class="mb-2"
                                             type="date"
                                             placeholder="Date of Birth"
-                                            v-model="formData.dobirth"
-                                            :value="getHumanDate(memberStore.showMember.dobirth)"
+                                            v-model="dobirth"
+                                            :value="getHumanDate(dobirth)"
                                         />
-                                    </span>
+                                    </template>
                                 </CCol>
                             </CRow>
 
                             <CRow>
                                 <CCol :md="3" :sm="6">Date of Baptized</CCol>
                                 <CCol :md="9" :sm="6">
-                                    <span v-if="!memberStore.edit"> - {{ getHumanDate(memberStore.showMember.dobap) }}</span>
-                                    <span v-else>
+                                    <template v-if="!memberStore.edit">
+                                        -
+                                        <template v-if="memberStore.showMember.dobap.date">
+                                            {{ getHumanDate(memberStore.showMember.dobap.date) }} /
+                                            {{ memberStore.showMember.dobap.human }}
+                                        </template>
+                                    </template>
+                                    <template v-else>
                                         <CFormInput
                                             class="mb-2"
                                             type="date"
                                             placeholder="Date of Baptized"
-                                            v-model="formData.dobap"
-                                            :value="getHumanDate(memberStore.showMember.dobap)"
+                                            v-model="dobap"
+                                            :value="getHumanDate(dobap)"
                                         />
-                                    </span>
+                                    </template>
                                 </CCol>
                             </CRow>
 
@@ -164,10 +176,8 @@
                                 <CCol :md="3" :sm="6">Phone</CCol>
                                 <CCol :md="9" :sm="6">
                                     <table width="100%">
-
-
                                         <template v-for="(phone, index) in memberStore.phones" :key="index">
-                                            <tr v-show="!rows[index]">
+                                            <tr v-show="!rows[phone.id]">
                                                 <td width="97%">
                                                     <span v-if="!memberStore.edit">
                                                         <CBadge color="success" class="m-1">
@@ -186,7 +196,7 @@
                                                 <td>
                                                     <a
                                                         v-show="memberStore.edit"
-                                                        @click="numberStore.deleteMemberPhone(phone.id); rows[index]=1"
+                                                        @click="numberStore.deleteMemberPhone(phone.id); rows[phone.id]=1"
                                                         class="ms-2 fw-bolder text-decoration-none text-danger"
                                                         href="javascript:void"
                                                     >
@@ -200,7 +210,7 @@
                                         v-if="showAddPhone"
                                         class="mb-2"
                                         placeholder="Add phone number..."
-                                        v-model="addPhone"
+                                        v-model="addPhoneNumber"
                                     />
                                     <small v-show = "memberStore.edit" @click="showAddPhone == 1 ? showAddPhone=0:showAddPhone=1, addPhone=''">
                                       <a href="javascript:void" class="text-decoration-none">
@@ -380,7 +390,9 @@
                 edit: 0,
                 showAddPhone: 0,
                 validationUpdate: null,
-                addPhone: '',
+                addPhoneNumber: '',
+                dobirth: '',
+                dobap: '',
                 formData: {},
             }
         },
@@ -394,7 +406,9 @@
             },
 
             getHumanDateUpdate(date) {
-                return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY');
+                if (date) {
+                    return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY');
+                }
             },
 
             editInfo(val) {
@@ -402,6 +416,8 @@
                 if (val) {
                     this.formData = memberStore.member
                     this.formData.position_id = memberStore.defPosition
+                    this.dobirth = this.formData.dobirth.date
+                    this.dobap = this.formData.dobap.date
                 }
             },
 
@@ -419,8 +435,11 @@
                     event.stopPropagation()
                 }
                 else {
-                    // console.log(this.formData)
-                    this.formData.addPhone = this.addPhone
+
+                    this.formData.dobirth = this.dobirth
+                    this.formData.dobap = this.dobap
+                    this.formData.addPhoneNumber = this.addPhoneNumber
+
                     memberStore.updateMember(this.formData)
                     this.showAddPhone = 0
                 }
