@@ -3,7 +3,26 @@
         <CCol>
             <CCard>
                 <CCardHeader> <CIcon icon="cil-notes" />
-                    {{ helperStore.year }} Service Year
+                    Service Year
+
+                    <CButtonGroup
+                            class="float-end me"
+                            role="group"
+                            aria-label="Basic outlined example"
+                        >
+                            <template v-for="(year, index) in helperStore.years_months.year" :key="year">
+                                <CButton
+                                    color="secondary"
+                                    variant="outline"
+                                    :class="{active: activeBtn === year}"
+                                    @click="fieldServiceStore.fetchMonthlyReport(
+                                        {'year': year,
+                                        'month': helperStore.years_months.month[index]
+                                    }, activeBtn=year)"
+                                >{{ year }}</CButton>
+                            </template>
+                        </CButtonGroup>
+
                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.loading"/>
                 </CCardHeader>
                 <CCardBody>
@@ -68,11 +87,13 @@
     async created() {
         await helperStore.fetchMonthYear();
         fieldServiceStore.fetchMonthlyReport({ "year": helperStore.year, "month": helperStore.month });
+        this.activeBtn = helperStore.year
     },
     data() {
         return {
             helperStore: helperStore,
             fieldServiceStore: fieldServiceStore,
+            activeBtn: 0,
         };
     },
     methods: {

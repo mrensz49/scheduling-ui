@@ -31,14 +31,17 @@
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
                 </CCardHeader>
                 <CCardBody>
+                    <div v-if="$isMobile()">MOBILE</div>
+                    <div v-else>DESKTOP OR TABLET</div>
+
                     <CAlert color="warning" v-if="Object.keys(memberStore.errors).length">
                         <span v-for="error in memberStore.errors" :key="error"> * {{ error[0] }}<br/></span>
                     </CAlert>
                     <CRow class="mt-3 mb-4" v-if="typeof memberStore.showMember !== 'undefined'">
-                        <CCol :md="6">
+                        <CCol :sm="12" :md="12">
                             <h2>Personal Information</h2>
                             <CRow class="mt-3">
-                                <CCol :md="3" :sm="6">Last Name</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Last Name</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit"> - {{ memberStore.showMember.last_name }}</span>
                                     <span v-else>
@@ -55,7 +58,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">First Name</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">First Name</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit"> - {{ memberStore.showMember.first_name }}</span>
                                     <span v-else>
@@ -72,7 +75,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Middle Init <sup>Optional</sup></CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Middle Init <sup>Optional</sup></CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit"> - {{ memberStore.showMember.middle_name }}</span>
                                     <span v-else>
@@ -88,7 +91,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Gender</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Gender</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit"> - {{ memberStore.showMember.gender }}</span>
                                     <span v-else>
@@ -102,7 +105,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Designate</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Designate</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit">
                                         <template v-if="typeof memberStore.showMember.positions !== 'undefined'">
@@ -129,7 +132,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Date of Birth</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Date of Birth</CCol>
                                 <CCol :md="9" :sm="6">
                                     <template v-if="!memberStore.edit">
                                             -
@@ -151,7 +154,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Date of Baptized</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Date of Baptized</CCol>
                                 <CCol :md="9" :sm="6">
                                     <template v-if="!memberStore.edit">
                                         -
@@ -173,7 +176,7 @@
                             </CRow>
 
                             <CRow class="mb-4">
-                                <CCol :md="3" :sm="6">Phone</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Phone</CCol>
                                 <CCol :md="9" :sm="6">
                                     <table width="100%">
                                         <template v-for="(phone, index) in memberStore.phones" :key="index">
@@ -220,10 +223,12 @@
                                     </small>
                                 </CCol>
                             </CRow>
+                        </CCol>
 
+                        <CCol :sm="12" :md="12" class="mb-4">
                             <h2>Congregation</h2>
                             <CRow class="mt-3">
-                                <CCol :md="3" :sm="6">Congregation</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Congregation</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit">
                                         <template v-if="typeof memberStore.showMember.congregation !== 'undefined'">
@@ -250,7 +255,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="3" :sm="6">Group</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Group</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit">
                                         - {{ memberStore.showMember.group_no }}
@@ -274,27 +279,28 @@
                                 </CCol>
                             </CRow>
                         </CCol>
-                        <CCol :md="6">
+
+                        <CCol :sm="12" :md="12">
                             <h2>Address</h2>
 
                             <CRow class="mt-3">
-                                <CCol :md="3" :sm="6">Country</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Country</CCol>
                                 <CCol :md="9" :sm="6">- Philippines</CCol>
                             </CRow>
                             <CRow>
-                                <CCol :md="3" :sm="6">Region</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Region</CCol>
                                 <CCol :md="9" :sm="6">- VII</CCol>
                             </CRow>
                             <CRow>
-                                <CCol :md="3" :sm="6">Province</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Province</CCol>
                                 <CCol :md="9" :sm="6">- Bohol</CCol>
                             </CRow>
                             <CRow>
-                                <CCol :md="3" :sm="6">City/Town</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">City/Town</CCol>
                                 <CCol :md="9" :sm="6">- Loon</CCol>
                             </CRow>
                             <CRow>
-                                <CCol :md="3" :sm="6">Brgy</CCol>
+                                <CCol :md="3" :sm="6" class="fw-semibold">Brgy</CCol>
                                 <CCol :md="9" :sm="6">
                                     <span v-if="!memberStore.edit">
                                         <template v-if="typeof memberStore.showMember.brgy !== 'undefined'">
@@ -328,7 +334,7 @@
       </CCol>
     </CRow>
 
-    <MemberFieldServiceReport
+    <MemberFieldServiceReport v-if="formData"
         :member_id="this.$route.params.id"
     />
 

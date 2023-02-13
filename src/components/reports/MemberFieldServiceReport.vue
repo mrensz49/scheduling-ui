@@ -4,13 +4,13 @@
             <CCard class="mt-3">
                 <CCardHeader> <CIcon icon="cil-notes" />
                     Field Service Reports
-                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.reports_loading"/>
+                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="!delayShow"/>
                 </CCardHeader>
                 <CCardBody v-if="delayShow">
 
                     <CRow>
                         <CCol :sm="5"></CCol>
-                        <CCol :sm="7" class="d-none d-md-block">
+                        <CCol :sm="7" class="">
                         <CButtonGroup
                             class="float-end me-3"
                             role="group"
@@ -31,7 +31,7 @@
                     <template v-for="(year, index) in fieldServiceStore.member_reports.years" :key="year">
                         <CCard class="p-2 mt-4" v-if="activeBtn==year">
                             <CChartLine
-                                height="60"
+                                :height="height"
                                 :data="{
                                     labels: fieldServiceStore.lineMonths[index][0],
                                     datasets: [
@@ -50,7 +50,7 @@
                     <template v-for="(year, index) in fieldServiceStore.member_reports.years" :key="year">
                         <CCard class="p-2 mt-4" v-if="activeBtn==year">
                             <CChartLine
-                                height="60"
+                                :height="height"
                                 :data="{
                                     labels: fieldServiceStore.lineMonths[index][0],
                                     datasets: [
@@ -84,8 +84,6 @@
                         </CCard>
                     </template>
 
-
-
                 </CCardBody>
             </CCard>
         </CCol>
@@ -109,13 +107,14 @@ export default {
     props: ['member_id'],
 
     async created() {
-        fieldServiceStore.memberReports(this.member_id)
         positionStore.getPositions()
+        await fieldServiceStore.memberReports(this.member_id)
         setTimeout(()=>{
             this.activeBtn = fieldServiceStore.member_reports.years[0]
             this.delayShow=true;
         },1000)
     },
+
 
     data() {
         return {
@@ -123,29 +122,12 @@ export default {
             positionStore: positionStore,
 
             delayShow: false,
-            activeBtn: 0, // default value, latest year
+            activeBtn: 0, // default value, latest year,
+            height: window.innerWidth > 1000 ? 60 : 0,
+            windowWidth: window.innerWidth
         }
     },
 
     components: { CChartLine },
-
-    methods: {
-        defaultData() {
-                return fieldServiceStore.lineData
-            // console.log(1)
-            // return {
-            //     labels: [],
-            //     datasets: [
-            //         {
-            //             label: 'Hours',
-            //             backgroundColor: 'rgb(228,102,81,0.9)',
-            //             data: [],
-            //         },
-            //     ],
-            // }
-        },
-    },
-
-
 }
 </script>

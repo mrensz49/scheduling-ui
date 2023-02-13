@@ -15,6 +15,7 @@ export const useHelperStore = defineStore({
         weeks: {},
         year: 0,
         month: 0,
+        years_months:{},
 
         visibleModalSongsMeeting: false,
         visibleModalTreasure: false,
@@ -55,8 +56,9 @@ export const useHelperStore = defineStore({
             this.loading = true
             await EventService.fetchMonthYear()
             .then(response => {
-                this.year = response.data.year
-                this.month = response.data.month
+                this.year = response.data.current_year
+                this.month = response.data.current_month
+                this.years_months = response.data.years_months
                 this.loading = false
             })
             .catch(error => {

@@ -12,6 +12,8 @@ import { iconsSet as icons } from '@/assets/icons'
 import DocsCallout from '@/components/DocsCallout'
 import DocsExample from '@/components/DocsExample'
 
+import VueMobileDetection from "vue-mobile-detection";
+
 const pinia = createPinia()
 const app = createApp(App)
 
@@ -25,6 +27,6 @@ app.provide('icons', icons)
 app.component('CIcon', CIcon)
 app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
-
+app.use(VueMobileDetection);
 
 app.mount('#app')

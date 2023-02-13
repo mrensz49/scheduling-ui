@@ -48,12 +48,12 @@
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
-                                <template v-if="member.dobirth">
+                                <template v-if="member.dobirth.date">
                                     {{ getHumanDate(member.dobirth.date) }} / {{ member.dobirth.age }} <sup>yrs. old</sup>
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
-                                <template v-if="member.dobap">
+                                <template v-if="member.dobap.date">
                                     {{ getHumanDate(member.dobap.date) }} / {{ member.dobap.human }}
                                 </template>
                             </CTableDataCell>
@@ -63,11 +63,16 @@
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell>
-                                <CButton color="primary" shape="rounded-pill" class="btn-sm" @click="viewedit(member.id)"><CIcon icon="cil-user" /></CButton> |
+                                <CButton
+                                    color="primary"
+                                    shape="rounded-pill"
+                                    class="btn-sm m-1"
+                                    @click="viewedit(member.id)
+                                "><CIcon icon="cil-user" /></CButton>
                                 <CButton
                                     color="warning"
                                     shape="rounded-pill"
-                                    class="btn-sm"
+                                    class="btn-sm m-1"
                                     @click="helperStore.confirmDelete(member.id)"
                                 >Delete</CButton>
                             </CTableDataCell>
@@ -78,7 +83,7 @@
                     </CTableBody>
                     </CTable>
                 </CCol>
-                <Pagination type="members" :items="memberStore.members"/>
+                <Pagination type="members"  v-if="typeof memberStore.members.meta !== 'undefined'" :items="memberStore.members.meta"/>
                 <ModalConfirmation data="Are you sure you want to delete this?" type="members" />
             </CRow>
           </CCardBody>

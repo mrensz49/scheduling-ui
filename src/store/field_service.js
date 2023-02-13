@@ -120,9 +120,9 @@ export const useFieldServiceStore = defineStore({
             })
         },
 
-        memberReports(id) {
+        async memberReports(id) {
             this.loading = true
-            EventService.memberReports(id)
+            await EventService.memberReports(id)
             .then(response => {
                 this.member_reports = response.data
                 this.lineChartData(response.data)
