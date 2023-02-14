@@ -73,6 +73,18 @@ export default [
     to: '/setup/treasures',
     icon: 'cil-notes',
   },
+  // {
+  //   component: 'CNavItem',
+  //   name: 'Effective Ministries',
+  //   to: '/setup/ministries',
+  //   icon: 'cil-notes',
+  // },
+  {
+    component: 'CNavItem',
+    name: 'Christian Living',
+    to: '/setup/christian-living',
+    icon: 'cil-notes',
+  },
 
 
 

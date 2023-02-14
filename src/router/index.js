@@ -124,6 +124,16 @@ const routes = [
         name: 'Bahandi Gikan sa Pulong sa Diyos',
         component: () => import('@/views/setup/Treasures'),
       },
+      {
+        path: 'ministries',
+        name: 'Effective Ministries',
+        component: () => import('@/views/setup/Ministries'),
+      },
+      {
+        path: 'christian-living',
+        name: 'Christian Living',
+        component: () => import('@/views/setup/ChristianLiving'),
+      },
     ]
   },
 

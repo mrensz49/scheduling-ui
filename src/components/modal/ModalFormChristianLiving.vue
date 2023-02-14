@@ -1,5 +1,5 @@
 <template>
-    <CModal :visible="helperStore.visibleModalTreasure" @close="() => { helperStore.visibleModalTreasure = false }">
+    <CModal :visible="helperStore.visibleModal" @close="() => { helperStore.visibleModal = false }">
         <CModalHeader>
             <CModalTitle> {{ title }}</CModalTitle>
         </CModalHeader>
@@ -61,7 +61,7 @@
             </CForm>
         </CModalBody>
         <CModalFooter>
-            <CButton color="secondary" @click="() => { helperStore.visibleModalTreasure = false }">
+            <CButton color="secondary" @click="() => { helperStore.visibleModal = false }">
                 Close
             </CButton>
         </CModalFooter>
@@ -71,22 +71,22 @@
 <script>
 
 
-    import { useTreasureStore } from '@/store/treasure'
+    import { useChristianLivingStore } from '@/store/christian_living'
     import { useHelperStore } from '@/services/helper'
 
-    const treasureStore = useTreasureStore()
+    const christianLivingStore = useChristianLivingStore()
     const helperStore = useHelperStore()
 
     export default {
 
-        name: 'ModalFormTreasure',
+        name: 'ModalFormChristianLiving',
 
         props: ['type', 'title', 'data', 'week'],
 
         data() {
             return {
                 helperStore:helperStore,
-                treasureStore:treasureStore,
+                christianLivingStore:christianLivingStore,
 
                 validationAdd: null,
                 weeks: this.data.date_start,
@@ -104,10 +104,10 @@
                     event.stopPropagation()
                 }
                 else {
-                    if (this.type == 'AddTreasure')
-                        treasureStore.addTreasure(this.formData)
-                    else if (this.type == 'EditTreasure')
-                        treasureStore.editTreasure({formData: this.formData, id: this.formData.id})
+                    if (this.type == 'AddChristianLiving')
+                        christianLivingStore.addChristianLiving(this.formData)
+                    else if (this.type == 'EditChristianLiving')
+                        christianLivingStore.editChristianLiving({formData: this.formData, id: this.formData.id})
                 }
             },
 

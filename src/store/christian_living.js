@@ -5,48 +5,48 @@ import { notify } from "@kyvg/vue3-notification"
 import { useHelperStore } from '@/services/helper'
 const helperStore = useHelperStore()
 
-export const useTreasureStore = defineStore({
+export const useChristianLivingStore = defineStore({
 
-    id: 'treasures',
+    id: 'christian-living',
 
     state: () => ({
-        treasures: [],
+        livings: [],
         loading: false,
         errors: {},
     }),
 
     getters: {
 
-        removeTreasure: state => id =>  {
-            const index = state.treasures.findIndex(treasure => treasure.id === id);
+        removeChristianLiving: state => id =>  {
+            const index = state.livings.findIndex(living => living.id === id);
              if (index !== -1) {
-                 state.treasures.splice(index, 1);
+                 state.livings.splice(index, 1);
              }
-         },
-
-        appendTreasure: state => (payload) => {
-            state.treasures.push(payload); // append added song
         },
 
-        updateTreasure: state => (payload) => {
-            const index = state.treasures.findIndex(item => item.id === payload.id);
+        appendChristianLiving: state => (payload) => {
+            state.livings.push(payload); // append
+        },
+
+        updateChristianLiving: state => (payload) => {
+            const index = state.livings.findIndex(item => item.id === payload.id);
             if (index !== -1) {
-                state.treasures[index] = payload
+                state.livings[index] = payload
             }
         },
     },
 
     actions: {
 
-        addTreasure(payloads) {
+        addChristianLiving(payloads) {
             helperStore.loading = true
-            EventService.addTreasure(payloads)
+            EventService.addChristianLiving(payloads)
             .then(response => {
 
-                this.appendTreasure(response.data)
+                this.appendChristianLiving(response.data)
                 helperStore.loading = false
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY ADDED" });
-                helperStore.visibleModalTreasure=false
+                helperStore.visibleModal=false
             })
             .catch(error => {
                 if (typeof error.response !== 'undefined') {
@@ -56,11 +56,11 @@ export const useTreasureStore = defineStore({
             })
         },
 
-        fetchMeetingTreasures() {
+        fetchMeetingLivings() {
             this.loading = true
-            EventService.fetchMeetingTreasures()
+            EventService.fetchMeetingLivings()
             .then(response => {
-                this.treasures = response.data
+                this.livings = response.data
                 this.loading = false
                 this.errors = {}
             })
@@ -72,14 +72,14 @@ export const useTreasureStore = defineStore({
             })
         },
 
-        editTreasure(payloads) {
+        editChristianLiving(payloads) {
             helperStore.loading = true
-            EventService.editTreasure(payloads)
+            EventService.editChristianLiving(payloads)
             .then(response => {
-                this.updateTreasure(response.data)
+                this.updateChristianLiving(response.data)
                 helperStore.loading = false
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
-                helperStore.visibleModalTreasure=false
+                helperStore.visibleModal=false
             })
             .catch(error => {
                 if (typeof error.response !== 'undefined') {
@@ -89,15 +89,15 @@ export const useTreasureStore = defineStore({
             })
         },
 
-        deleteMeetingTreasure(id) {
+        deleteChristianLiving(id) {
 
             helperStore.loading_delete = true
             setTimeout(() => {
-                EventService.deleteMeetingTreasure(id)
+                EventService.deleteChristianLiving(id)
                 .then(() => {
                     helperStore.loading_delete = false
                     helperStore.confirm = 0
-                    this.removeTreasure(id)
+                    this.removeChristianLiving(id)
                     notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
                 })
                 .catch(error => {

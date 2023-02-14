@@ -137,6 +137,21 @@ export default {
         return apiClient.get(`/api/member-reports/${id}`)
     },
 
+    fetchMeetingLivings() {
+        return apiClient.get(`/api/meeting-christian-living`)
+    },
+
+    addChristianLiving(payloads) {
+        return apiClient.post(`/api/meeting-christian-living`, payloads)
+    },
+
+    deleteChristianLiving(id) {
+        return apiClient.delete(`/api/meeting-christian-living/`+id)
+    },
+
+    editChristianLiving(payload) {
+        return apiClient.put(`/api/meeting-christian-living/${payload.id}`, payload.formData)
+    },
 
     //helper
     fetchWeeks() {

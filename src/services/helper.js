@@ -19,6 +19,7 @@ export const useHelperStore = defineStore({
 
         visibleModalSongsMeeting: false,
         visibleModalTreasure: false,
+        visibleModal: false,
     }),
 
     getters: {

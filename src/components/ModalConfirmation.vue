@@ -28,11 +28,14 @@
     import { useMemberStore } from '@/store/member'
     import { useSongStore } from '@/store/song'
     import { useTreasureStore } from '@/store/treasure'
+    import { useChristianLivingStore } from '@/store/christian_living'
+
 
     const helperStore = useHelperStore()
     const memberStore = useMemberStore()
     const songStore = useSongStore()
     const treasureStore = useTreasureStore()
+    const christianLivingStore = useChristianLivingStore()
 
     export default {
 
@@ -43,6 +46,7 @@
                 helperStore: helperStore,
                 memberStore: memberStore,
                 songStore: songStore,
+                christianLivingStore: christianLivingStore,
             }
         },
 
@@ -57,6 +61,9 @@
                 }
                 else if (this.type == 'treasure') {
                     treasureStore.deleteMeetingTreasure(id)
+                }
+                else if (this.type == 'christian_living') {
+                    christianLivingStore.deleteChristianLiving(id)
                 }
             }
         }
