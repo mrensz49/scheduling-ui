@@ -31,8 +31,6 @@
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
                 </CCardHeader>
                 <CCardBody>
-                    <div v-if="$isMobile()">MOBILE</div>
-                    <div v-else>DESKTOP OR TABLET</div>
 
                     <CAlert color="warning" v-if="Object.keys(memberStore.errors).length">
                         <span v-for="error in memberStore.errors" :key="error"> * {{ error[0] }}<br/></span>

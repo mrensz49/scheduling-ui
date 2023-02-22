@@ -18,7 +18,7 @@ export const useCongregationStore = defineStore({
             if (typeof this.groups.congregation !== 'undefined') {
 
                 let arr_group=[];
-                for(let g=1; g <=  this.groups.congregation.total_groups; g++) {
+                for(let g=1; g <= this.groups.congregation.total_groups; g++) {
                     const filteredGroups = this.groups.members.filter((group) => {
                         // console.log('group - ', group)
                         return group.group_no == g

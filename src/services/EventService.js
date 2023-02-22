@@ -153,6 +153,15 @@ export default {
         return apiClient.put(`/api/meeting-christian-living/${payload.id}`, payload.formData)
     },
 
+    saveAttendance(payloads) {
+        return apiClient.post(`/api/meeting-attendances`, payloads)
+    },
+
+    getAttendances(payload) {
+        return apiClient.get(`/api/get-meeting-attendances/${payload}`)
+    },
+
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)
