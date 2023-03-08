@@ -85,7 +85,7 @@ const routes = [
       {
         path: 'midweek',
         name: 'Midweek',
-        component: () => import('@/views/schedule/Midweek'),
+        component: () => import('@/views/schedule/Midweek.vue'),
       },
     ]
   },
@@ -93,7 +93,7 @@ const routes = [
   {
     path: '/reports',
     redirect: '/pages/404',
-    name: 'Schedule',
+    name: 'Reports',
     component: DefaultLayout,
     children: [
       {

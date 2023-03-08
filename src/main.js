@@ -14,6 +14,10 @@ import DocsExample from '@/components/DocsExample'
 
 import VueMobileDetection from "vue-mobile-detection";
 
+import 'jquery'
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+
 const pinia = createPinia()
 const app = createApp(App)
 
@@ -28,5 +32,8 @@ app.component('CIcon', CIcon)
 app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
 app.use(VueMobileDetection);
+app.component('v-select', vSelect)
+
+
 
 app.mount('#app')

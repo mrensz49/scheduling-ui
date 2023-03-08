@@ -20,20 +20,24 @@ export const useHelperStore = defineStore({
         visibleModalSongsMeeting: false,
         visibleModalTreasure: false,
         visibleModal: false,
+
+        edit_name: [],
     }),
 
     getters: {
 
         showWeeks() {
-            const weeks = this.weeks.map((week) => {
-                return {
-                    "start": moment(week.start, 'YYYY-MM-DD').format('MMM DD YYYY'),
-                    "end": moment(week.end, 'YYYY-MM-DD').format('MMM DD YYYY'),
-                    "dateStart": moment(week.start, 'YYYY-MM-DD').format('YYYY/MM/DD'),
-                    "dateEnd": moment(week.end, 'YYYY-MM-DD').format('YYYY/MM/DD'),
-                }
-            })
-            return weeks
+            if (Object.keys(this.weeks).length) {
+                const weeks = this.weeks.map((week) => {
+                    return {
+                        "start": moment(week.start, 'YYYY-MM-DD').format('MMM DD YYYY'),
+                        "end": moment(week.end, 'YYYY-MM-DD').format('MMM DD YYYY'),
+                        "dateStart": moment(week.start, 'YYYY-MM-DD').format('YYYY/MM/DD'),
+                        "dateEnd": moment(week.end, 'YYYY-MM-DD').format('YYYY/MM/DD'),
+                    }
+                })
+                return weeks
+            }
         }
     },
 

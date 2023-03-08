@@ -156,9 +156,16 @@ export const useMemberStore = defineStore({
 
         search(event) {
             this.loading_search = true
-            EventService.search(event.target.value)
+
+            var search = typeof event.target !== 'undefined'
+            ? event.target.value : event
+            // path - member/view  : schedule/midweek
+
+            console.log('search - ', search)
+            EventService.search(search)
             .then(response => {
-                this.members = response.data
+                this.members = typeof event.target !== 'undefined'
+                               ? response.data : response.data.data
                 this.loading_search = false
             })
             .catch(error => {

@@ -77,6 +77,10 @@ export default {
         return apiClient.get(`/api/search?q=`+payload)
     },
 
+    searchSong(payload) {
+        return apiClient.get(`/api/search/song?q=`+payload)
+    },
+
     addSongMeeting(payloads) {
         return apiClient.post(`/api/song-meeting`, payloads)
     },
@@ -161,6 +165,13 @@ export default {
         return apiClient.get(`/api/get-meeting-attendances/${payload}`)
     },
 
+    showAssignment(payloads) {
+        return apiClient.post(`/api/meeting-assignment/show-assignment`, payloads)
+    },
+
+    updateAssignment(payloads) {
+        return apiClient.put(`/api/meeting-assignment/${payloads.id}`, payloads)
+    },
 
     //helper
     fetchWeeks() {
