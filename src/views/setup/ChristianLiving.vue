@@ -18,6 +18,8 @@
                             <CTableRow>
                                 <CTableHeaderCell scope="col" width="10%">Petsa</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                                <CTableHeaderCell scope="col">Duration</CTableHeaderCell>
+                                <CTableHeaderCell scope="col">Order By</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                             </CTableRow>
                     </CTableHead>
@@ -25,6 +27,8 @@
                         <CTableRow v-for="living in christianLivingStore.livings" :key="living.id">
                             <CTableDataCell width="30%">{{ getHumanDate(living.date_start) }} - {{ getHumanDate(living.date_end) }}</CTableDataCell>
                             <CTableDataCell>{{ living.title }}</CTableDataCell>
+                            <CTableDataCell>{{ living.duration }}</CTableDataCell>
+                            <CTableDataCell>{{ living.order_by }}</CTableDataCell>
                             <CTableDataCell>
                                 <CButton
                                     color="primary"
@@ -50,7 +54,6 @@
         :type="type"
         title="Christian Living"
         :data=formData
-        :week="week"
     />
     <ModalConfirmation data="Are you sure you want to delete this?" type="christian_living" />
 </template>
@@ -96,22 +99,27 @@
         methods: {
 
             handleAdd() {
-                helperStore.errors = {}
-                this.formData.date_start = ''
-                this.formData.date_end = ''
-                this.formData.title = ''
+                this.type = "AddChristianLiving"
+                this.clearFormData()
                 helperStore.visibleModal = true
             },
 
             handleEditChristianLiving(living) {
-
                 helperStore.errors = {}
-                helperStore.visibleModal = true
                 this.type = "EditChristianLiving"
-                this.formData.id = living.id
-                this.formData.title = living.title
-                this.formData.date_start = this.getHumanDateFilter(living.date_start)
-                this.formData.date_end = this.getHumanDateFilter(living.date_end)
+                this.formData = living
+                helperStore.visibleModal = true
+            },
+
+            clearFormData() {
+                this.formData = {
+                    id : '',
+                    date_start : '',
+                    date_end : '',
+                    title : '',
+                    duration : '',
+                    order_by : '',
+                }
             },
 
             getHumanDate(date) {

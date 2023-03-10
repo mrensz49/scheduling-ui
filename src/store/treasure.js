@@ -11,6 +11,7 @@ export const useTreasureStore = defineStore({
 
     state: () => ({
         treasures: [],
+        treasure: {},
         loading: false,
         errors: {},
     }),
@@ -109,7 +110,22 @@ export const useTreasureStore = defineStore({
 
                 })
             },1000)
-        }
+        },
+
+        showTreasure(payloads) {
+            this.loading = true
+            EventService.showTreasure(payloads)
+            .then(response => {
+                this.treasure = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                if (typeof error.response !== 'undefined') {
+                    this.errors = error.response.data.errors
+                }
+                this.loading = false
+            })
+        },
     }
 
 })

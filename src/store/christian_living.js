@@ -109,7 +109,23 @@ export const useChristianLivingStore = defineStore({
 
                 })
             },1000)
-        }
+        },
+
+        fetchChristianLivingTitles(payloads) {
+            this.loading = true
+            EventService.fetchChristianLivingTitles(payloads)
+            .then(response => {
+                this.titles = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                if (typeof error.response !== 'undefined') {
+                    this.errors = error.response.data.errors
+                }
+                this.loading = false
+            })
+        },
+
     }
 
 })

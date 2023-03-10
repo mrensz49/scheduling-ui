@@ -107,7 +107,18 @@
                       </tr>
                       <tr>
                         <td class="ps-2">0:00</td>
-                        <td><span style="color:#4f5d73;">&#x2022;</span> Unsay Gipakita .... <small>(10 min)</small></td>
+                        <td>
+
+                          <span style="color:#4f5d73;" class="me-1">&#x2022;</span>
+                          <span v-if="treasureStore.treasure.title" :class="[treasureStore.treasure.title.length >= 40 ? 'text-sm-14':'']">
+                            {{  treasureStore.treasure.title }}
+                          </span>
+                          <span v-else class="text-primar">
+                            <span class="pointer text-decoration-underline text-primary" @click="addTreasure()" title="Click here to add a Title">+add</span>
+                          </span>
+                          <small class="ms-3">(10 min)</small>
+
+                        </td>
                         <td class="text-end fw-semibold"></td>
                         <td class="ps-2">
                           <span v-if="!helperStore.edit_name['edit_treasures']">
@@ -186,9 +197,18 @@
                           <table width="100%">
                             <tr>
                               <td>
-                                <span style="color:#d39717;">&#x2022;</span> Unang Pakig-estorya <small>(3 min)</small>
+
+                                <span v-if="!helperStore.edit_name['edit_em']">
+                                  <span style="color:#d39717;">&#x2022;</span>
+                                  {{ assignmentStore.data.first_effective_ministries_id?.type }}
+                                  <small>({{ assignmentStore.data.first_effective_ministries_id?.duration }})</small>
+                                </span>
+                                <span v-else>
+                                  <v-select label="type" v-model="formData.first_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                </span>
+
                               </td>
-                              <td class="text-end text-muted"><small>Estudyante/Assistant:</small></td>
+                              <td class="text-end text-muted"  v-if="!helperStore.edit_name['edit_em']"><small>{{ assignmentStore.data.first_effective_ministries_id?.participants }}:</small></td>
                             </tr>
                           </table>
                         </td>
@@ -216,9 +236,18 @@
                           <table width="100%">
                             <tr>
                               <td>
-                                <span style="color:#d39717;">&#x2022;</span> Pagbalikduaw <small>(4 min)</small>
+
+                                <span v-if="!helperStore.edit_name['edit_em']">
+                                  <span style="color:#d39717;">&#x2022;</span>
+                                  {{ assignmentStore.data.second_effective_ministries_id?.type }}
+                                  <small>({{ assignmentStore.data.second_effective_ministries_id?.duration }})</small>
+                                </span>
+                                <span v-else>
+                                  <v-select label="type" v-model="formData.second_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                </span>
+
                               </td>
-                              <td class="text-end text-muted"><small>Estudyante/Assistant:</small></td>
+                              <td class="text-end text-muted" v-if="!helperStore.edit_name['edit_em']"><small>{{ assignmentStore.data.second_effective_ministries_id?.participants }}:</small></td>
                             </tr>
                           </table>
                         </td>
@@ -246,9 +275,18 @@
                           <table width="100%">
                             <tr>
                               <td>
-                                <span style="color:#d39717;">&#x2022;</span> Pagtuon sa Bibliya <small>(5 min)</small>
+
+                                <span v-if="!helperStore.edit_name['edit_em']">
+                                  <span style="color:#d39717;">&#x2022;</span>
+                                  {{ assignmentStore.data.third_effective_ministries_id?.type }}
+                                  <small>({{ assignmentStore.data.third_effective_ministries_id?.duration }})</small>
+                                </span>
+                                <span v-else>
+                                  <v-select label="type" v-model="formData.third_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                </span>
+
                               </td>
-                              <td class="text-end text-muted"><small>Estudyante/Assistant:</small></td>
+                              <td class="text-end text-muted" v-if="!helperStore.edit_name['edit_em']"><small>{{ assignmentStore.data.third_effective_ministries_id?.participants }}:</small></td>
                             </tr>
                           </table>
                         </td>
@@ -304,12 +342,16 @@
 
                         </td>
                       </tr>
-                      <tr>
+                      <tr v-for="living in christianLivingStore.titles" :key="living">
                         <td class="ps-2">0:00</td>
-                        <td><span style="color:#b73333;">&#x2022;</span> Pangandam na Karon sa Medical na Emergency <small>(15 min)</small></td>
+                        <td>
+                          <span style="color:#b73333;">&#x2022;</span> {{ living.title }} <small>({{ living.duration }})</small></td>
                         <td class="text-end fw-semibold"></td>
                         <td class="ps-2">Bro. E. Adiong Jr.</td>
                       </tr>
+                      <!-- <tr v-empty>
+                        <td>sadad</td>
+                      </tr> -->
                       <tr>
                         <td class="ps-2">0:00</td>
                         <td><span style="color:#b73333;">&#x2022;</span> Pagtuon sa Kongregasyon <small>(30 min)</small></td>
@@ -383,11 +425,17 @@
 
   import { useAuthStore } from '@/store/auth'
   import { useAssignmentStore } from '@/store/assignment'
+  import { useMinistryStore } from '@/store/ministry'
+  import { useTreasureStore } from '@/store/treasure'
+  import { useChristianLivingStore } from '@/store/christian_living'
   import { useHelperStore } from '@/services/helper'
 
   const helperStore = useHelperStore()
   const authStore = useAuthStore()
   const assignmentStore = useAssignmentStore()
+  const ministryStore = useMinistryStore()
+  const treasureStore = useTreasureStore()
+  const christianLivingStore = useChristianLivingStore()
 
   export default {
     name: 'Midweek',
@@ -398,12 +446,18 @@
 
     mounted() {
       helperStore.fetchWeeks()
+      ministryStore.fetchMeetingMinistries()
+
+
     },
 
     data() {
         return {
             helperStore:helperStore,
             assignmentStore:assignmentStore,
+            ministryStore:ministryStore,
+            treasureStore:treasureStore,
+            christianLivingStore:christianLivingStore,
 
             week_date: '',
             date_start: '',
@@ -429,12 +483,15 @@
         this.formData.spiritual_gem_member_id = assignmentStore.data.spiritual_gem_member_id
         this.formData.bible_reading_member_id = assignmentStore.data.bible_reading_member_id
 
+        this.formData.first_effective_ministries_id = assignmentStore.data.first_effective_ministries_id
         this.formData.first_hh_member_id = assignmentStore.data.first_hh_member_id
         this.formData.first_partner_member_id = assignmentStore.data.first_partner_member_id
 
+        this.formData.second_effective_ministries_id = assignmentStore.data.second_effective_ministries_id
         this.formData.second_hh_member_id = assignmentStore.data.second_hh_member_id
         this.formData.second_partner_member_id = assignmentStore.data.second_partner_member_id
 
+        this.formData.third_effective_ministries_id = assignmentStore.data.third_effective_ministries_id
         this.formData.third_hh_member_id = assignmentStore.data.third_hh_member_id
         this.formData.third_partner_member_id = assignmentStore.data.third_partner_member_id
 
@@ -457,6 +514,8 @@
         this.date_start = c[0]
         this.date_end = c[1]
 
+        treasureStore.showTreasure({'date_start': c[0], 'date_end' : c[1]})
+        christianLivingStore.fetchChristianLivingTitles(c[0].replace(/\//g, '-'))
 
         this.week_date = this.getHumanDate(c[0], 'MMM') == this.getHumanDate(c[1], 'MMM')
                          ? this.getHumanDate(c[0], 'MMM DD') +' - '+ this.getHumanDate(c[1], 'DD')
@@ -500,6 +559,10 @@
         })
       },
 
+      addTreasure() {
+        this.$router.push('/setup/treasures')
+      },
+
       getHumanDate(date, format) {
         return moment(date, 'YYYY-MM-DD').format(format);
       },
@@ -507,4 +570,3 @@
     },
   }
   </script>
-

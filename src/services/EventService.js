@@ -173,6 +173,17 @@ export default {
         return apiClient.put(`/api/meeting-assignment/${payloads.id}`, payloads)
     },
 
+    fetchMeetingMinistries() {
+        return apiClient.get(`/api/meeting-effective-ministry`)
+    },
+
+    showTreasure(payload) {
+        return apiClient.post(`/api/meeting-treasures/show-treasure`, payload)
+    },
+    fetchChristianLivingTitles(payload) {
+        return apiClient.get(`/api/meeting-christian-living/titles/${payload}`)
+    },
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

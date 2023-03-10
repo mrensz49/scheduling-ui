@@ -64,7 +64,7 @@
     import ModalFormTreasure from '@/components/modal/ModalFormTreasure.vue'
 
     import { useHelperStore } from '@/services/helper'
-    import { useMinistryStore } from '@/store/treasure'
+    import { useMinistryStore } from '@/store/ministry'
 
     const helperStore = useHelperStore()
     const ministryStore = useMinistryStore()

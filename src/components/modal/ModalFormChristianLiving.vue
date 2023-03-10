@@ -27,9 +27,8 @@
                     >
                         <option value="">Choose...</option>
                         <option
-                            v-for="week in helperStore.showWeeks" :key="week"
+                        v-for="week in helperStore.showWeeks" :key="week"
                             :value="week.dateStart+'-'+week.dateEnd"
-                            :selected="formData.date_start+'-'+formData.date_end == week.dateStart+'-'+week.dateEnd"
                         >
                             {{ week.start }} - {{ week.end }}
                         </option>
@@ -45,6 +44,36 @@
                         feedbackInvalid="This is required!"
                         v-model="formData.title"
                     />
+                </CCol>
+
+                <CCol :md="12">
+                    <CFormLabel for="validationTextarea" class="form-label"
+                    ><sup class="text-danger">*</sup> Duration</CFormLabel>
+                    <CFormSelect
+                    feedbackInvalid="This is required!"
+                        required
+                        v-model="formData.duration"
+                    >
+                        <option value="">Choose...</option>
+                        <option value="5 min.">5 min.</option>
+                        <option value="10 min.">10 min.</option>
+                        <option value="15 min.">15 min.</option>
+                    </CFormSelect>
+                </CCol>
+
+                <CCol :md="12">
+                    <CFormLabel for="validationTextarea" class="form-label"
+                    ><sup class="text-danger">*</sup> Order By</CFormLabel>
+                    <CFormSelect
+                    feedbackInvalid="This is required!"
+                        required
+                        v-model="formData.order_by"
+                    >
+                        <option value="">Choose...</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                    </CFormSelect>
                 </CCol>
 
                 <CCol :md="12">
@@ -81,7 +110,7 @@
 
         name: 'ModalFormChristianLiving',
 
-        props: ['type', 'title', 'data', 'week'],
+        props: ['type', 'title', 'data'],
 
         data() {
             return {
@@ -89,8 +118,8 @@
                 christianLivingStore:christianLivingStore,
 
                 validationAdd: null,
-                weeks: this.data.date_start,
-                formData: this.data,
+                weeks: '',
+                formData: {},
             }
         },
 
@@ -116,7 +145,15 @@
                 this.formData.date_start = c[0]
                 this.formData.date_end = c[1]
             }
-        }
+        },
+
+        watch: {
+            // whenever question changes, this function will run
+            data: function (newData) {
+                this.formData = newData
+                this.weeks = newData.date_start.replace(/-/g, '/') +'-'+  newData.date_end.replace(/-/g, '/')
+            }
+        },
     }
 
 </script>
