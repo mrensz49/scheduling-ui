@@ -165,7 +165,7 @@
                           <span v-if="!helperStore.edit_name['edit_treasures']">
                             <span v-if="assignmentStore.data.bible_reading_member_id?.gender == 'Female'">Sis.</span>
                             <span v-else>Bro.</span>
-                            {{ assignmentStore.data.bible_reading_member_id?.abbr_name }}
+                            {{ assignmentStore.data.bible_reading_member_id?.name }}
                           </span>
                           <span v-else>
                             <v-select label="name" v-model="formData.bible_reading_member_id" :filterable="false" :options="options" @search="onSearch"></v-select>
@@ -297,13 +297,13 @@
                             <span v-if="assignmentStore.data.third_hh_member_id?.gender == 'Female'">Sis.</span>
                             <span v-else>Bro.</span>
                             <small class="ms-1">
-                              {{ assignmentStore.data.third_hh_member_id?.name }} /
+                              {{ assignmentStore.data.third_hh_member_id?.name }} <span v-show="assignmentStore.data.third_effective_ministries_id?.id != 6">/</span> <!-- if student only -->
                               {{ assignmentStore.data.third_partner_member_id?.name }}
                             </small>
                           </span>
                           <span v-else>
                             <v-select label="name" v-model="formData.third_hh_member_id" placeholder="Stu." :filterable="false" :options="options" @search="onSearch" class="mt-2"></v-select>
-                            <v-select label="name" v-model="formData.third_partner_member_id" placeholder="Pr." :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                            <v-select label="name" v-model="formData.third_partner_member_id" placeholder="Pr." v-show="assignmentStore.data.third_effective_ministries_id?.id != 6" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
                           </span>
 
                         </td>
@@ -319,11 +319,13 @@
                         <td></td>
                         <td></td>
                         <td class="ps-2">
+                          <CIcon icon="cil-plus" class="pointer text-primary text-size-20 me-1" @click="addLiving()" title="Add new title if necessarry."/>
                           <EditClose
                             edit_val = 'edit_cl'
                             @click="helperStore.edit_name['edit_cl']
                                     ? updateSetup('edit_cl') : setData('edit_cl')"
                           />
+                          <!-- {{ formData.living_member_ids }} -->
                         </td>
                       </tr>
 
@@ -332,26 +334,31 @@
                         <td>
 
                           <span v-if="!helperStore.edit_name['edit_cl']">
-                            <span style="color:#4f5d73;">&#x2022;</span>
+                            <span style="color:#b73333;">&#x2022;</span>
                             Awit {{ assignmentStore.data.song_no_middle?.song_no }} &#8212;
                             {{ assignmentStore.data.song_no_middle?.title }}
                           </span>
                           <span v-else>
                             <v-select label="song_no_title" v-model="formData.song_no_middle" placeholder="Song No" :filterable="false" :options="optionSongs" @search="onSearchSong" class="mt-2"></v-select>
                           </span>
-
                         </td>
                       </tr>
-                      <tr v-for="living in christianLivingStore.titles" :key="living">
+                      <tr v-for="(living, index) in christianLivingStore.titles" :key="living">
                         <td class="ps-2">0:00</td>
                         <td>
                           <span style="color:#b73333;">&#x2022;</span> {{ living.title }} <small>({{ living.duration }})</small></td>
                         <td class="text-end fw-semibold"></td>
-                        <td class="ps-2">Bro. E. Adiong Jr.</td>
+                        <td class="ps-2">
+                          <span v-if="!helperStore.edit_name['edit_cl']">
+                            <span v-if="assignmentStore.data.living_member_ids[index]?.abbr_name == 'Female'">Sis.</span>
+                            <span v-else>Bro.</span>
+                            {{ assignmentStore.data.living_member_ids[index]?.abbr_name }}
+                          </span>
+                          <span v-else>
+                            <v-select label="name" v-model="formData.living_member_ids[index]" placeholder="Incharge" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                          </span>
+                        </td>
                       </tr>
-                      <!-- <tr v-empty>
-                        <td>sadad</td>
-                      </tr> -->
                       <tr>
                         <td class="ps-2">0:00</td>
                         <td><span style="color:#b73333;">&#x2022;</span> Pagtuon sa Kongregasyon <small>(30 min)</small></td>
@@ -378,7 +385,7 @@
                         <td>
 
                           <span v-if="!helperStore.edit_name['edit_cl']">
-                            <span style="color:#4f5d73;">&#x2022;</span>
+                            <span style="color:#b73333;">&#x2022;</span>
                             Awit {{ assignmentStore.data.song_no_closing?.song_no }} &#8212;
                             {{ assignmentStore.data.song_no_closing?.title }}
                           </span>
@@ -465,7 +472,9 @@
 
             options: [],
             optionSongs: [],
-            formData: {}
+            formData: {
+              living_member_ids: {}
+            }
         }
     },
     components: { EditClose },
@@ -499,6 +508,7 @@
         this.formData.cvs_reading_member_id = assignmentStore.data.cvs_reading_member_id
 
         this.formData.closing_prayer_member_id = assignmentStore.data.closing_prayer_member_id
+        this.formData.living_member_ids = assignmentStore.data.living_member_ids
       },
 
       updateSetup(name) {
@@ -561,6 +571,10 @@
 
       addTreasure() {
         this.$router.push('/setup/treasures')
+      },
+
+      addLiving() {
+        this.$router.push('/setup/christian-living')
       },
 
       getHumanDate(date, format) {

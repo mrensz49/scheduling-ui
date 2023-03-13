@@ -18,6 +18,14 @@ import 'jquery'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 
+import {
+    cilPlus,
+} from '@coreui/icons'
+
+  const iconsi = {
+    cilPlus,
+}
+
 const pinia = createPinia()
 const app = createApp(App)
 
@@ -26,8 +34,7 @@ app.use(store)
 app.use(router)
 app.use(pinia)
 app.use(Notifications)
-
-app.provide('icons', icons)
+app.provide('icons', Object.assign(icons, iconsi))
 app.component('CIcon', CIcon)
 app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
