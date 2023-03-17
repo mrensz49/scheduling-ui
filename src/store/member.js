@@ -155,24 +155,26 @@ export const useMemberStore = defineStore({
         },
 
         search(event) {
-            this.loading_search = true
 
             var search = typeof event.target !== 'undefined'
             ? event.target.value : event
             // path - member/view  : schedule/midweek
 
-            console.log('search - ', search)
-            EventService.search(search)
-            .then(response => {
-                this.members = typeof event.target !== 'undefined'
-                               ? response.data : response.data.data
-                this.loading_search = false
-            })
-            .catch(error => {
-                this.errors = error.response.data.errors
-                this.loading_search = false
-            })
-        },
+            if (search.length >= 3) {
+                this.loading_search = true
+
+                EventService.search(search)
+                .then(response => {
+                    this.members = typeof event.target !== 'undefined'
+                    ? response.data : response.data.data
+                    this.loading_search = false
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors
+                    this.loading_search = false
+                })
+            }
+            },
 
         getPosition(designates) {
             const foundPosition = designates.map((designate) => {

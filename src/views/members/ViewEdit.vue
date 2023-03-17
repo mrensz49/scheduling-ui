@@ -333,7 +333,6 @@
     </CRow>
 
     <MemberFieldServiceReport v-if="formData"
-        :member_id="this.$route.params.id"
     />
 
   </template>

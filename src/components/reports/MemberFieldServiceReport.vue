@@ -1,13 +1,13 @@
 <template>
     <CRow>
         <CCol>
-            <CCard class="mt-3">
+            <CCard class="mt-3 mb-4">
                 <CCardHeader> <CIcon icon="cil-notes" />
                     Field Service Reports
-                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="!delayShow"/>
+                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.reports_loading"/>
+                    <a class="pointer" style="float:right" @click="showReport()">SHOW REPORT</a>
                 </CCardHeader>
                 <CCardBody v-if="delayShow">
-
                     <CRow>
                         <CCol :sm="5"></CCol>
                         <CCol :sm="7" class="">
@@ -33,13 +33,13 @@
                             <CChartLine
                                 :height="height"
                                 :data="{
-                                    labels: fieldServiceStore.lineMonths[index][0],
+                                    labels: fieldServiceStore.lineMonths[index][index],
                                     datasets: [
                                         {
                                             label: 'Hours',
                                             backgroundColor: '#FFCE56',
                                             borderColor: '#FFCE56',
-                                            data: fieldServiceStore.lineHours[index][0]
+                                            data: fieldServiceStore.lineHours[index][index]
                                         }
                                     ]
                                 }"
@@ -52,31 +52,31 @@
                             <CChartLine
                                 :height="height"
                                 :data="{
-                                    labels: fieldServiceStore.lineMonths[index][0],
+                                    labels: fieldServiceStore.lineMonths[index][index],
                                     datasets: [
                                         {
                                             label: 'Placements',
                                             backgroundColor: '#FF6384',
                                             borderColor: '#FF6384',
-                                            data: fieldServiceStore.linePlacements[index][0]
+                                            data: fieldServiceStore.linePlacements[index][index]
                                         },
                                         {
                                             label: 'Video Showings',
                                             backgroundColor: '#36A2EB',
                                             borderColor: '#36A2EB',
-                                            data: fieldServiceStore.lineVideoShowings[index][0]
+                                            data: fieldServiceStore.lineVideoShowings[index][index]
                                         },
                                         {
                                             label: 'Return Visits',
                                             backgroundColor: '#4BC0C0',
                                             borderColor: '#4BC0C0',
-                                            data: fieldServiceStore.lineReturnVisits[index][0]
+                                            data: fieldServiceStore.lineReturnVisits[index][index]
                                         },
                                         {
                                             label: 'Bible Studies',
                                             backgroundColor: '#E7E9ED',
                                             borderColor: '#E7E9ED',
-                                            data: fieldServiceStore.lineBibleStudies[index][0]
+                                            data: fieldServiceStore.lineBibleStudies[index][index]
                                         },
                                     ]
                                 }"
@@ -104,15 +104,15 @@ export default {
 
     name: 'MemberFieldServiceReport',
 
-    props: ['member_id'],
+    // props: ['member_id'],
 
-    async created() {
+    created() {
         positionStore.getPositions()
-        await fieldServiceStore.memberReports(this.member_id)
-        setTimeout(()=>{
-            this.activeBtn = fieldServiceStore.member_reports.years[0]
-            this.delayShow=true;
-        },1000)
+
+        // setTimeout(()=>{
+        //     this.activeBtn = fieldServiceStore.member_reports.years[0]
+        //     this.delayShow=true;
+        // },1000)
     },
 
 
@@ -123,11 +123,27 @@ export default {
 
             delayShow: false,
             activeBtn: 0, // default value, latest year,
+            // activeBtn: 2022, // default value, latest year,
             height: window.innerWidth > 1000 ? 60 : 0,
             windowWidth: window.innerWidth
         }
     },
 
     components: { CChartLine },
+
+    methods: {
+        showReport() {
+
+            this.delayShow=false;
+            fieldServiceStore.clearData()
+            fieldServiceStore.memberReports(this.$route.params.id)
+
+            setTimeout(()=>{
+                this.activeBtn = fieldServiceStore.member_reports.years[0]
+                this.delayShow=true;
+            },1000)
+        }
+    },
+
 }
 </script>

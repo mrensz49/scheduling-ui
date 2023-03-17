@@ -29,7 +29,7 @@
                   <CCardBody class="table-responsive mb-4">
                     <table width="100%">
                       <tr>
-                        <td><h5><b>North Loon Congregation</b></h5></td>
+                        <td class="text-uppercase"><h5><b>North Loon Congregation</b></h5></td>
                         <td class="text-end"><h3><b>Eskedyul sa Midweek nga Tigom</b></h3></td>
                       </tr>
                     </table>
@@ -303,7 +303,7 @@
                           </span>
                           <span v-else>
                             <v-select label="name" v-model="formData.third_hh_member_id" placeholder="Stu." :filterable="false" :options="options" @search="onSearch" class="mt-2"></v-select>
-                            <v-select label="name" v-model="formData.third_partner_member_id" placeholder="Pr." v-show="assignmentStore.data.third_effective_ministries_id?.id != 6" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                            <v-select label="name" v-model="formData.third_partner_member_id" placeholder="Pr." :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
                           </span>
 
                         </td>
@@ -382,6 +382,10 @@
                       </tr>
                       <tr>
                         <td class="ps-2">0:00</td>
+                        <td><span style="color:#b73333;">&#x2022;</span> Konklusyon (3 min.)</td>
+                      </tr>
+                        <tr>
+                        <td class="ps-2">0:00</td>
                         <td>
 
                           <span v-if="!helperStore.edit_name['edit_cl']">
@@ -412,14 +416,23 @@
                       </tr>
 
                     </table>
+
                   </CCardBody>
                 </CCard>
 
               </CCol>
             </CRow>
           </CCardBody>
+
+          <hr/>
+          <CCol>
+            <ScheduleMidweekDownload/>
+          </CCol>
         </CCard>
       </CCol>
+    </CRow>
+
+    <CRow>
     </CRow>
   </template>
 
@@ -429,6 +442,7 @@
 
   import EventService from "@/services/EventService.js"
   import EditClose from "@/components/icon/EditClose"
+  import ScheduleMidweekDownload from "@/components/reports/ScheduleMidweekDownload.vue"
 
   import { useAuthStore } from '@/store/auth'
   import { useAssignmentStore } from '@/store/assignment'
@@ -477,7 +491,7 @@
             }
         }
     },
-    components: { EditClose },
+    components: { EditClose, ScheduleMidweekDownload },
     methods: {
 
       setData(name) {

@@ -120,9 +120,9 @@ export const useFieldServiceStore = defineStore({
             })
         },
 
-        async memberReports(id) {
-            this.loading = true
-            await EventService.memberReports(id)
+        memberReports(id) {
+            this.reports_loading = true
+            EventService.memberReports(id)
             .then(response => {
                 this.member_reports = response.data
                 this.lineChartData(response.data)
@@ -136,11 +136,10 @@ export const useFieldServiceStore = defineStore({
 
         lineChartData(data) {
 
-            console.log('data - ', data.years)
-
             let index=0
             for(let year in data.years) {
                 let y = data.years[year]
+                console.log('years - ', y, ' - ', index)
                 var list_months = data.reports[y].map(month => {
                     return this.getHumanDate(month.date_rendered)
                 })
@@ -175,29 +174,15 @@ export const useFieldServiceStore = defineStore({
 
                 index2++
             }
+        },
 
-
-            // var list_placements = []
-            // var list_video_showings = []
-            // var list_return_visits = []
-            // var list_bible_studies = []
-
-            // var list_hours = reports.map(month => {
-
-            //     list_placements.push(month.placements)
-            //     list_video_showings.push(month.video_showings)
-            //     list_return_visits.push(month.return_visits)
-            //     list_bible_studies.push(month.bible_studies)
-
-            //     return month.hours
-            // })
-
-            // this.lineData.data = list_months
-            // this.lineData.placements = list_placements
-            // this.lineData.video_showings = list_video_showings
-            // this.lineData.hours = list_hours
-            // this.lineData.return_visits = list_return_visits
-            // this.lineData.bible_studies = list_bible_studies
+        clearData() {
+            this.lineMonths = []
+            this.lineHours = []
+            this.linePlacements = []
+            this.lineVideoShowings = []
+            this.lineReturnVisits = []
+            this.lineBibleStudies = []
         },
 
         getHumanDate(date) {

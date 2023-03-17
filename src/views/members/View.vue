@@ -8,7 +8,7 @@
           <CCardBody>
             <CRow>
                 <CInputGroup class="mb-3" :md="6">
-                    <CFormInput @change="memberStore.search($event)" placeholder="Member's name" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                    <CFormInput @keyup="memberStore.search($event)" placeholder="Member's name" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
                     <CInputGroupText id="basic-addon2">
                         <span v-if="!memberStore.loading_search">search</span>
                         <span v-else>

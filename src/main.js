@@ -14,6 +14,7 @@ import DocsExample from '@/components/DocsExample'
 
 import VueMobileDetection from "vue-mobile-detection";
 
+
 import 'jquery'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';

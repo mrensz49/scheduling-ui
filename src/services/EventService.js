@@ -10,14 +10,30 @@ const apiClient = axios.create({
   },
   timeout: 15000
 })
+auth(apiClient)
 
-apiClient.interceptors.request.use(function (config) {
-    const token = localStorage.getItem('scheduling_token');
-    if(token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-}, null, { synchronous: true });
+const apiClientReport = axios.create({
+    baseURL: `http://localhost:8080/`,
+    responseType: 'blob',
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    },
+    timeout: 15000
+})
+
+auth(apiClientReport)
+
+function auth(apiC) {
+
+    apiC.interceptors.request.use(function (config) {
+        const token = localStorage.getItem('scheduling_token');
+        if(token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    }, null, { synchronous: true });
+}
 
 export default {
 
@@ -180,8 +196,13 @@ export default {
     showTreasure(payload) {
         return apiClient.post(`/api/meeting-treasures/show-treasure`, payload)
     },
+
     fetchChristianLivingTitles(payload) {
         return apiClient.get(`/api/meeting-christian-living/titles/${payload}`)
+    },
+
+    downloadMidweekSchedule(payload) {
+        return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
     },
 
     //helper
