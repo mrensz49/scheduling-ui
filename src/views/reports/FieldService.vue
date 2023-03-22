@@ -93,10 +93,19 @@
 
         <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
-
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
                         <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer" :date_rendered="date_rendered"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.special_pioneer" :key="group" :item-key="index">
+                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                    <div class="accordion-body">
+                        <FieldServiceTable :group="group" :edit="edit" designate="Special Pioneer" :date_rendered="date_rendered"/>
                     </div>
                 </div>
             </div>
@@ -134,7 +143,7 @@
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
-                        <CTableRow color="dark">
+                        <CTableRow color="dark" class="text-warning">
                             <CTableHeaderCell colspan="2" scope="col" width="37.5%">Publishers</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
@@ -162,7 +171,7 @@
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
-                        <CTableRow color="dark">
+                        <CTableRow color="dark" class="text-warning">
                             <CTableHeaderCell colspan="2" scope="col" width="37.5%">Auxiliary Pioneers</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
@@ -180,6 +189,34 @@
                             <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
                             <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['return_visits'] }}</CTableHeaderCell>
                             <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                        </CTableRow>
+                    </CTableHead>
+                </CTable>
+            </CCardBody>
+        </CCard>
+
+        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+            <CCardBody>
+                <CTable striped hover responsive>
+                    <CTableHead>
+                        <CTableRow color="dark" class="text-warning">
+                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special/Regular Pioneers</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                        </CTableRow>
+                        <CTableRow>
+                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                Total :
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] + fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] + fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
                 </CTable>
@@ -214,6 +251,33 @@
             </CCardBody>
         </CCard>
 
+        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+            <CCardBody>
+                <CTable striped hover responsive>
+                    <CTableHead>
+                        <CTableRow color="dark">
+                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special Pioneers</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                        </CTableRow>
+                        <CTableRow>
+                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                Total :
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                        </CTableRow>
+                    </CTableHead>
+                </CTable>
+            </CCardBody>
+        </CCard>
 
         </CCol>
     </CRow>

@@ -4,8 +4,8 @@
             <CCard class="mt-3 mb-4">
                 <CCardHeader> <CIcon icon="cil-notes" />
                     Field Service Reports
-                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.reports_loading"/>
-                    <a class="pointer" style="float:right" @click="showReport()">SHOW REPORT</a>
+                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.reports_loading || loading"/>
+                    <a class="pointer" style="float:right" @click="showReport()" v-if="!delayShow">SHOW REPORT</a>
                 </CCardHeader>
                 <CCardBody v-if="delayShow">
                     <CRow>
@@ -121,9 +121,9 @@ export default {
             fieldServiceStore: fieldServiceStore,
             positionStore: positionStore,
 
+            loading: false,
             delayShow: false,
             activeBtn: 0, // default value, latest year,
-            // activeBtn: 2022, // default value, latest year,
             height: window.innerWidth > 1000 ? 60 : 0,
             windowWidth: window.innerWidth
         }
@@ -135,12 +135,14 @@ export default {
         showReport() {
 
             this.delayShow=false;
+            this.loading=true;
             fieldServiceStore.clearData()
             fieldServiceStore.memberReports(this.$route.params.id)
 
             setTimeout(()=>{
                 this.activeBtn = fieldServiceStore.member_reports.years[0]
                 this.delayShow=true;
+                this.loading=false;
             },1000)
         }
     },

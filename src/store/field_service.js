@@ -20,6 +20,7 @@ export const useFieldServiceStore = defineStore({
             stats: {},
             reports: {
                 regular_pioneer: {},
+                special_pioneer: {},
                 auxillary_pioneer: {},
             },
             placements: 0,

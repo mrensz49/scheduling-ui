@@ -134,9 +134,9 @@
                                 <CCol :md="9" :sm="6">
                                     <template v-if="!memberStore.edit">
                                             -
-                                            <template v-if="memberStore.showMember.dobirth.date">
-                                                {{ getHumanDate(memberStore.showMember.dobirth.date) }} /
-                                                {{ memberStore.showMember.dobirth.age }} <sup>yrs. old</sup>
+                                            <template v-if="memberStore.showMember.dobirth?.date">
+                                                {{ getHumanDate(memberStore.showMember.dobirth?.date) }} /
+                                                {{ memberStore.showMember.dobirth?.age }} <sup>yrs. old</sup>
                                             </template>
                                     </template>
                                     <template v-else>

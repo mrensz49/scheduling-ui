@@ -29,7 +29,7 @@
                   <CCardBody class="table-responsive mb-4">
                     <table width="100%">
                       <tr>
-                        <td class="text-uppercase"><h5><b>North Loon Congregation</b></h5></td>
+                        <td class="text-uppercase"><h5><b>{{ assignmentStore.data.congregation?.name }}</b></h5></td>
                         <td class="text-end"><h3><b>Eskedyul sa Midweek nga Tigom</b></h3></td>
                       </tr>
                     </table>
