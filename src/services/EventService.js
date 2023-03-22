@@ -205,6 +205,14 @@ export default {
         return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
     },
 
+    fetchAuxiDates(payload) {
+        return apiClient.get(`/api/auxilary/show-dates/${payload}`)
+    },
+
+    addAuxilary(payloads) {
+        return apiClient.post(`/api/auxilary-dates`, payloads)
+    },
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

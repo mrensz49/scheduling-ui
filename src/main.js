@@ -14,6 +14,8 @@ import DocsExample from '@/components/DocsExample'
 
 import VueMobileDetection from "vue-mobile-detection";
 
+import { MonthPicker } from 'vue-month-picker'
+import { MonthPickerInput } from 'vue-month-picker'
 
 import 'jquery'
 import vSelect from 'vue-select'
@@ -41,7 +43,8 @@ app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
 app.use(VueMobileDetection);
 app.component('v-select', vSelect)
-
+app.use(MonthPicker)
+app.use(MonthPickerInput)
 
 
 app.mount('#app')
