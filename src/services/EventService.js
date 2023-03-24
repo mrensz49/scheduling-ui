@@ -213,6 +213,11 @@ export default {
         return apiClient.post(`/api/auxilary-dates`, payloads)
     },
 
+    deleteAuxilary(id) {
+        return apiClient.delete(`/api/auxilary-dates/delete/`+id)
+    },
+
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

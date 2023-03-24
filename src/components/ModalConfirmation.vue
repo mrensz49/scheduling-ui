@@ -4,7 +4,7 @@
         {{ data }}<hr/>
 
         <div class="text-end">
-            <CButton class="me-2" color="secondary" @click="() => { helperStore.confirm = 0 }">
+            <CButton class="me-2" color="secondary" @click="() => { helperStore.confirm = false }">
                 No
             </CButton>
             <CButton
@@ -29,6 +29,7 @@
     import { useSongStore } from '@/store/song'
     import { useTreasureStore } from '@/store/treasure'
     import { useChristianLivingStore } from '@/store/christian_living'
+    import { useAuxilaryStore } from '@/store/auxilary'
 
 
     const helperStore = useHelperStore()
@@ -36,6 +37,7 @@
     const songStore = useSongStore()
     const treasureStore = useTreasureStore()
     const christianLivingStore = useChristianLivingStore()
+    const auxilaryStore = useAuxilaryStore()
 
     export default {
 
@@ -47,6 +49,7 @@
                 memberStore: memberStore,
                 songStore: songStore,
                 christianLivingStore: christianLivingStore,
+                auxilaryStore: auxilaryStore,
             }
         },
 
@@ -64,6 +67,9 @@
                 }
                 else if (this.type == 'christian_living') {
                     christianLivingStore.deleteChristianLiving(id)
+                }
+                else if (this.type == 'auxilary') {
+                    auxilaryStore.deleteAuxilary(id)
                 }
             }
         }

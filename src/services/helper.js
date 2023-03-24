@@ -9,7 +9,7 @@ export const useHelperStore = defineStore({
     state: () => ({
         loading_delete: false,
         loading: false,
-        confirm: 0,
+        confirm: false,
         errors: {},
 
         weeks: {},

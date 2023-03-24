@@ -23,10 +23,12 @@ import 'vue-select/dist/vue-select.css';
 
 import {
     cilPlus,
+    cilTrash,
 } from '@coreui/icons'
 
   const iconsi = {
     cilPlus,
+    cilTrash,
 }
 
 const pinia = createPinia()

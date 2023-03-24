@@ -8,6 +8,13 @@
                 class="row g-3"
                 @submit="handleAdd"
             >
+
+                <CCallout color="danger" v-if="Object.keys(auxilaryStore.errors).length" class="bg-warning bg-opacity-10 border-start-5 ">
+                    <ul>
+                        <li v-for="error in auxilaryStore.errors" :key="error" class="text-danger">{{ error[0] }}<br/></li>
+                    </ul>
+                </CCallout>
+
                 <CCol :md="6">
                     <CFormLabel for="" class="form-label"
                     ><sup class="text-danger">*</sup> Month Start</CFormLabel>
@@ -24,8 +31,8 @@
                 </CCol>
 
                 <CCol :md="12">
-                    <CButton color="primary" type="submit" :disabled="helperStore.loading">
-                        <template v-if="helperStore.loading">
+                    <CButton color="primary" type="submit" :disabled="auxilaryStore.loading">
+                        <template v-if="auxilaryStore.loading">
                             <CSpinner class="me-1" color="primary" component="span" size="sm" aria-hidden="true" v-if="helperStore.loading"/>
                             saving...
                         </template>
@@ -71,14 +78,15 @@
 
         methods: {
             showDateStart(date) {
-                this.formData.date_start= date
+                this.formData.date_start= date.to
             },
 
             showDateEnd(date) {
-                this.formData.date_end= date
+                this.formData.date_end= date.to
             },
 
             handleAdd() {
+                this.formData.member_id = this.$route.params.id
                 auxilaryStore.addAuxilary(this.formData)
             },
         },

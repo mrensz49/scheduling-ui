@@ -8,7 +8,7 @@
                 <CTableHead>
                     <CTableRow>
                         <CTableHeaderCell scope="col" width="20%">No</CTableHeaderCell>
-                        <CTableHeaderCell scope="col" >Dates</CTableHeaderCell>
+                        <CTableHeaderCell scope="col" colspan="2">Dates</CTableHeaderCell>
                     </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -19,6 +19,9 @@
                         <CTableDataCell>
                             {{ getHumanDate(auxilary.date_start) }} -
                             {{ getHumanDate(auxilary.date_end) }}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                            <CIcon icon="cil-trash" class="text-danger pointer" @click="helperStore.confirmDelete(auxilary.id)"/>
                         </CTableDataCell>
                     </CTableRow>
                     <CTableRow v-if="!auxilaryStore.data.length && !auxilaryStore.loading">
@@ -33,12 +36,15 @@
     <ModalFormAuxilary
         title="Auxilary Pioneer Ministry"
     />
+    <ModalConfirmation data="Are you sure you want to delete this?" type="auxilary" />
 </template>
 
 <script>
 
     import moment from 'moment'
     import ModalFormAuxilary from '@/components/modal/ModalFormAuxilary.vue'
+    import ModalConfirmation from '@/components/ModalConfirmation.vue'
+
     import { useAuxilaryStore } from '@/store/auxilary'
     import { useHelperStore } from '@/services/helper'
 
@@ -54,7 +60,7 @@
 
         },
 
-        components: { ModalFormAuxilary },
+        components: { ModalFormAuxilary, ModalConfirmation },
 
         data() {
             return {
@@ -73,6 +79,7 @@
                 // helperStore.errors = {}
                 // this.type = "EditChristianLiving"
                 // this.formData = living
+                auxilaryStore.errors = {}
                 helperStore.visibleModal = true
             },
         },

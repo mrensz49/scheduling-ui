@@ -4,7 +4,7 @@
             <CModalTitle> {{ title }}</CModalTitle>
         </CModalHeader>
         <CModalBody>
-            <CCallout color="danger" v-if="Object.keys(helperStore.errors).length" class="bg-warning bg-opacity-10 border-start-5 ms-2">
+            <CCallout color="danger" v-if="Object.keys(helperStore.errors).length" class="bg-warning bg-opacity-10 border-start-5 ms-2 ">
                 <ul>
                     <li v-for="error in helperStore.errors" :key="error" class="text-danger">{{ error[0] }}<br/></li>
                 </ul>
