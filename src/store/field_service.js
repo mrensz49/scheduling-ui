@@ -177,6 +177,20 @@ export const useFieldServiceStore = defineStore({
             }
         },
 
+        calculateAP(payload) {
+
+            this.ap_loading = true
+            EventService.calculateAP(payload)
+            .then(response => {
+                this.countsAP = response.data
+                this.ap_loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.ap_loading = false
+            })
+        },
+
         clearData() {
             this.lineMonths = []
             this.lineHours = []

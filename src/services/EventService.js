@@ -218,6 +218,10 @@ export default {
     },
 
 
+    calculateAP(payload) {
+        return apiClient.get(`/api/report-field-services/countap/`+payload)
+    },
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

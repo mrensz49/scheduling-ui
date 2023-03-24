@@ -6,8 +6,10 @@ export const useAssignmentStore = defineStore({
     id: 'assignments',
 
     state: () => ({
+        countsAP: [],
         data: [],
         loading: false,
+        ap_loading: false,
         errors: {},
     }),
 
@@ -45,6 +47,7 @@ export const useAssignmentStore = defineStore({
                 this.loading = false
             })
         },
+
 
     }
 
