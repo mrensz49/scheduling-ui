@@ -2,7 +2,7 @@
     <CRow>
       <CCol>
         <CCard>
-          <CCardHeader> <CIcon icon="cil-people" />
+          <CCardHeader> <CIcon icon="cil-address-book" />
             View Members
             <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/></CCardHeader>
           <CCardBody>

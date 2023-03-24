@@ -9,7 +9,7 @@
             @submit="handleUpdate"
         >
 
-            <CCardHeader> <CIcon icon="cil-user" />
+            <CCardHeader> <CIcon icon="cil-address-book" />
                 View Member
 
 

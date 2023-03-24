@@ -2,7 +2,7 @@
     <CRow>
       <CCol>
         <CCard>
-          <CCardHeader> <CIcon icon="cil-notes" /> Setup Midweek Schedule </CCardHeader>
+          <CCardHeader> <CIcon icon="cil-calendar" /> Setup Midweek Schedule </CCardHeader>
           <CCardBody>
             <CRow>
               <CCol :md="4">

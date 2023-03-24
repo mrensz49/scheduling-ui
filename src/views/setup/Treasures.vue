@@ -3,7 +3,7 @@
       <CCol>
         <CCard>
             <CCardHeader>
-                <CIcon icon="cil-notes" />
+                <CIcon icon="cil-lightbulb" />
                 Bahandi Gikan sa Pulong sa Diyos
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="treasureStore.loading"/>
                 <a href="javascript:void" @click="handleAddSong(song)" class="text-sm">

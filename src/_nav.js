@@ -24,7 +24,7 @@ export default [
     component: 'CNavItem',
     name: 'View',
     to: '/member/view',
-    icon: 'cil-people',
+    icon: 'cil-address-book',
   },
   {
     component: 'CNavItem',
@@ -42,7 +42,7 @@ export default [
     component: 'CNavItem',
     name: 'Midweek',
     to: '/schedule/midweek',
-    icon: 'cil-notes',
+    icon: 'cil-calendar',
   },
 
   {
@@ -53,7 +53,7 @@ export default [
     component: 'CNavItem',
     name: 'Field Service',
     to: '/reports/monthly-reports',
-    icon: 'cil-notes',
+    icon: 'cil-calendar-check',
   },
 
 
@@ -65,13 +65,13 @@ export default [
     component: 'CNavItem',
     name: 'Meeting Songs',
     to: '/setup/songs-meeting',
-    icon: 'cil-notes',
+    icon: 'cil-music-note',
   },
   {
     component: 'CNavItem',
     name: 'Treasures F.G.W.',
     to: '/setup/treasures',
-    icon: 'cil-notes',
+    icon: 'cil-lightbulb',
   },
   // {
   //   component: 'CNavItem',

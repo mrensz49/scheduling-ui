@@ -3,7 +3,7 @@
       <CCol>
         <CCard>
             <CCardHeader>
-                <CIcon icon="cil-notes" />
+                <CIcon icon="cil-music-note" />
                 Malipayong Mag-awit—Tigom
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="songStore.loading"/>
                 <a href="javascript:void" @click="handleAddSong(song)" class="text-sm">

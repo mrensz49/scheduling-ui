@@ -2,7 +2,7 @@
     <CRow>
         <CCol>
             <CCard>
-                <CCardHeader> <CIcon icon="cil-notes" />
+                <CCardHeader> <CIcon icon="cil-calendar-check" />
                     Service Year
 
                     <CButtonGroup
