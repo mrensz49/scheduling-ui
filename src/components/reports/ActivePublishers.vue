@@ -8,15 +8,32 @@
                 <CInputGroupText
                     id="addon-wrapping"
                     class="pointer"
-                    @click="fieldServiceStore.calculateAP(this.$route.params.year+'-'+this.$route.params.month+'-01')"
-                >Calculate</CInputGroupText>
+                    @click="fieldServiceStore.activePublishers({
+                        'date': fieldServiceStore.date_rendered,
+                        'type': 'count',
+                    })"
+                >
+                    <span v-if="fieldServiceStore.active_publishers.active">Re-calculate</span>
+                    <span v-else>Calculate</span>
+                    <span v-if="fieldServiceStore.ap_loading">...<CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
+                </CInputGroupText>
                 <CFormInput
-                    :value="fieldServiceStore.countsAP"
+                    :value="fieldServiceStore.active_publishers.active"
                     placeholder="Click the button to calculate"
                     aria-label="Calculate"
                     readonly
                     aria-describedby="addon-wrapping"
                 />
+                <CInputGroupText
+                    v-if="fieldServiceStore.active_publishers.active"
+                    class="pointer"
+                    @click="fieldServiceStore.activePublishers({
+                        'date': fieldServiceStore.date_rendered,
+                        'type': 'get',
+                    })"
+                >
+                    Show
+                </CInputGroupText>
             </CInputGroup>
         </CCardBody>
     </CCard>
@@ -26,5 +43,10 @@
 
     import { useFieldServiceStore } from '@/store/field_service'
     const fieldServiceStore = useFieldServiceStore()
+
+    fieldServiceStore.activePublishers({
+        'date': fieldServiceStore.date_rendered,
+        'type': 'show',
+    })
 
 </script>

@@ -4,8 +4,6 @@
         <h1>{{ getHumanDate() }} Reports</h1>
         <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="congregationStore.loading"/>
 
-
-
         <CCard class="mt-2">
             <CCardBody>
             <CRow class="ms-1">
@@ -303,12 +301,13 @@
             </CCard>
         </CCol>
     </CRow>
-
+    <ModalActivePublishers/>
 
 </template>
 
 <script>
 
+    import ModalActivePublishers from '@/components/modal/ModalActivePublishers.vue'
     import FieldServiceTable from '@/components/reports/FieldServiceTable.vue'
     import MeetingAttendance from '@/components/reports/MeetingAttendance.vue'
     import ActivePublishers from '@/components/reports/ActivePublishers.vue'
@@ -330,6 +329,7 @@
         async created() {
 
             this.date_rendered = this.$route.params.year+'-'+this.$route.params.month+'-01'
+            fieldServiceStore.date_rendered = this.date_rendered
             await congregationStore.getGroups(this.date_rendered)
             this.total_groups = congregationStore.groups.congregation.total_groups
             fieldServiceStore.grandTotalReports(this.date_rendered)
@@ -361,7 +361,7 @@
                 bible_studies: [],
             }
         },
-        components: { CChartBar, FieldServiceTable, MeetingAttendance, ActivePublishers },
+        components: { CChartBar, FieldServiceTable, MeetingAttendance, ActivePublishers, ModalActivePublishers },
         computed: {
 
         },

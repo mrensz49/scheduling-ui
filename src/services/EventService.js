@@ -217,9 +217,8 @@ export default {
         return apiClient.delete(`/api/auxilary-dates/delete/`+id)
     },
 
-
-    calculateAP(payload) {
-        return apiClient.get(`/api/report-field-services/countap/`+payload)
+    activePublishers(payloads) {
+        return apiClient.get(`/api/report-field-services/active-publishers/`+payloads.date+'/'+payloads.type)
     },
 
     //helper

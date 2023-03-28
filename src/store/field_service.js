@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js";
 import moment from 'moment'
 
+import { useHelperStore } from '@/services/helper'
+const helperStore = useHelperStore()
+
 export const useFieldServiceStore = defineStore({
 
     id: 'field_service',
@@ -29,6 +32,11 @@ export const useFieldServiceStore = defineStore({
             return_visits: 0,
             bible_studies: 0,
         },
+        date_rendered: '',
+        active_publishers: '',
+        list_publishers: '',
+        ap_loading: false,
+        aps_loading: false,
         loading: false,
         reports_loading: false,
         calc_loading: false,
@@ -177,18 +185,36 @@ export const useFieldServiceStore = defineStore({
             }
         },
 
-        calculateAP(payload) {
+        activePublishers(payloads) {
 
-            this.ap_loading = true
-            EventService.calculateAP(payload)
-            .then(response => {
-                this.countsAP = response.data
-                this.ap_loading = false
-            })
-            .catch(error => {
-                this.errors = error.response.data.message
-                this.ap_loading = false
-            })
+            if (payloads.type == 'get') {
+
+                helperStore.visibleModal = true
+                this.aps_loading = true
+                EventService.activePublishers(payloads)
+                .then(response => {
+                    this.list_publishers = response.data
+                    this.aps_loading = false
+                })
+                .catch(error => {
+                    this.errors = error.response.data.message
+                    this.aps_loading = false
+                })
+            }
+            else {
+                this.ap_loading = true
+                EventService.activePublishers(payloads)
+                .then(response => {
+
+
+                    this.active_publishers = response.data
+                    this.ap_loading = false
+                })
+                .catch(error => {
+                    this.errors = error.response.data.message
+                    this.ap_loading = false
+                })
+            }
         },
 
         clearData() {
