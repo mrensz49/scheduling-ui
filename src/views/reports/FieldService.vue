@@ -53,7 +53,7 @@
                 <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
                 <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
                 <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
-                <CButton color="primary">
+                <CButton color="primary" disabled>
                     <CIcon icon="cil-cloud-download" />
                 </CButton>
                 </CButtonGroup>

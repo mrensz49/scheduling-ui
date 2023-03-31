@@ -29,6 +29,7 @@ import {
     cilCalendar,
     cilCalendarCheck,
     cilLightbulb,
+    cilPhone,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -39,6 +40,7 @@ import {
     cilCalendar,
     cilCalendarCheck,
     cilLightbulb,
+    cilPhone,
 }
 
 const pinia = createPinia()

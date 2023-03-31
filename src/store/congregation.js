@@ -6,6 +6,8 @@ export const useCongregationStore = defineStore({
     id: 'congregations',
 
     state: () => ({
+        data: [],
+        genders: [],
         congregations: [],
         groups:[],
         loading: false,
@@ -83,6 +85,62 @@ export const useCongregationStore = defineStore({
             }
 
             return positions
-        }
+        },
+
+        getCongregationGenders() {
+
+            this.loading = true
+            EventService.getCongregationGenders()
+            .then(response => {
+                this.genders = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
+
+        getCongregationNumbers() {
+
+            this.loading = true
+            EventService.getCongregationNumbers()
+            .then(response => {
+                this.numbers = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
+
+        getDOBirths() {
+
+            this.loading = true
+            EventService.getDOBirths()
+            .then(response => {
+                this.dobirths = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
+
+        getCongregationDetails() {
+
+            this.loading = true
+            EventService.getCongregationDetails()
+            .then(response => {
+                this.data = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
     }
 })

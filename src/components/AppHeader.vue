@@ -5,7 +5,9 @@
         <CIcon icon="cil-menu" size="lg" />
       </CHeaderToggler>
       <CHeaderBrand class="mx-auto d-lg-none" to="/">
-        <CIcon :icon="logo" height="48" alt="Logo" />
+        <!-- <CIcon :icon="logo" height="48" alt="Logo" /> -->
+        <img src="@/assets/images/logo/calendar-clock.png" :height="50" alt="logo">
+        <span class="fw-semibold" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">rScheduling</span>
       </CHeaderBrand>
       <!-- <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>

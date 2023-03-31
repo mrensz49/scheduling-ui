@@ -12,7 +12,7 @@
     "
   >
     <CSidebarBrand>
-      <CIcon
+      <!-- <CIcon
         custom-class-name="sidebar-brand-full"
         :icon="logoNegative"
         :height="35"
@@ -21,7 +21,9 @@
         custom-class-name="sidebar-brand-narrow"
         :icon="sygnet"
         :height="35"
-      />
+      /> -->
+      <img src="@/assets/images/logo/calendar-clock.png" :height="50" alt="logo">
+      <span class="fw-semibold" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">rScheduling</span>
     </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler

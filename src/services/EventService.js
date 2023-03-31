@@ -69,6 +69,22 @@ export default {
         return apiClient.get(`/api/congregations`)
     },
 
+    getCongregationGenders() {
+        return apiClient.get(`/api/congregation/genders`)
+    },
+
+    getCongregationNumbers() {
+        return apiClient.get(`/api/congregation/numbers`)
+    },
+
+    getDOBirths() {
+        return apiClient.get(`/api/congregation/dobirths`)
+    },
+
+    getCongregationDetails() {
+        return apiClient.get(`/api/congregation/details`)
+    },
+
     addMember(payloads) {
         return apiClient.post(`/api/members`, payloads)
     },
@@ -219,6 +235,10 @@ export default {
 
     activePublishers(payloads) {
         return apiClient.get(`/api/report-field-services/active-publishers/`+payloads.date+'/'+payloads.type)
+    },
+
+    latestFSReport() {
+        return apiClient.get(`/api/report-field-services/latest/report`)
     },
 
     //helper

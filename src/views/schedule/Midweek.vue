@@ -219,7 +219,7 @@
                             <span v-if="assignmentStore.data.first_hh_member_id?.gender == 'Female'">Sis.</span>
                             <span v-else>Bro.</span>
                             <small class="ms-1">
-                              {{ assignmentStore.data.first_hh_member_id?.name }} /
+                              {{ assignmentStore.data.first_hh_member_id?.name }} <span v-show="assignmentStore.data.first_effective_ministries_id?.id != 4">/</span>
                               {{ assignmentStore.data.first_partner_member_id?.name }}
                             </small>
                           </span>

@@ -159,9 +159,9 @@
                                     <CCol :md="8" :sm="6">
                                         <template v-if="!memberStore.edit">
                                             -
-                                            <template v-if="memberStore.showMember.dobap.date">
-                                                {{ getHumanDate(memberStore.showMember.dobap.date) }} /
-                                                {{ memberStore.showMember.dobap.human }}
+                                            <template v-if="memberStore.showMember.dobap?.date">
+                                                {{ getHumanDate(memberStore.showMember.dobap?.date) }} /
+                                                {{ memberStore.showMember.dobap?.human }}
                                             </template>
                                         </template>
                                         <template v-else>

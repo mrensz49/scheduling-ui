@@ -10,6 +10,8 @@ export const useFieldServiceStore = defineStore({
     id: 'field_service',
 
     state: () => ({
+        show_fs: 0,
+        fs_report: [],
         member_reports: [],
         all_reports: [],
         monthly_reports: [],
@@ -215,6 +217,21 @@ export const useFieldServiceStore = defineStore({
                     this.ap_loading = false
                 })
             }
+        },
+
+        latestFSReport() {
+
+            this.loading = true
+            EventService.latestFSReport()
+            .then(response => {
+                this.fs_report = response.data
+                this.loading = false
+                this.show_fs = 1
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
         },
 
         clearData() {
