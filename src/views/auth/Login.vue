@@ -68,11 +68,9 @@
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
                 <div>
-                  <h2>Sign up</h2>
+                  <h2>Join</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Sign up here to get the latest report, assigning schedule, monitoring and etc.
                   </p>
                   <CButton color="light" variant="outline" class="mt-3" :disabled="authStore.user_loading" @click="handleRegisterLink()">
                     Register Now!

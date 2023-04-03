@@ -5,6 +5,15 @@
           <CCol :md="9" :lg="7" :xl="6">
             <CCard class="mx-4">
               <CCardBody class="p-4">
+
+                <CAlert color="warning" v-if="Object.keys(errors).length">
+                  <span v-for="error in errors" :key="error"> * {{ error[0] }}<br/></span>
+                </CAlert>
+
+                <CAlert color="success" v-if="Object.keys(success).length">
+                  <span v-for="okay in success" :key="okay"> * {{ okay }}<br/></span>
+                </CAlert>
+
                 <CForm @submit.prevent="handleForgotPassword">
                   <h1>Forgot Password?</h1>
                   <p class="text-medium-emphasis">No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one. </p>
@@ -15,7 +24,10 @@
                   </CInputGroup>
 
                   <div class="d-grid">
-                    <CButton color="success"  type="submit">Email Password Reset Link</CButton>
+                    <CButton color="success" :disabled="loading" type="submit">
+                      Email Password Reset Link
+                      <CSpinner v-if="loading" component="span" class="ms-1" size="sm" aria-hidden="true"/>
+                    </CButton>
                     <p class="text-center">or</p>
                     <CButton color="secondary" class="mt-n8" @click="handleLoginLink">Back to Login</CButton>
                   </div>
@@ -42,16 +54,23 @@
             formData: {
                 email: '',
             },
-            errors: {}
+            success: {},
+            errors: {},
+            loading: false
         }
     },
 
     methods: {
 
         handleForgotPassword() {
+            this.loading = true
+            this.success = {}
+            this.errors = {}
             axios.post('/api/forgot-password', this.formData).then(response => {
-               console.log(response)
-            }).catch((errors) => {
+               this.success = response.data
+               this.loading = false
+              }).catch((errors) => {
+                this.loading = false
                 this.errors = errors.response.data.errors
             });
         },
