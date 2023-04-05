@@ -1,7 +1,11 @@
 <template>
   <CDropdown variant="nav-item">
-    <CDropdownToggle placement="bottom-end" class="py-0" :caret="false">
-      <CAvatar :src="avatar" size="md" />
+    <CDropdownToggle placement="bottom-end" href="#" class="py-0" :caret="true">
+      <span class="me-2">{{ authStore.user.name }}</span>
+      <!-- <CAvatar :src="avatar" size="md" /> -->
+      <CAvatar color="secondary" text-color="white" size="md">
+        {{ showName(authStore.user.name) }}
+      </CAvatar>
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
@@ -11,7 +15,7 @@
         <CIcon icon="cil-bell" /> Updates
         <CBadge color="info" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
-      <CDropdownItem>
+      <!-- <CDropdownItem>
         <CIcon icon="cil-envelope-open" /> Messages
         <CBadge color="success" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
@@ -22,12 +26,12 @@
       <CDropdownItem>
         <CIcon icon="cil-comment-square" /> Comments
         <CBadge color="warning" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
+      </CDropdownItem> -->
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
         Settings
       </CDropdownHeader>
       <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
+      <!-- <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
       <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments
         <CBadge color="secondary" class="ms-auto">{{ itemsCount }}</CBadge>
@@ -39,15 +43,22 @@
       <CDropdownDivider />
       <CDropdownItem>
         <CIcon icon="cil-shield-alt" /> Lock Account
-      </CDropdownItem>
+      </CDropdownItem> -->
       <CDropdownItem @click="authStore.handleLogout()"> <CIcon icon="cil-lock-locked"/> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
 
 <script setup>
-  import avatar from '@/assets/images/avatars/8.jpg'
+  // import avatar from '@/assets/images/avatars/8.jpg'
   import { useAuthStore } from '@/store/auth'
 
   const authStore = useAuthStore()
+
+  function showName(name) {
+    if (name) {
+      let n = name.split(' ')
+      return n[0].slice(0,1)+n[1].slice(0,1)
+    }
+  }
 </script>
