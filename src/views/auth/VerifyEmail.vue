@@ -1,3 +1,29 @@
+<template>
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <CContainer>
+        <CRow class="justify-content-center">
+
+            <span class="text-center" v-if="loading">
+                <CSpinner  component="span" aria-hidden="true"/>
+                <i class="ms-2">verifying ....</i>
+            </span>
+
+            <CAlert color="danger" v-if="Object.keys(errors).length">
+                <h5>{{ errors }} </h5>
+                <p>
+                    For security purposes, you must use the same browser you registered with to validate your account.
+                </p>
+            </CAlert>
+
+            <CBadge color="success" v-if="Object.keys(success).length">
+                <h3 class="text-center text-uppercase">{{ success }}</h3>
+                <small>redirecting to dashboard.</small>
+            </CBadge>
+
+        </CRow>
+      </CContainer>
+    </div>
+</template>
 <script>
 
     import axios from 'axios';
@@ -6,14 +32,21 @@
 
         name: 'VerifyEmail',
 
+        data() {
+            return {
+                success: {},
+                errors: {},
+                loading: false
+            }
+        },
+
         mounted() {
 
             const hash = this.$route.params.hash+'?expires='+this.$route.query.expires+'?signature='+this.$route.query.signature;
-
+            this.loading = true
             axios.interceptors.request.use(function(config) {
                 const token = localStorage.getItem('scheduling_token');
                 if(token) {
-                    console.log('token - ', token)
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 return config;
@@ -24,10 +57,15 @@
             axios.get(`/api/verify-email/${this.$route.params.id}/${hash}`).then(response => {
 
                 if (response.data.message == 'verified') {
-                    this.$router.push('/')
+                    this.success = response.data.message
+                    setTimeout(()=>{
+                        this.$router.push('/')
+                    },1500)
                 }
+                this.loading = false
             }).catch((errors) => {
-                this.errors = errors.response.data.errors
+                this.errors = errors.response.data.message
+                this.loading = false
             });
 
         }
