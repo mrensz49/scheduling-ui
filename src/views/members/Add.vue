@@ -230,7 +230,7 @@
                             Adding member...
                         </CButton>
                         <CButton color="primary" type="submit" :disabled="memberStore.loading" v-else>
-                            Submit form
+                            Submit
                         </CButton>
                     </CCol>
                 </CForm>

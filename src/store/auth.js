@@ -8,11 +8,17 @@ export const useAuthStore = defineStore({
     id: 'auth',
 
     state: () => ({
+        editInfo: 0,
+        editPassword: 0,
         user: [],
+        loading: false,
+        loading_password: false,
         user_loading: false,
         verification_loading: false,
         errors_register: {},
         errors_login: {},
+        errors: {},
+        errors_password: {},
     }),
 
     getters: {
@@ -27,6 +33,38 @@ export const useAuthStore = defineStore({
     },
 
     actions: {
+
+        updateUser(payloads) {
+
+            this.loading = true
+            EventService.updateUser(payloads)
+            .then(response => {
+                this.editInfo = 0
+                this.user = response.data
+                this.loading = false
+                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY SAVE" });
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading = false
+            })
+        },
+
+        updateUserPassword(payloads) {
+
+            this.loading_password = true
+            EventService.updateUserPassword(payloads)
+            .then(() => {
+                this.editPassword = 0
+                this.loading_password = false
+                this.errors_password = {}
+                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY CHANGED" });
+            })
+            .catch(error => {
+                this.errors_password = error.response.data.errors
+                this.loading_password = false
+            })
+        },
 
         handleRegister(payloads) {
 

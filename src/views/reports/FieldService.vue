@@ -384,7 +384,6 @@
             },
 
             changeColor(index) {
-                console.log(index)
                 switch(index) {
                     case 1:
                         return '#36A2EB'

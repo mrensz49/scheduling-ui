@@ -8,7 +8,6 @@ export default {
 
  // update this code only if session is not expired
     fetchUser() {
-        console.log('test - mounted');
 
         EventService.getUser()
         .then(response => {

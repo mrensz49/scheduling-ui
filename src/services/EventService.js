@@ -53,6 +53,14 @@ export default {
         return apiClient.post(`/api/email/verification-notification`)
     },
 
+    updateUser(payloads) {
+        return apiClient.post(`/api/update-user`, payloads)
+    },
+
+    updateUserPassword(payloads) {
+        return apiClient.post(`/api/update-user-password`, payloads)
+    },
+
     getUser() {
         return apiClient.get(`/api/user`)
     },

@@ -1,10 +1,10 @@
 <template>
   <CDropdown variant="nav-item">
-    <CDropdownToggle placement="bottom-end" href="#" class="py-0" :caret="true">
-      <span class="me-2">{{ authStore.user.name }}</span>
+    <CDropdownToggle placement="bottom-end" class="py-0" :caret="true">
+      <span class="me-2">{{ authStore.user?.name }}</span>
       <!-- <CAvatar :src="avatar" size="md" /> -->
-      <CAvatar color="secondary" text-color="white" size="md">
-        {{ showName(authStore.user.name) }}
+      <CAvatar color="secondary" text-color="white" size="md" status="success">
+        {{ showName(authStore.user?.name) }}
       </CAvatar>
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
@@ -12,7 +12,7 @@
         Account
       </CDropdownHeader>
       <CDropdownItem>
-        <CIcon icon="cil-bell" /> Updates
+        <CIcon icon="cil-bell"/> Updates
         <CBadge color="info" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
       <!-- <CDropdownItem>
@@ -30,7 +30,9 @@
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
         Settings
       </CDropdownHeader>
-      <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
+      <CDropdownItem class="pointer" @click="showProfile()">
+          <CIcon icon="cil-user"/> Profile
+      </CDropdownItem>
       <!-- <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
       <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments
@@ -44,13 +46,14 @@
       <CDropdownItem>
         <CIcon icon="cil-shield-alt" /> Lock Account
       </CDropdownItem> -->
-      <CDropdownItem @click="authStore.handleLogout()"> <CIcon icon="cil-lock-locked"/> Logout </CDropdownItem>
+      <CDropdownItem @click="authStore.handleLogout()" class="pointer"> <CIcon icon="cil-lock-locked"/> Logout </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
 
 <script setup>
   // import avatar from '@/assets/images/avatars/8.jpg'
+  import router from '@/router'
   import { useAuthStore } from '@/store/auth'
 
   const authStore = useAuthStore()
@@ -60,5 +63,10 @@
       let n = name.split(' ')
       return n[0].slice(0,1)+n[1].slice(0,1)
     }
+  }
+
+  function showProfile() {
+    // this.$router.push('/settings/profile')
+    router.push({name: 'Profile'})
   }
 </script>

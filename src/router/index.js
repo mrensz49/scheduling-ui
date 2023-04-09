@@ -139,6 +139,19 @@ const routes = [
 
 
   {
+    path: '/settings',
+    name: 'Settings',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/settings/Profile'),
+      },
+    ]
+  },
+
+  {
     path: '/',
     name: 'Home',
     component: DefaultLayout,
@@ -395,38 +408,38 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/pages',
-    redirect: '/pages/404',
-    name: 'Pages',
-    component: {
-      render() {
-        return h(resolveComponent('router-view'))
-      },
-    },
-    children: [
-      {
-        path: '404',
-        name: 'Page404',
-        component: () => import('@/views/pages/Page404'),
-      },
-      {
-        path: '500',
-        name: 'Page500',
-        component: () => import('@/views/pages/Page500'),
-      },
-      {
-        path: 'login',
-        name: 'Login Pages',
-        component: () => import('@/views/pages/Login'),
-      },
-      {
-        path: 'register',
-        name: 'Register Pages',
-        component: () => import('@/views/pages/Register'),
-      },
-    ],
-  },
+  // {
+  //   path: '/pages',
+  //   redirect: '/pages/404',
+  //   name: 'Pages',
+  //   component: {
+  //     render() {
+  //       return h(resolveComponent('router-view'))
+  //     },
+  //   },
+  //   children: [
+  //     {
+  //       path: '404',
+  //       name: 'Page404',
+  //       component: () => import('@/views/pages/Page404'),
+  //     },
+  //     {
+  //       path: '500',
+  //       name: 'Page500',
+  //       component: () => import('@/views/pages/Page500'),
+  //     },
+  //     {
+  //       path: 'login',
+  //       name: 'Login Pages',
+  //       component: () => import('@/views/pages/Login'),
+  //     },
+  //     {
+  //       path: 'register',
+  //       name: 'Register Pages',
+  //       component: () => import('@/views/pages/Register'),
+  //     },
+  //   ],
+  // },
 ]
 
 const router = createRouter({
