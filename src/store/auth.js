@@ -86,7 +86,7 @@ export const useAuthStore = defineStore({
 
         handleLogin(payloads) {
             this.user_loading = true
-
+            let url = window.location.origin
             EventService.login(payloads)
             .then(response => {
                 this.user = response.data.user
@@ -94,7 +94,8 @@ export const useAuthStore = defineStore({
 
                 localStorage.setItem('scheduling_token', response.data.token)
                 localStorage.setItem('scheduling_id', response.data.user.id)
-                router.push({name: 'Dashboard'})
+                // router.push({name: 'Dashboard'})
+                location.href = url+'/?#/dashboard';
                 notify({ type: "success", duration: 6000, title: "SUCCESSFULLY LOGIN" });
             })
             .catch(error => {

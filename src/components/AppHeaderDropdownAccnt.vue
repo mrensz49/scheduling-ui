@@ -58,6 +58,8 @@
 
   const authStore = useAuthStore()
 
+  authStore.getUser()
+
   function showName(name) {
     if (name) {
       let n = name.split(' ')
@@ -66,7 +68,6 @@
   }
 
   function showProfile() {
-    // this.$router.push('/settings/profile')
     router.push({name: 'Profile'})
   }
 </script>

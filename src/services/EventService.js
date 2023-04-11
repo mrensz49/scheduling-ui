@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-    baseURL: `http://localhost:8080/`,
+    baseURL: process.env.VUE_APP_URL,
     //   baseURL: `http://localhost:8081/`,
 //   withCredentials: false, // This is the default
   headers: {
@@ -13,7 +13,7 @@ const apiClient = axios.create({
 auth(apiClient)
 
 const apiClientReport = axios.create({
-    baseURL: `http://localhost:8080/`,
+    baseURL: process.env.VUE_APP_URL,
     responseType: 'blob',
     headers: {
         Accept: 'application/json',

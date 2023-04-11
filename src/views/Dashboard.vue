@@ -220,8 +220,6 @@
       }
     },
     mounted() {
-
-
     },
     components: {
 

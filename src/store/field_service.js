@@ -109,7 +109,6 @@ export const useFieldServiceStore = defineStore({
 
                 let sum = 0
                 for (const n of this.all_reports) {
-                    console.log(report,' - ', parseInt(n[report]))
                     isNaN(parseInt(n[report])) ? sum+=0 : sum += n[report]
                 }
 
@@ -150,7 +149,6 @@ export const useFieldServiceStore = defineStore({
             let index=0
             for(let year in data.years) {
                 let y = data.years[year]
-                console.log('years - ', y, ' - ', index)
                 var list_months = data.reports[y].map(month => {
                     return this.getHumanDate(month.date_rendered)
                 })

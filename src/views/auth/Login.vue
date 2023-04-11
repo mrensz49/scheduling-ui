@@ -108,7 +108,7 @@ export default {
 
     const state = reactive({
       formData: {
-        email: 'rene@gmail.com',
+        email: '',
         password: '',
         device_name: 'browser',
       },

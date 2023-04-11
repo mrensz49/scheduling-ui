@@ -18,5 +18,5 @@
 
     const authStore = useAuthStore()
 
-    authStore.getUser()
+
 </script>
