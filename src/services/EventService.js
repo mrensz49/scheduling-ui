@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-    baseURL: process.env.VUE_APP_URL,
+    baseURL: process.env.NODE_ENV == 'development'
+            ? process.env.VUE_APP_URL : 'https://rscheduling.xyz/be/',
     //   baseURL: `http://localhost:8081/`,
 //   withCredentials: false, // This is the default
   headers: {

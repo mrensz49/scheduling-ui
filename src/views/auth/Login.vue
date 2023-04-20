@@ -49,14 +49,14 @@
                   </div>
 
                   <CRow class="mt-4">
-                    <CCol :xs="6">
+                    <CCol :xs="12" :sm="6" :md="6">
                       <CButton disabled v-if="authStore.user_loading">
                         <CSpinner component="span" size="sm" aria-hidden="true"/>
                         Logging In...
                       </CButton>
                       <CButton color="primary" type="submit" class="px-4" :disabled="authStore.user_loading" v-else> Login </CButton>
                     </CCol>
-                    <CCol :xs="6" class="text-right">
+                    <CCol :xs="12" :sm="6" :md="6" class="text-right">
                       <CButton color="link" class="px-0" :disabled="authStore.user_loading" @click="handleForgotPasswordLink">
                         Forgot password?
                       </CButton>
@@ -65,7 +65,7 @@
                 </CForm>
               </CCardBody>
             </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 44%">
+            <CCard class="text-white bg-primary py-5">
               <CCardBody class="text-center">
                 <div>
                   <h2>Join</h2>

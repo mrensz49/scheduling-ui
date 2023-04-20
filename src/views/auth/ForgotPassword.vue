@@ -28,8 +28,8 @@
                       Email Password Reset Link
                       <CSpinner v-if="loading" component="span" class="ms-1" size="sm" aria-hidden="true"/>
                     </CButton>
-                    <p class="text-center">or</p>
-                    <CButton color="secondary" class="mt-n8" @click="handleLoginLink">Back to Login</CButton>
+                    <p class="text-center mt-3">or</p>
+                    <CButton color="secondary" @click="handleLoginLink">Back to Login</CButton>
                   </div>
                 </CForm>
               </CCardBody>
@@ -66,9 +66,12 @@
             this.loading = true
             this.success = {}
             this.errors = {}
-            axios.post('/api/forgot-password', this.formData).then(response => {
+
+            let path = process.env.NODE_ENV == 'development' ? process.env.VUE_APP_URL+'/api/forgot-password' : 'https://rscheduling.xyz/be/api/forgot-password'
+            axios.post(`${path}`, this.formData).then(response => {
                this.success = response.data
                this.loading = false
+               this.formData.email = ''
               }).catch((errors) => {
                 this.loading = false
                 this.errors = errors.response.data.errors

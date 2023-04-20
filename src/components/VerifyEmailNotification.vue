@@ -1,7 +1,7 @@
 <template>
     <CAlert color="warning" v-if="authStore.isLoggedIn && !authStore.user.email_verified_at">
         Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? <br />
-        If you didn't receive the email, we will gladly send you another.
+        If you didn't receive the email, check your Email {{ authStore.user.email }} for typos, check the SPAM folder of your mailbox or we will gladly send you another.
 
         <CButton class="btn-sm ml-3" disabled v-if="authStore.verification_loading">
             <CSpinner component="span" size="sm" aria-hidden="true"/>

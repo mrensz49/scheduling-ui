@@ -41,8 +41,11 @@
         },
 
         mounted() {
+            let url = window.location.origin
+            const hash = process.env.NODE_ENV == 'development'
+                            ? this.$route.params.hash+'?expires='+this.$route.query.expires+'?signature='+this.$route.query.signature
+                            : this.$route.params.hash
 
-            const hash = this.$route.params.hash+'?expires='+this.$route.query.expires+'?signature='+this.$route.query.signature;
             this.loading = true
             axios.interceptors.request.use(function(config) {
                 const token = localStorage.getItem('scheduling_token');
@@ -54,18 +57,20 @@
                 return Promise.reject(err);
             });
 
-            axios.get(`/api/verify-email/${this.$route.params.id}/${hash}`).then(response => {
+            let path = process.env.NODE_ENV == 'development' ? process.env.VUE_APP_URL+'api/verify-email/' : 'https://rscheduling.xyz/be/api/verify-email/'
+            axios.get(`${path}${this.$route.params.id}/${hash}`).then(response => {
 
                 if (response.data.message == 'verified') {
                     this.success = response.data.message
                     setTimeout(()=>{
-                        this.$router.push('/')
+                        // this.$router.push('/')
+                        location.href = url+'/?#/dashboard';
                     },1500)
                 }
                 this.loading = false
             }).catch((errors) => {
-                this.errors = errors.response.data.message
                 this.loading = false
+                this.errors = errors.response.data?.message
             });
 
         }

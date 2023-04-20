@@ -67,16 +67,17 @@ export const useAuthStore = defineStore({
         },
 
         handleRegister(payloads) {
-
+            this.errors_register = {}
             this.user_loading = true
-
+            let url = window.location.origin
             EventService.register(payloads)
             .then(response => {
                 this.user = response.data.user
                 this.user_loading = false
                 localStorage.setItem('scheduling_token', response.data.token)
                 localStorage.setItem('scheduling_id', response.data.user.id)
-                router.push({name: 'Dashboard'})
+                // router.push({name: 'Dashboard'})
+                location.href = url+'/?#/dashboard';
             })
             .catch(error => {
                 this.errors_register = error.response.data.errors
@@ -85,6 +86,7 @@ export const useAuthStore = defineStore({
         },
 
         handleLogin(payloads) {
+            this.errors_login = {}
             this.user_loading = true
             let url = window.location.origin
             EventService.login(payloads)

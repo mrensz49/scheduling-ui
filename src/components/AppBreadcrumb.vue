@@ -3,9 +3,9 @@
     <CBreadcrumbItem
       v-for="item in breadcrumbs"
       :key="item"
-      :href="item.active ? '' : item.path"
       :active="item.active"
-    >
+      >
+      <!-- :href="item.active ? '' : item.path" -->
       {{ item.name }}
     </CBreadcrumbItem>
   </CBreadcrumb>

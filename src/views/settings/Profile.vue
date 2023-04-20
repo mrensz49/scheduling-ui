@@ -185,7 +185,7 @@
                                 ><sup class="text-danger">*</sup> Confirm Password</CFormLabel>
                                 <CFormInput
                                     type="password"
-                                    placeholder="New Password"
+                                    placeholder="Confirm Password"
                                     required
                                     feedbackInvalid="This is required!"
                                     v-model="formData.confirm_password"
@@ -227,7 +227,7 @@
 
                 profile: {
                     name: '',
-                    mobile: '',
+                    phone: '',
                     address: '',
                 },
                 formData: {},
@@ -268,7 +268,7 @@
                 this.profile.id = authStore.user.id
                 this.profile.name = authStore.user.name
                 this.profile.email = authStore.user.email
-                this.profile.mobile = authStore.user.mobile
+                this.profile.phone = authStore.user.phone
                 this.profile.address = authStore.user.address
             },
 

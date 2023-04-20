@@ -179,7 +179,7 @@ export const useMemberStore = defineStore({
         getPosition(designates) {
             const foundPosition = designates.map((designate) => {
                 return positionStore.positions.find((position) => {
-                    return position.id === designate.position_id
+                    return position.id === parseInt(designate.position_id)
                 })
             })
 

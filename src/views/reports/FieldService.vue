@@ -62,11 +62,13 @@
             <CCol :sm="4">
                 <CInputGroup v-show = "activeBtn === 'ar'">
                 <CButton type="button" color="secondary" >Show</CButton>
-                <CFormSelect>
+                <CFormSelect
+                    @change="defShowGroup=$event.target.value"
+                >
                     <option
-                        v-for="n in total_groups"
+                        v-for="n in parseInt(total_groups)"
                         :key="n"
-                        @click="defShowGroup=n"
+                        :value="n"
                         :selected="defShowGroup == n ? true : false"
                     > Group {{ n }}</option>
                 </CFormSelect>
@@ -94,6 +96,16 @@
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
                         <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer" :date_rendered="date_rendered"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.auxillary_pioneer" :key="group" :item-key="index">
+                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                    <div class="accordion-body">
+                        <FieldServiceTable :group="group" :edit="edit" designate="Auxillary Pioneer" :date_rendered="date_rendered"/>
                     </div>
                 </div>
             </div>

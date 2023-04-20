@@ -72,7 +72,6 @@ export const useCongregationStore = defineStore({
                         if (member.group_no == c) {
 
                             foundPosition = member.designates.filter((mem) => {
-                                console.log(mem.position.name , ' == ' , position.name)
                                 return mem.group_no == position.name
                             })
                         }

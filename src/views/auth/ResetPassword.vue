@@ -5,6 +5,15 @@
           <CCol :md="9" :lg="7" :xl="6">
             <CCard class="mx-4">
               <CCardBody class="p-4">
+
+                <CAlert color="warning" v-if="Object.keys(errors).length">
+                  <span v-for="error in errors" :key="error"> * {{ error[0] }}<br/></span>
+                </CAlert>
+
+                <CAlert color="success" v-if="data">
+                  {{ data.message }}
+                </CAlert>
+
                 <CForm @submit.prevent="handleResetPassword">
                   <h1>Reset Password</h1>
                   <p class="text-medium-emphasis">Reset your password</p>
@@ -63,16 +72,22 @@
                 password: '',
                 password_confirmation: '',
             },
-            errors: {}
+            errors: {},
+            data: '',
         }
     },
 
     methods: {
 
         handleResetPassword() {
-            axios.post('/api/reset-password', this.formData).then(response => {
-                console.log(response)
+            this.errors = {}
+
+            let path = process.env.NODE_ENV == 'development' ? process.env.VUE_APP_URL+'/api/reset-password' : 'https://rscheduling.xyz/be/api/reset-password'
+            axios.post(`${path}`, this.formData).then(response => {
+                this.data = response.data
+                this.formData.password_confirmation = ''
             }).catch((errors) => {
+                this.formData.password_confirmation = ''
                 this.errors = errors.response.data.errors
             });
         },

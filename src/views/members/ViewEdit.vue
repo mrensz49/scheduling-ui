@@ -111,13 +111,11 @@
                                 <CCol :md="4" :sm="6" class="fw-semibold">Designate</CCol>
                                 <CCol :md="8" :sm="6">
                                     <span v-if="!memberStore.edit">
-                                        <template v-if="typeof memberStore.showMember.positions !== 'undefined'">
                                             -
-                                            <template v-for="(position, index) in memberStore.showMember.positions" :key="index">
+                                            <template v-for="(position, index) in memberStore.showMember?.positions" :key="index">
                                                 <CBadge  v-if="typeof position !== 'undefined'" color="success" class="m-1"
                                             > {{ position.name }}</CBadge>
                                             </template>
-                                        </template>
                                     </span>
                                     <span v-else>
                                         <Multiselect required feedbackInvalid="This is required!"
@@ -255,7 +253,7 @@
                                             >
                                         <option value="">Choose...</option>
                                             <option
-                                                v-for="index in authStore.user.congregation.total_groups"
+                                                v-for="index in parseInt(authStore.user.congregation.total_groups)"
                                                 :key="index"
                                                 :value="index"
                                                 :selected="index == memberStore.showMember.group_no"
@@ -269,15 +267,14 @@
 
                         <CCol :sm="12" :md="12">
                             <h2>Address</h2>
-
-                            <CRow class="mt-3">
+                            <!-- <CRow class="mt-3">
                                 <CCol :md="4" :sm="6" class="fw-semibold">Country</CCol>
                                 <CCol :md="8" :sm="6">- Philippines</CCol>
                             </CRow>
                             <CRow>
                                 <CCol :md="4" :sm="6" class="fw-semibold">Region</CCol>
                                 <CCol :md="8" :sm="6">- VII</CCol>
-                            </CRow>
+                            </CRow> -->
                             <CRow>
                                 <CCol :md="4" :sm="6" class="fw-semibold">Province</CCol>
                                 <CCol :md="8" :sm="6">- Bohol</CCol>

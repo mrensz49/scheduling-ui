@@ -28,7 +28,11 @@
                       class="border-start border-start-4 border-start-success py-1 px-3 mb-3"
                     >
                       <div class="text-medium-emphasis small">Number of Group</div>
-                      <div class="fs-5 fw-semibold">{{ authStore.user.congregation?.total_groups }}</div>
+                      <div class="fs-5 fw-semibold">
+                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewgroup()">
+                          {{ authStore.user.congregation?.total_groups }}
+                        </a>
+                      </div>
                     </div>
                   </CCol>
 
@@ -39,7 +43,11 @@
                     >
 
                       <div class="text-medium-emphasis small">{{ position.name }}</div>
-                      <div class="fs-5 fw-semibold">{{ position.congregation_designates_count }}</div>
+                      <div class="fs-5 fw-semibold">
+                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewposition(position.id)">
+                          {{ position.congregation_designates_count }}
+                        </a>
+                      </div>
                     </div>
                   </CCol>
                 </template>
@@ -187,6 +195,7 @@
 
 <script>
 
+  import router from '@/router'
   import { CChartBar } from '@coreui/vue-chartjs'
   import VerifyEmailNotification from '@/components/VerifyEmailNotification.vue'
 
@@ -226,6 +235,14 @@
       VerifyEmailNotification, CChartBar
     },
     methods: {
+
+      viewposition(id) {
+          router.push({name: 'Position', params: { id: id } })
+      },
+
+      viewgroup() {
+          router.push({name: 'Group' })
+      },
 
       showOnlyDesignates(name) {
         if (name == 'Elder' || name == 'Ministerial' || name == 'Special Pioneer' || name == 'Regular Pioneer' || name == 'Auxillary Pioneer') {

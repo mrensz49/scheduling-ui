@@ -218,7 +218,7 @@
                         >
                         <option value="">Choose...</option>
                             <option
-                                v-for="index in totalGroups"
+                                v-for="index in (totalGroups * 1)"
                                 :key="index"
                                 :value="index"
                             >{{ index }}</option>

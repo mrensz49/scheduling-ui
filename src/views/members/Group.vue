@@ -15,7 +15,7 @@
                     >
                     <div class="text-medium-emphasis small">{{  position.name }}</div>
                     <div class="fs-5 fw-semibold">
-                        <a href="javascript:void" class="text-decoration-none" @click="viewposition(position.id)">
+                        <a href="javascript:void" class="text-danger text-decoration-none" @click="viewposition(position.id)">
                             {{  position.congregation_designates_count }}
                         </a>
                     </div>
@@ -24,36 +24,30 @@
                 <CRow>
                     <template v-for="group in congregationStore.showGroups" :key="group.group">
                         <CCol :md="6">
-                            <CCard class="mb-4 mt-2">
-                                <CCardImage orientation="top" />
-                                <CCardBody>
-                                    <CCardTitle>Group {{ group.group }}</CCardTitle>
-                                    <CCardText>
-                                        <ul>
-                                            <li v-for="member in group.members" :key="member">
-                                                <table width="100%">
-                                                    <tr>
-                                                        <td width="50%">
-                                                            <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
-                                                                {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
-                                                            </a>
+                            <CListGroup class="mt-4">
+                                <CListGroupItem color="dark">
+                                    <strong>Group {{ group.group }}</strong>
+                                </CListGroupItem>
+                                <template v-for="member in group.members" :key="member">
+                                    <CListGroupItem component="a" href="javascript:void" @click="viewedit(member.id)">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="50%">
+                                                    {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
+                                                </td>
+                                                <td>
+                                                    <template v-for="designate in member.designates" :key= "designate">
+                                                            <CBadge v-if="designate.position" color="success" class="m-1">
+                                                                {{ designate.position.name }}
+                                                            </CBadge>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                                        </td>
-                                                        <td>
-                                                            <template v-for="designate in member.designates" :key= "designate">
-                                                                    <CBadge v-if="designate.position" color="success" class="m-1">
-                                                                        {{ designate.position.name }}
-                                                                    </CBadge>
-                                                            </template>
-
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </li>
-                                        </ul>
-                                    </CCardText>
-                                </CCardBody>
-                            </CCard>
+                                    </CListGroupItem>
+                                </template>
+                            </CListGroup>
                         </CCol>
                     </template>
                 </CRow>

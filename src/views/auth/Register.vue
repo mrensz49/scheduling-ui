@@ -81,7 +81,7 @@
                   </div>
 
                   <CRow class="mt-5">
-                    <CCol :xs="6">
+                    <CCol :xs="12" :sm="6" :md="6">
                       <CButton disabled v-if="authStore.user_loading">
                         <CSpinner component="span" size="sm" aria-hidden="true"/>
                         Registering...
@@ -90,7 +90,7 @@
                         Create Account
                       </CButton>
                     </CCol>
-                    <CCol :xs="6" class="text-right">
+                    <CCol :xs="12" :sm="6" :md="6" class="text-right">
                       <CButton color="link" class="px-0"  @click="handleLoginLink" :disabled="authStore.user_loading">
                         Already registered?
                       </CButton>
