@@ -134,6 +134,11 @@ const routes = [
         name: 'Christian Living',
         component: () => import('@/views/setup/ChristianLiving'),
       },
+      {
+        path: 'admin/users',
+        name: 'Users',
+        component: () => import('@/views/setup/admin/Users'),
+      },
     ]
   },
 

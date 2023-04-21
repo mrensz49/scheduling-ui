@@ -2,6 +2,7 @@
   <div>
 
     <VerifyEmailNotification />
+    <ModalNoSetupCongregation v-if="typeof authStore.user?.current_congregation_id !== 'undefined' && !authStore.user?.current_congregation_id"/>
 
     <CRow>
       <CCol :md="12">
@@ -198,6 +199,8 @@
   import router from '@/router'
   import { CChartBar } from '@coreui/vue-chartjs'
   import VerifyEmailNotification from '@/components/VerifyEmailNotification.vue'
+  import  ModalNoSetupCongregation from '@/components/modal/ModalNoSetupCongregation.vue'
+
 
   import { useCongregationStore } from '@/store/congregation'
   import { usePositionStore } from '@/store/position'
@@ -228,11 +231,10 @@
         fieldServiceStore:fieldServiceStore,
       }
     },
-    mounted() {
-    },
+    mounted() {},
     components: {
 
-      VerifyEmailNotification, CChartBar
+      VerifyEmailNotification, CChartBar, ModalNoSetupCongregation
     },
     methods: {
 

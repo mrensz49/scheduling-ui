@@ -81,7 +81,16 @@ export default [
     icon: 'cil-notes',
   },
 
-
+  {
+    component: 'CNavTitle',
+    name: 'Admin',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Users',
+    to: '/setup/admin/users',
+    icon: 'cil-people',
+  },
 
   // {
   //   component: 'CNavTitle',

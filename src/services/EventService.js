@@ -38,6 +38,18 @@ function auth(apiC) {
 
 export default {
 
+    // admin side
+
+    fetchUsers() {
+        return apiClient.get(`/api/admin/user`)
+    },
+
+    setUserCongregation(payloads) {
+        return apiClient.put(`/api/admin/user/${payloads.id}`, payloads)
+    },
+
+    //end of admin side
+
     register(payloads) {
         return apiClient.post(`/api/register`, payloads)
     },
