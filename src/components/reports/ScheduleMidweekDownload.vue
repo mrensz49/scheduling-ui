@@ -53,6 +53,7 @@
 <script>
 
 import moment from 'moment'
+import { notify } from "@kyvg/vue3-notification"
 import EventService from "@/services/EventService.js"
 import { useHelperStore } from '@/services/helper'
 
@@ -113,6 +114,8 @@ export default {
                     document.body.appendChild(fileLink);
                     fileLink.click();
                     this.loading = 0
+
+                    notify({ type: "success", duration: 6000, title: "Successfully Downloaded!" });
                 })
             }
         }

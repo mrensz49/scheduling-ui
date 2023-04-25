@@ -104,17 +104,15 @@ export default {
 
     name: 'MemberFieldServiceReport',
 
-    // props: ['member_id'],
+    props: ['member_id'],
 
     created() {
-        positionStore.getPositions()
-
         // setTimeout(()=>{
         //     this.activeBtn = fieldServiceStore.member_reports.years[0]
         //     this.delayShow=true;
         // },1000)
+        console.log('test')
     },
-
 
     data() {
         return {
@@ -132,6 +130,7 @@ export default {
     components: { CChartLine },
 
     methods: {
+
         showReport() {
 
             this.delayShow=false;
@@ -144,6 +143,13 @@ export default {
                 this.delayShow=true;
                 this.loading=false;
             },1000)
+        },
+    },
+
+    watch: {
+        // whenever question changes, this function will run
+        member_id: function () {
+            this.delayShow = false
         }
     },
 

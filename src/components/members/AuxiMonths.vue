@@ -2,9 +2,9 @@
     <CRow class="mt-3">
         <CCol>
             <CSpinner component="span" size="sm" aria-hidden="true" v-if="auxilaryStore.loading"/>
-            <h5 v-if="!auxilaryStore.loading">Auxilary Pioneer</h5>
+            <h2 v-if="!auxilaryStore.loading">Auxilary Pioneer</h2>
             <CIcon icon="cil-plus" @click="addAuxilarry()" v-if="!auxilaryStore.loading" style="float:right;margin-top: -11%;" class="pointer text-primary"/>
-            <CTable hover responsive>
+            <CTable hover responsive class="table-sm">
                 <CTableHead>
                     <CTableRow>
                         <CTableHeaderCell scope="col" width="20%">No</CTableHeaderCell>
@@ -57,7 +57,6 @@
 
         mounted() {
             auxilaryStore.fetchAuxiDates(this.$route.params.id)
-
         },
 
         components: { ModalFormAuxilary, ModalConfirmation },

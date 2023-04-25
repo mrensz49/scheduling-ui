@@ -33,16 +33,6 @@
                                     <CIcon icon="cil-pencil" class="me-4" />
                                 </a>
                             </span>
-                            <span v-else style="float:right;margin-top: -8%;">
-                                <CButton class="btn-sm me-1 ms-1" color="primary" type="submit" :disabled="memberStore.loading_update">
-                                    <span v-if="memberStore.loading_update"><CSpinner color="warning" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading_update"/> Updating...</span>
-                                    <span v-else>Update</span>
-                                </CButton>
-                                <CButton class="btn-sm" color="secondary" type="submit" @click="editInfo(0)" :disabled="memberStore.loading_update">
-                                    Cancel
-                                </CButton>
-                            </span>
-
                             <CRow class="mt-3">
                                 <CCol :md="4" :sm="6" class="fw-semibold">Last Name</CCol>
                                 <CCol :md="8" :sm="6">
@@ -155,7 +145,7 @@
                             </CRow>
 
                             <CRow>
-                                <CCol :md="4" :sm="6" class="fw-semibold">Date of Baptized</CCol>
+                                <CCol :md="4" :sm="6" class="fw-semibold">Date of Baptism</CCol>
                                 <CCol :md="8" :sm="6">
                                     <template v-if="!memberStore.edit">
                                         -
@@ -310,10 +300,27 @@
                                     </span>
                                 </CCol>
                             </CRow>
+
+                            <CRow class="mb-4">
+                                <CCol :md="4" :sm="6" class="fw-semibold"></CCol>
+                                <CCol :md="8" :sm="6">
+                                    <div class="mt-4"  v-if="memberStore.edit">
+                                        <CButton class="btn-sm me-1 ms-1" color="primary" type="submit" :disabled="memberStore.loading_update">
+                                            <span v-if="memberStore.loading_update"><CSpinner color="warning" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading_update"/> Updating...</span>
+                                            <span v-else>Update</span>
+                                        </CButton>
+                                        <CButton class="btn-sm" color="secondary" type="submit" @click="editInfo(0)" :disabled="memberStore.loading_update">
+                                            Cancel
+                                        </CButton>
+                                    </div>
+                                </CCol>
+                            </CRow>
+                            <hr>
                         </CCol>
+                        <AuxiMonths/>
                     </CCol>
                     <CCol :sm="12" :md="5">
-                        <AuxiMonths/>
+                        <CoGroupMembers/>
                     </CCol>
 
                 </CRow>
@@ -323,8 +330,7 @@
       </CCol>
     </CRow>
 
-    <MemberFieldServiceReport v-if="formData"
-    />
+    <MemberFieldServiceReport :member_id="memberStore.member.id" v-if="formData"/>
 
   </template>
 
@@ -342,6 +348,7 @@
     import Multiselect from '@vueform/multiselect'
     import MemberFieldServiceReport from '@/components/reports/MemberFieldServiceReport.vue'
     import AuxiMonths from '@/components/members/AuxiMonths'
+    import CoGroupMembers from '@/components/members/CoGroupMembers'
 
     const memberStore = useMemberStore()
     const positionStore = usePositionStore()
@@ -368,10 +375,15 @@
             await memberStore.getMember(this.$route.params.id)
 
             memberStore.edit=0;
+
+            memberStore.getCoMembers({
+                'congregation_id' : memberStore.showMember.congregation_id,
+                'group_no' : memberStore.showMember.group_no
+            })
             this.formData.position_id = memberStore.defPosition
 
         },
-        components: { Multiselect, MemberFieldServiceReport, AuxiMonths, },
+        components: { Multiselect, MemberFieldServiceReport, AuxiMonths, CoGroupMembers, },
         data() {
             return {
                 memberStore: memberStore,

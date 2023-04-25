@@ -6,7 +6,7 @@
       >
     </div>
     <div class="ms-auto">
-      Version 1.3
+      Version 1.6
     </div>
   </CFooter>
 </template>

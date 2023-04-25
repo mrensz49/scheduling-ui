@@ -114,6 +114,10 @@ export default {
         return apiClient.put(`/api/members/${payloads.id}`, payloads)
     },
 
+    getAllMembers() {
+        return apiClient.get(`/api/members/all`)
+    },
+
     getMembers(page) {
         return apiClient.get(`/api/congregation/members?page=`+page)
     },
@@ -242,6 +246,10 @@ export default {
         return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
     },
 
+    downloadContacts() {
+        return apiClientReport.get(`/api/generate/contacts`)
+    },
+
     fetchAuxiDates(payload) {
         return apiClient.get(`/api/auxilary/show-dates/${payload}`)
     },
@@ -260,6 +268,14 @@ export default {
 
     latestFSReport() {
         return apiClient.get(`/api/report-field-services/latest/report`)
+    },
+
+    congAttendances() {
+        return apiClient.get(`/api/meeting-attendances/meeting`)
+    },
+
+    getCoMembers(payloads) {
+        return apiClient.get(`/api/members/co-members/${payloads.congregation_id}/${payloads.group_no}`)
     },
 
     //helper

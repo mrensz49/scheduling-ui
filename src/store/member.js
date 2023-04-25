@@ -21,6 +21,7 @@ export const useMemberStore = defineStore({
 
     state: () => ({
         def_brgys: [], // default brgy to avoid multiple query
+        co_members: [],
         member: [],
         members: [],
         phones: [],
@@ -115,6 +116,19 @@ export const useMemberStore = defineStore({
             })
         },
 
+        getAllMembers() {
+            this.loading = true
+            EventService.getAllMembers()
+            .then(response => {
+                this.members = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading = false
+            })
+        },
+
         getMembers(page=1) {
             this.loading = true
             EventService.getMembers(page)
@@ -134,6 +148,19 @@ export const useMemberStore = defineStore({
             .then(response => {
                 this.member = response.data.data
                 this.phones = response.data.data.numbers
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading = false
+            })
+        },
+
+        getCoMembers(payloads) {
+            this.loading = true
+            EventService.getCoMembers(payloads)
+            .then(response => {
+                this.co_members = response.data
                 this.loading = false
             })
             .catch(error => {

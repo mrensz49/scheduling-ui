@@ -24,13 +24,19 @@ export default [
     component: 'CNavItem',
     name: 'View',
     to: '/member/view',
-    icon: 'cil-address-book',
+    icon: 'cil-people',
   },
   {
     component: 'CNavItem',
     name: 'Group',
     to: '/member/group',
     icon: 'cil-people',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Contact',
+    to: '/member/contact',
+    icon: 'cil-address-book',
   },
 
 

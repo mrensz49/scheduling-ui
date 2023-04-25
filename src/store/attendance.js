@@ -47,6 +47,20 @@ export const useAttendanceStore = defineStore({
                 this.loading = false
             })
         },
+
+        congAttendances() {
+            EventService.congAttendances()
+            .then(response => {
+                this.attendances = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                if (typeof error.response !== 'undefined') {
+                    this.errors = error.response.data.errors
+                }
+                this.loading = false
+            })
+        },
     }
 
 });

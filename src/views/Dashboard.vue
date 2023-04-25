@@ -5,13 +5,12 @@
     <ModalNoSetupCongregation v-if="typeof authStore.user?.current_congregation_id !== 'undefined' && !authStore.user?.current_congregation_id"/>
 
     <CRow>
-      <CCol :md="12">
+      <CCol :md="12" :sm="12">
         <CCard class="mb-4">
           <CCardHeader>
             <h4>{{ authStore.user.congregation?.name }}</h4>
           </CCardHeader>
           <CCardBody>
-            <span v-if="congregationStore.loading"><CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
             <CRow>
               <CCol :sm="12">
                 <CRow>
@@ -20,10 +19,13 @@
                       class="border-start border-start-4 border-start-info py-1 px-3 mb-3"
                     >
                       <div class="text-medium-emphasis small">Members</div>
-                      <div class="fs-5 fw-semibold">{{ congregationStore.genders.members_count}}</div>
+                      <div class="fs-5 fw-semibold">
+                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewAllMembers()">
+                          {{ congregationStore.genders.members_count}}
+                        </a>
+                      </div>
                     </div>
                   </CCol>
-
                   <CCol :sm="3">
                     <div
                       class="border-start border-start-4 border-start-success py-1 px-3 mb-3"
@@ -54,9 +56,23 @@
                 </template>
                 </CRow>
               </CCol>
-              <CCol :sm="6" :lg="4">
+            </CRow>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
+    <CRow>
+      <CCol :md="8" :sm="12">
+        <CCard class="mb-4">
+          <CCardHeader>
+            <h5>Stats</h5>
+          </CCardHeader>
+          <CCardBody>
+            <span v-if="congregationStore.loading"><CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
+            <CRow>
 
-                <hr class="mt-0" />
+              <CCol :sm="12" :md="5" :lg="5">
+
                 <div
                   class="progress-group"
                 >
@@ -90,9 +106,8 @@
                 <div class="mb-5"></div>
 
               </CCol>
-              <CCol :sm="6" :lg="4">
+              <CCol :sm="12" :md="7" :lg="7">
 
-                <hr class="mt-0" />
                 <div
                   class="progress-group"
                 >
@@ -100,7 +115,9 @@
                     <CIcon icon="cil-phone" class="me-2" size="lg" />
                     <span class="title">Phone registered</span>
                     <span class="ms-auto fw-semibold">
-                      {{ congregationStore.data.numbers?.registered_count }} <sup>or</sup> {{ congregationStore.data.numbers?.registered_percent }}%
+                      {{ congregationStore.data.numbers?.registered_count }} /
+                      {{ congregationStore.genders.members_count}}
+                      <sup>or</sup> {{ congregationStore.data.numbers?.registered_percent }}%
                     </span>
                   </div>
                   <div class="progress-group-bars">
@@ -112,61 +129,24 @@
                   class="progress-group"
                 >
                   <div class="progress-group-header">
-                    <CIcon icon="cil-phone" class="me-2" size="lg" />
-                    <span class="title">Phone un-registered</span>
-                    <span class="ms-auto fw-semibold">
-                      {{ congregationStore.data.numbers?.unregistered_count }} <sup>or</sup> {{ congregationStore.data.numbers?.unregistered_percent }}%
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress thin :value="congregationStore.data.numbers?.unregistered_percent" :color="congregationStore.data.numbers?.registered_percent < congregationStore.data.numbers?.unregistered_percent ? 'success':'warning'" />
-                  </div>
-                </div>
-
-                <div class="mb-5"></div>
-
-              </CCol>
-
-              <CCol :sm="6" :lg="4">
-
-              <hr class="mt-0" />
-              <div
-                  class="progress-group"
-                >
-                  <div class="progress-group-header">
                     <CIcon icon="cil-calendar" class="me-2" size="lg" />
                     <span class="title">DOBirth setup</span>
                     <span class="ms-auto fw-semibold">
-                      {{ congregationStore.data.dobirths?.setup }} <sup>or</sup> {{ congregationStore.data.dobirths?.setup_percent }}%
+                      {{ congregationStore.data.dobirths?.setup }} /
+                      {{ congregationStore.genders.members_count }}
+                      <sup>or</sup> {{ congregationStore.data.dobirths?.setup_percent }}%
                     </span>
                   </div>
                   <div class="progress-group-bars">
                     <CProgress thin :value="congregationStore.data.dobirths?.setup_percent" :color="congregationStore.data.dobirths?.setup_percent > congregationStore.data.dobirths?.unsetup_percent ? 'success':'warning'" />
                   </div>
                 </div>
-
-                <div
-                  class="progress-group"
-                >
-                  <div class="progress-group-header">
-                    <CIcon icon="cil-calendar" class="me-2" size="lg" />
-                    <span class="title">DOBirth un-setup</span>
-                    <span class="ms-auto fw-semibold">
-                      {{ congregationStore.data.dobirths?.unsetup }} <sup>or</sup> {{ congregationStore.data.dobirths?.unsetup_percent }}%
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress thin :value="congregationStore.data.dobirths?.unsetup_percent" :color="congregationStore.data.dobirths?.setup_percent < congregationStore.data.dobirths?.unsetup_percent ? 'success':'warning'" />
-                  </div>
-                </div>
-
-              <div class="mb-5"></div>
-
+                <div class="mb-5"></div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol :sm="6" :lg="4">
+              <CCol :sm="12" :md="9" :lg="9">
 
                 <hr class="mt-0" />
                 <CSpinner v-if="fieldServiceStore.loading" color="warning" class="ms-1" component="span" size="sm" aria-hidden="true"/>
@@ -189,13 +169,36 @@
           </CCardBody>
         </CCard>
       </CCol>
+      <CCol :md="4" :sm="12">
+        <CCard class="mb-4">
+          <CCardHeader>
+            <h5>Avg. Meeting Att.</h5>
+          </CCardHeader>
+          <CCardBody>
+            <div class="table-responsive">
+            <CTable small>
+              <CTableHeaderCell scope="col" class="w-25">Date</CTableHeaderCell>
+              <CTableHeaderCell scope="col" class="w-25"><small>Midweek</small></CTableHeaderCell>
+              <CTableHeaderCell scope="col" class="w-25"><small>Weekend</small></CTableHeaderCell>
+              <CTableBody>
+                <CTableRow v-for="attendance in attendanceStore.attendances" :key="attendance">
+                  <CTableDataCell><code>{{ getHumanDate(attendance.year_month) }}</code></CTableDataCell>
+                  <CTableDataCell><code>{{ attendance.midweek }}</code></CTableDataCell>
+                  <CTableDataCell><code>{{ attendance.weekend }}</code></CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
+          </div>
+          </CCardBody>
+        </CCard>
+      </CCol>
     </CRow>
 
   </div>
 </template>
 
 <script>
-
+  import moment from 'moment'
   import router from '@/router'
   import { CChartBar } from '@coreui/vue-chartjs'
   import VerifyEmailNotification from '@/components/VerifyEmailNotification.vue'
@@ -204,6 +207,7 @@
 
   import { useCongregationStore } from '@/store/congregation'
   import { usePositionStore } from '@/store/position'
+  import { useAttendanceStore } from '@/store/attendance'
   import { useAuthStore } from '@/store/auth'
   import { useFieldServiceStore } from '@/store/field_service'
 
@@ -211,13 +215,17 @@
   const positionStore = usePositionStore()
   const authStore = useAuthStore()
   const fieldServiceStore = useFieldServiceStore()
+  const attendanceStore = useAttendanceStore()
 
   congregationStore.getCongregationGenders()
   congregationStore.getCongregationDetails()
 
+
   positionStore.getPositions()
 
   fieldServiceStore.latestFSReport()
+
+  attendanceStore.congAttendances()
 
   export default {
 
@@ -229,6 +237,7 @@
         positionStore:positionStore,
         authStore:authStore,
         fieldServiceStore:fieldServiceStore,
+        attendanceStore:attendanceStore,
       }
     },
     mounted() {},
@@ -246,10 +255,18 @@
           router.push({name: 'Group' })
       },
 
+      viewAllMembers() {
+        this.$router.push('/member/position/all')
+      },
+
       showOnlyDesignates(name) {
         if (name == 'Elder' || name == 'Ministerial' || name == 'Special Pioneer' || name == 'Regular Pioneer' || name == 'Auxillary Pioneer') {
           return name
         }
+      },
+
+      getHumanDate(date) {
+          return moment(date, 'YYYY-MM-DD').format('MMM Y');
       },
 
       showColor(index) {

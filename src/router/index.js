@@ -73,6 +73,11 @@ const routes = [
         name: 'Position',
         component: () => import('@/views/members/Position'),
       },
+      {
+        path: 'contact',
+        name: 'Contact',
+        component: () => import('@/views/members/Contact'),
+      },
     ]
   },
 
