@@ -45,7 +45,7 @@
                             {{ assignmentStore.data.chairman_member_id?.abbr_name }}
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.chairman_member_id" :filterable="false" :options="options" @search="onSearch"></v-select>
+                            <v-select label="name" v-model="formData.chairman_member_id" :filterable="false" :options="optionsEMS" @search="onSearchEMS"></v-select>
                           </span>
                         </td>
                         <td class="ps-2">
@@ -127,7 +127,7 @@
                             {{ assignmentStore.data.meeting_treasures_member_id?.abbr_name }}
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.meeting_treasures_member_id" :filterable="false" :options="options" @search="onSearch"></v-select>
+                            <v-select label="name" v-model="formData.meeting_treasures_member_id" :filterable="false" :options="optionsEMS" @search="onSearchEMS"></v-select>
                           </span>
                         </td>
                       </tr>
@@ -143,7 +143,7 @@
                             {{ assignmentStore.data.spiritual_gem_member_id?.abbr_name }}
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.spiritual_gem_member_id" :filterable="false" :options="options" @search="onSearch"></v-select>
+                            <v-select label="name" v-model="formData.spiritual_gem_member_id" :filterable="false" :options="optionsEMS" @search="onSearchEMS"></v-select>
                           </span>
 
                         </td>
@@ -355,7 +355,7 @@
                             {{ assignmentStore.data.living_member_ids[index]?.abbr_name }}
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.living_member_ids[index]" placeholder="Incharge" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                            <v-select label="name" v-model="formData.living_member_ids[index]" placeholder="Incharge" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-1"></v-select>
                           </span>
                         </td>
                       </tr>
@@ -374,8 +374,8 @@
                             </small>
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.cvs_member_id" placeholder="CVS Incharge" :filterable="false" :options="options" @search="onSearch" class="mt-2"></v-select>
-                            <v-select label="name" v-model="formData.cvs_reading_member_id" placeholder="CVS Reader" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                            <v-select label="name" v-model="formData.cvs_member_id" placeholder="CVS Incharge" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-2"></v-select>
+                            <v-select label="name" v-model="formData.cvs_reading_member_id" placeholder="CVS Reader" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-1"></v-select>
                           </span>
 
                         </td>
@@ -409,7 +409,7 @@
                             </small>
                           </span>
                           <span v-else>
-                            <v-select label="name" v-model="formData.closing_prayer_member_id" placeholder="Closing Prayer" :filterable="false" :options="options" @search="onSearch" class="mt-2"></v-select>
+                            <v-select label="name" v-model="formData.closing_prayer_member_id" placeholder="Closing Prayer" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-2"></v-select>
                           </span>
 
                         </td>
@@ -439,6 +439,8 @@
   <script>
 
   import moment from 'moment'
+  import router from '@/router'
+  import { useToast } from 'vue-toastification'
 
   import EventService from "@/services/EventService.js"
   import EditClose from "@/components/icon/EditClose"
@@ -457,6 +459,7 @@
   const ministryStore = useMinistryStore()
   const treasureStore = useTreasureStore()
   const christianLivingStore = useChristianLivingStore()
+  const toast = useToast()
 
   export default {
     name: 'Midweek',
@@ -468,8 +471,6 @@
     mounted() {
       helperStore.fetchWeeks()
       ministryStore.fetchMeetingMinistries()
-
-
     },
 
     data() {
@@ -485,6 +486,7 @@
             date_end: '',
 
             options: [],
+            optionsEMS: [],
             optionSongs: [],
             formData: {
               living_member_ids: {}
@@ -560,12 +562,39 @@
           }
       },
       search(loading, search) {
-
         EventService.search(`${escape(search)}`)
           .then(response => {
               this.options = response.data.data
               loading(false);
-        })
+          })
+          .catch(error => {
+            loading(false);
+            if (error.response.status == 401) {
+                toast.error("Session Timeout. Please log in.")
+                router.push({name: 'Login'})
+            }
+          })
+      },
+
+      onSearchEMS(search, loading) {
+          if(search.length) {
+            loading(true);
+            this.searchEMS(loading, search);
+          }
+      },
+      searchEMS(loading, search) {
+        EventService.searchEMS(`${escape(search)}`)
+          .then(response => {
+              this.optionsEMS = response.data.data
+              loading(false);
+          })
+          .catch(error => {
+            loading(false);
+            if (error.response.status == 401) {
+                toast.error("Session timeout. Please log in again.")
+                router.push({name: 'Login'})
+            }
+          })
       },
 
       onSearchSong(search, loading) {
@@ -580,7 +609,13 @@
           .then(response => {
               this.optionSongs = response.data
               loading(false);
-        })
+          })
+          .catch(error => {
+            loading(false);
+            if (error.response.status == 401) {
+                router.push({name: 'Login'})
+            }
+          })
       },
 
       addTreasure() {

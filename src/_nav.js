@@ -32,13 +32,6 @@ export default [
     to: '/member/group',
     icon: 'cil-people',
   },
-  {
-    component: 'CNavItem',
-    name: 'Contact',
-    to: '/member/contact',
-    icon: 'cil-address-book',
-  },
-
 
   {
     component: 'CNavTitle',
@@ -62,29 +55,53 @@ export default [
     icon: 'cil-calendar-check',
   },
 
-
   {
     component: 'CNavTitle',
+    name: 'Setup & Generate',
+  },
+  {
+    component: 'CNavGroup',
     name: 'Setup',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Meeting Songs',
-    to: '/setup/songs-meeting',
-    icon: 'cil-music-note',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Treasures F.G.W.',
-    to: '/setup/treasures',
-    icon: 'cil-lightbulb',
+    icon: 'cil-cog',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Meeting Songs',
+        to: '/setup/songs-meeting',
+        // icon: 'cil-music-note',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Treasures F.G.W.',
+        to: '/setup/treasures',
+        // icon: 'cil-lightbulb',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Christian Living',
+        to: '/setup/christian-living',
+        // icon: 'cil-notes',
+      },
+    ]
   },
 
   {
-    component: 'CNavItem',
-    name: 'Christian Living',
-    to: '/setup/christian-living',
-    icon: 'cil-notes',
+    component: 'CNavGroup',
+    name: 'Generate',
+    icon: 'cil-cloud-download',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Information',
+        to: '/generate/information',
+      },
+
+      {
+        component: 'CNavItem',
+        name: 'Publishers',
+        to: '/generate/publishers',
+      },
+    ],
   },
 
   // {

@@ -10,14 +10,14 @@
 
             <CAlert color="danger" v-if="Object.keys(errors).length">
                 <h5>{{ errors }} </h5>
-                <p>
+                <p v-if="errors == 'Unauthorized action.'">
                     For security purposes, you must use the same browser you registered with to validate your account.
                 </p>
             </CAlert>
 
             <CBadge color="success" v-if="Object.keys(success).length">
-                <h3 class="text-center text-uppercase">{{ success }}</h3>
-                <small>redirecting to dashboard.</small>
+                <h3 class="text-center text-uppercase">{{ success == 1 ? 'Already Verified':success }}</h3>
+                <small v-show="success!=1">redirecting to dashboard.</small>
             </CBadge>
 
         </CRow>
@@ -60,10 +60,12 @@
             let path = process.env.NODE_ENV == 'development' ? process.env.VUE_APP_URL+'api/verify-email/' : 'https://rscheduling.xyz/be/api/verify-email/'
             axios.get(`${path}${this.$route.params.id}/${hash}`).then(response => {
 
-                if (response.data.message == 'verified') {
-                    this.success = response.data.message
+                this.success = response.data.message
+
+                if (response.data.message != 1) {
+                    localStorage.setItem('scheduling_token', response.data.token)
+                    localStorage.setItem('scheduling_id', response.data.user.id)
                     setTimeout(()=>{
-                        // this.$router.push('/')
                         location.href = url+'/?#/dashboard';
                     },1500)
                 }

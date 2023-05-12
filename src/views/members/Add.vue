@@ -57,8 +57,8 @@
                         <CFormLabel><sup class="text-danger">*</sup> Gender</CFormLabel>
                         <CFormSelect required feedbackInvalid="This is required!" v-model="formData.gender">
                             <option value="">Choose...</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="Male">Brother</option>
+                            <option value="Female">Sister</option>
                         </CFormSelect>
                     </CCol>
 
@@ -87,10 +87,10 @@
 
                     <CCol :md="4">
                         <CFormLabel for="validationTextarea" class="form-label"
-                        >Date of Baptized</CFormLabel>
+                        >Date of Baptism</CFormLabel>
                         <CFormInput
                             type="date"
-                            placeholder="Date of Baptized"
+                            placeholder="Date of Baptism"
                             v-model="formData.dobap"
                         />
                     </CCol>
@@ -161,11 +161,12 @@
                             required
                             feedbackInvalid="This is required!"
                             v-model="formData.city_town_code"
+                            @change="changeCityTown($event)"
                         >
+                        <!-- :disabled="city.city_code == authStore.showCongregation.city_town_code ? false:true" -->
                         <option value="">Choose...</option>
                         <option
                         v-for="city in addressStore.cities" :key="city" :value="city.city_code"
-                            :disabled="city.city_code == authStore.showCongregation.city_town_code ? false:true"
                             :selected="city.city_code == authStore.showCongregation.city_town_code ? true:false"
                         >
                             {{ city.city_name }}
@@ -340,7 +341,12 @@
                     // console.log('s - ', this.formData)
                     memberStore.addMember(this.formData)
                 }
+            },
 
+            changeCityTown(event) {
+                this.formData.brgy_code = ''
+                this.formData.city_town_code = event.target.value
+                addressStore.fetchBrgys(event.target.value)
             },
         }
 

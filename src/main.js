@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import user from './services/User'
 import { createPinia } from 'pinia'
 import Notifications from '@kyvg/vue3-notification'
 
@@ -21,6 +20,11 @@ import 'jquery'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 
+// toast
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+const options = {};
+
 import {
     cilPlus,
     cilTrash,
@@ -30,6 +34,12 @@ import {
     cilCalendarCheck,
     cilLightbulb,
     cilPhone,
+    cilClipboard,
+    cilNoteAdd,
+    cilCloudDownload,
+    cilCog,
+    cilCheckCircle,
+    cilCircle,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -41,6 +51,12 @@ import {
     cilCalendarCheck,
     cilLightbulb,
     cilPhone,
+    cilClipboard,
+    cilNoteAdd,
+    cilCloudDownload,
+    cilCog,
+    cilCheckCircle,
+    cilCircle,
 }
 
 const pinia = createPinia()
@@ -59,6 +75,7 @@ app.use(VueMobileDetection);
 app.component('v-select', vSelect)
 app.use(MonthPicker)
 app.use(MonthPickerInput)
+app.use(Toast, options);
 
 
 app.mount('#app')

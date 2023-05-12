@@ -162,6 +162,24 @@ const routes = [
   },
 
   {
+    path: '/generate',
+    name: 'Generate',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'information',
+        name: 'Information',
+        component: () => import('@/views/generate/Information'),
+      },
+      {
+        path: 'publishers',
+        name: 'Publishers',
+        component: () => import('@/views/generate/Publishers'),
+      },
+    ]
+  },
+
+  {
     path: '/',
     name: 'Home',
     component: DefaultLayout,

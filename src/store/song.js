@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js"
-import { notify } from "@kyvg/vue3-notification"
+import { useToast } from 'vue-toastification'
 
 import { useHelperStore } from '@/services/helper'
+
 const helperStore = useHelperStore()
+const toast = useToast()
 
 export const useSongStore = defineStore({
 
@@ -47,7 +49,7 @@ export const useSongStore = defineStore({
 
                 this.appendMeetingSong(response.data)
                 helperStore.loading = false
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY ADDED" });
+                toast.success("Successfully Added")
                 helperStore.visibleModalSongsMeeting=false
             })
             .catch(error => {
@@ -64,7 +66,7 @@ export const useSongStore = defineStore({
             .then(response => {
                 this.updateMeetingSong(response.data)
                 helperStore.loading = false
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
+                toast.success("Successfully Updated")
                 helperStore.visibleModalSongsMeeting=false
             })
             .catch(error => {
@@ -100,7 +102,7 @@ export const useSongStore = defineStore({
                     helperStore.loading_delete = false
                     helperStore.confirm = 0
                     this.removeMeetingSong(id)
-                    notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
+                    toast.success("Successfully Deleted")
                 })
                 .catch(error => {
                     if (typeof error.response !== 'undefined') {

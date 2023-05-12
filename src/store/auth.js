@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js";
-import { notify } from "@kyvg/vue3-notification";
+import { useToast } from 'vue-toastification'
 import router from '@/router'
+
+const toast = useToast()
 
 export const useAuthStore = defineStore({
 
@@ -34,15 +36,23 @@ export const useAuthStore = defineStore({
 
     actions: {
 
+        async getToken() {
+            await EventService.getToken()
+            .then(response => {
+                return response;
+            })
+        },
+
         updateUser(payloads) {
 
             this.loading = true
+            this.errors = {}
             EventService.updateUser(payloads)
             .then(response => {
                 this.editInfo = 0
                 this.user = response.data
                 this.loading = false
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY SAVE" });
+                toast.success("Successfully Save")
             })
             .catch(error => {
                 this.errors = error.response.data.errors
@@ -58,7 +68,8 @@ export const useAuthStore = defineStore({
                 this.editPassword = 0
                 this.loading_password = false
                 this.errors_password = {}
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY CHANGED" });
+                toast.success("Successfully Changed")
+
             })
             .catch(error => {
                 this.errors_password = error.response.data.errors
@@ -85,7 +96,10 @@ export const useAuthStore = defineStore({
             })
         },
 
-        handleLogin(payloads) {
+        async handleLogin(payloads) {
+
+            await this.getToken()
+
             this.errors_login = {}
             this.user_loading = true
             let url = window.location.origin
@@ -98,7 +112,7 @@ export const useAuthStore = defineStore({
                 localStorage.setItem('scheduling_id', response.data.user.id)
                 // router.push({name: 'Dashboard'})
                 location.href = url+'/?#/dashboard';
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY LOGIN" });
+                toast.success("Successfully Login")
             })
             .catch(error => {
                 this.errors_login = error.response.data.errors
@@ -117,7 +131,8 @@ export const useAuthStore = defineStore({
                 localStorage.removeItem('scheduling_token')
                 localStorage.removeItem('scheduling_id')
                 router.push({name: 'Login'})
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY LOGOUT" });
+                toast.success("Successfully Logout")
+
             })
             .catch(error => {
                 this.errors_login = error.response.data.errors
@@ -131,7 +146,7 @@ export const useAuthStore = defineStore({
             EventService.resendVerification()
             .then(response => {
                 this.verification_loading = false
-                notify({ type: "success", duration: 6000, title: response.data.message });
+                toast.success(response.data.message)
             })
             .catch(error => {
                 this.errors_login = error.response.data.errors

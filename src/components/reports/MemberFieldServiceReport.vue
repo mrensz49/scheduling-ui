@@ -111,7 +111,6 @@ export default {
         //     this.activeBtn = fieldServiceStore.member_reports.years[0]
         //     this.delayShow=true;
         // },1000)
-        console.log('test')
     },
 
     data() {

@@ -299,6 +299,9 @@
         <CCol md="6">
             <ActivePublishers v-show = "activeBtn === 'ro'" />
         </CCol>
+        <CCol md="6">
+            <NoReportPublishers v-if = "activeBtn === 'ro'" />
+        </CCol>
     </CRow>
     <CRow v-if = "activeBtn === 'stat'">
         <CCol :md="4" v-for="(dataset, key, index) in fieldServiceStore.data.stats.datasets" :key="index">
@@ -313,16 +316,19 @@
             </CCard>
         </CCol>
     </CRow>
-    <ModalActivePublishers/>
+    <ModalActivePublishers v-show="helperStore.selectedModal == 'active_pub'"/>
+    <ModalNoOfReportsPubs  v-show="helperStore.selectedModal == 'report_pub'"/>
 
 </template>
 
 <script>
 
     import ModalActivePublishers from '@/components/modal/ModalActivePublishers.vue'
+    import ModalNoOfReportsPubs from '@/components/modal/ModalNoOfReportsPubs.vue'
     import FieldServiceTable from '@/components/reports/FieldServiceTable.vue'
     import MeetingAttendance from '@/components/reports/MeetingAttendance.vue'
     import ActivePublishers from '@/components/reports/ActivePublishers.vue'
+    import NoReportPublishers from '@/components/reports/NoReportPublishers.vue'
 
     import { CChartBar } from '@coreui/vue-chartjs'
 
@@ -330,9 +336,11 @@
 
     import { useCongregationStore } from '@/store/congregation'
     import { useFieldServiceStore } from '@/store/field_service'
+    import { useHelperStore } from '@/services/helper'
 
     const congregationStore = useCongregationStore()
     const fieldServiceStore = useFieldServiceStore()
+    const helperStore = useHelperStore()
 
     export default {
 
@@ -354,7 +362,9 @@
             return {
                 congregationStore: congregationStore,
                 fieldServiceStore: fieldServiceStore,
+                helperStore: helperStore,
 
+                selectedModal: '',
                 defShowGroup: 1, // default value
                 activeBtn: 'ar', // default value
                 edit: 0,
@@ -373,7 +383,15 @@
                 bible_studies: [],
             }
         },
-        components: { CChartBar, FieldServiceTable, MeetingAttendance, ActivePublishers, ModalActivePublishers },
+        components: {
+            CChartBar,
+            FieldServiceTable,
+            MeetingAttendance,
+            ActivePublishers,
+            ModalActivePublishers,
+            NoReportPublishers,
+            ModalNoOfReportsPubs,
+        },
         computed: {
 
         },

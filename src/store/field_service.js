@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js";
 import moment from 'moment'
+import router from '@/router'
+import { useToast } from 'vue-toastification'
 
 import { useHelperStore } from '@/services/helper'
+
 const helperStore = useHelperStore()
+const toast = useToast()
 
 export const useFieldServiceStore = defineStore({
 
@@ -61,6 +65,10 @@ export const useFieldServiceStore = defineStore({
             .catch(error => {
                 this.errors = error.response.data.message
                 this.calc_loading = false
+                if (error.response.status == 401) {
+                    toast.error("Session timeout. Please log in again.")
+                    router.push({name: 'Login'})
+                }
             })
         },
 
@@ -74,6 +82,10 @@ export const useFieldServiceStore = defineStore({
             .catch(error => {
                 this.errors = error.response.data.message
                 this.calc_loading = false
+                if (error.response.status == 401) {
+                    toast.error("Session timeout. Please log in again.")
+                    router.push({name: 'Login'})
+                }
             })
         },
 
@@ -190,6 +202,8 @@ export const useFieldServiceStore = defineStore({
             if (payloads.type == 'get') {
 
                 helperStore.visibleModal = true
+                helperStore.selectedModal = 'active_pub'
+
                 this.aps_loading = true
                 EventService.activePublishers(payloads)
                 .then(response => {

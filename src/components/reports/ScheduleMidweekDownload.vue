@@ -53,11 +53,12 @@
 <script>
 
 import moment from 'moment'
-import { notify } from "@kyvg/vue3-notification"
+import { useToast } from 'vue-toastification'
 import EventService from "@/services/EventService.js"
 import { useHelperStore } from '@/services/helper'
 
 const helperStore = useHelperStore()
+const toast = useToast()
 
 export default {
 
@@ -115,7 +116,7 @@ export default {
                     fileLink.click();
                     this.loading = 0
 
-                    notify({ type: "success", duration: 6000, title: "Successfully Downloaded!" });
+                    toast.success("Successfully Downloaded")
                 })
             }
         }

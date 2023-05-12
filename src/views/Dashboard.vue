@@ -9,6 +9,7 @@
         <CCard class="mb-4">
           <CCardHeader>
             <h4>{{ authStore.user.congregation?.name }}</h4>
+            <span v-if="congregationStore.loading"><CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
           </CCardHeader>
           <CCardBody>
             <CRow>
@@ -68,7 +69,6 @@
             <h5>Stats</h5>
           </CCardHeader>
           <CCardBody>
-            <span v-if="congregationStore.loading"><CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
             <CRow>
 
               <CCol :sm="12" :md="5" :lg="5">

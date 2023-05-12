@@ -43,6 +43,7 @@ export const useAddressStore = defineStore({
             if (code) {
                 cities(code).then((city) => {
                     this.cities = city
+                    memberStore.def_cities = city
                 });
             }
         },

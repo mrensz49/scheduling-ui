@@ -3,7 +3,7 @@
         <CCol>
             <CSpinner component="span" size="sm" aria-hidden="true" v-if="auxilaryStore.loading"/>
             <h2 v-if="!auxilaryStore.loading">Auxilary Pioneer</h2>
-            <CIcon icon="cil-plus" @click="addAuxilarry()" v-if="!auxilaryStore.loading" style="float:right;margin-top: -11%;" class="pointer text-primary"/>
+            <CIcon icon="cil-plus" @click="addAuxilarry()" v-if="!auxilaryStore.loading" style="float:right;margin-top: -9%;" class="pointer text-primary"/>
             <CTable hover responsive class="table-sm">
                 <CTableHead>
                     <CTableRow>

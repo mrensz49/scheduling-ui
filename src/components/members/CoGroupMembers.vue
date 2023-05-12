@@ -3,6 +3,9 @@
         <CCol>
             <CSpinner component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
             <h5 v-if="!memberStore.loading">Group Co-Members</h5>
+            <div
+                      class="border-start border-start-2 border-start-info py-1 px-2 mb-1"
+                    >
             <CTable hover responsive class="table-sm" striped >
                 <CTableHead>
                     <CTableRow>
@@ -25,6 +28,7 @@
                     </CTableRow>
                 </CTableBody>
             </CTable>
+        </div>
         </CCol>
     </CRow>
 
@@ -35,9 +39,11 @@
     import router from '@/router'
     import { useMemberStore } from '@/store/member'
     import { useAuxilaryStore } from '@/store/auxilary'
+    import { useAddressStore } from '@/store/address'
 
     const memberStore = useMemberStore()
     const auxilaryStore = useAuxilaryStore()
+    const addressStore = useAddressStore()
 
     export default {
 
@@ -57,9 +63,10 @@
                 await memberStore.getMember(id)
                 auxilaryStore.fetchAuxiDates(id)
 
+                addressStore.fetchCities(memberStore.member.address?.province_code)
+                addressStore.fetchBrgys(memberStore.member.address?.city_town_code)
+
                 router.push({name: 'View Member', params: { id: id } })
-
-
             }
         },
     }

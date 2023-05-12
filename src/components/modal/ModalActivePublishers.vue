@@ -1,5 +1,5 @@
 <template>
-    <CModal size="lg" :visible="helperStore.visibleModal" @close="() => { helperStore.visibleModal = false }">
+    <CModal size="lg" :visible="helperStore.visibleModal && helperStore.selectedModal == 'active_pub'" @close="() => { helperStore.visibleModal = false }">
         <CModalHeader>
             <CModalTitle> Active Publishers & Latest Report</CModalTitle>
         </CModalHeader>

@@ -1,5 +1,5 @@
 <template>
-    <CCard class="mb-4"  width="50%">
+    <CCard class="mb-4">
         <CCardBody>
             <CTable striped hover responsive>
                 <CTableHead>

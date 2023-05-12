@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js"
-import { notify } from "@kyvg/vue3-notification"
+import { useToast } from 'vue-toastification'
+
 import {
     // regions,
     // provinces,
@@ -14,17 +15,21 @@ import { useHelperStore } from '@/services/helper'
 
 const positionStore = usePositionStore()
 const helperStore = useHelperStore()
+const toast = useToast()
 
 export const useMemberStore = defineStore({
 
     id: 'members',
 
     state: () => ({
-        def_brgys: [], // default brgy to avoid multiple query
+        is_count_ap: '',
+        def_brgys: [], // default brgy to avoid multiple query -> query from address.js
+        def_cities: [], // default cities to avoid multiple query -> query from address.js
         co_members: [],
         member: [],
         members: [],
         phones: [],
+        loading_ap: false,
         loading: false,
         loading_search: false,
         loading_delete: 0,
@@ -40,7 +45,7 @@ export const useMemberStore = defineStore({
 
                 const listMembers = this.members.data.map((member) => {
                     if (member.address) {
-                        member.brgy = this.locateAddress(member.address.brgy_code)
+                        member.brgy = this.locateAddrBrgy(member.address.brgy_code)
                     }
                     if (member.designates.length) {
                         member.positions = this.getPosition(member.designates)
@@ -54,7 +59,8 @@ export const useMemberStore = defineStore({
         showMember() {
 
             if (Object.keys(this.member).length) {
-                this.member.brgy = this.locateAddress(this.member.address.brgy_code)
+                this.member.brgy = this.locateAddrBrgy(this.member.address.brgy_code)
+                this.member.city_town = this.locateAddrCity(this.member.address.city_town_code)
                 this.member.positions = this.getPosition(this.member.designates)
                 return this.member
             }
@@ -62,7 +68,7 @@ export const useMemberStore = defineStore({
 
         defPosition() {
             const listPositions = this.member.positions.map((position) => {
-                return position.id
+                return position?.id
             })
             return listPositions;
         },
@@ -85,7 +91,7 @@ export const useMemberStore = defineStore({
                 this.member = response.data
                 this.loading = false
                 this.errors = {}
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY ADDED" });
+                toast.success("Successfully Added")
                 // redirect this to view user
                 router.push({name: 'View Member', params: { id: response.data.id } })
             })
@@ -107,7 +113,7 @@ export const useMemberStore = defineStore({
                 this.phones = response.data.data.numbers
                 this.loading_update = false
                 this.errors = ''
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
+                toast.success("Successfully Updated")
                 this.edit=0
             })
             .catch(error => {
@@ -148,6 +154,7 @@ export const useMemberStore = defineStore({
             .then(response => {
                 this.member = response.data.data
                 this.phones = response.data.data.numbers
+                this.is_count_ap = response.data.data.is_count_ap
                 this.loading = false
             })
             .catch(error => {
@@ -174,11 +181,18 @@ export const useMemberStore = defineStore({
             barangays(city_town_code).then((barangay) => this.def_brgys = barangay);
         },
 
-        locateAddress(brgy_code) {
+        locateAddrBrgy(brgy_code) {
             const foundBrgy = this.def_brgys.find((brgy) => {
                 return brgy.brgy_code === brgy_code
             })
             return foundBrgy
+        },
+
+        locateAddrCity(city_town_code) {
+            const foundCity = this.def_cities.find((city) => {
+                return city.city_code === city_town_code
+            })
+            return foundCity
         },
 
         search(event) {
@@ -222,7 +236,7 @@ export const useMemberStore = defineStore({
                     helperStore.loading_delete = false
                     helperStore.confirm = 0
                     this.removeMember(id)
-                    notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
+                    toast.success("Successfully Deleted")
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
@@ -231,6 +245,19 @@ export const useMemberStore = defineStore({
 
                 })
             },1000)
+        },
+
+        isCountAP(payloads) {
+            this.loading_ap = true
+            EventService.isCountAP(payloads)
+            .then(response => {
+                this.is_count_ap = response.data
+                this.loading_ap = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading_ap = false
+            })
         }
 
     }

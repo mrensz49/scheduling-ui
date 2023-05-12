@@ -24,8 +24,8 @@
                     {{  memberStore.showMember?.first_name.slice(0,1) }}{{  memberStore.showMember?.last_name.slice(0,1) }}
                 </CAvatar>
 
-                <CRow class="mt-3 mb-4" v-if="typeof memberStore.showMember !== 'undefined'">
-                    <CCol :sm="12" :md="7" >
+                <CRow class="mt-3" v-if="typeof memberStore.showMember !== 'undefined'">
+                    <CCol :sm="12" :md="7" class="mb-2">
                         <CCol :sm="12" :md="12">
                             <h2>Personal Information</h2>
                             <span v-if="!memberStore.edit" style="float:right;margin-top: -8%;">
@@ -86,12 +86,14 @@
                             <CRow>
                                 <CCol :md="4" :sm="6" class="fw-semibold">Gender</CCol>
                                 <CCol :md="8" :sm="6">
-                                    <span v-if="!memberStore.edit"> - {{ memberStore.showMember.gender }}</span>
+                                    <span v-if="!memberStore.edit"> -
+                                        {{ memberStore.showMember.gender == 'Male' ? 'Brother':'Sister' }}
+                                    </span>
                                     <span v-else>
                                         <CFormSelect required feedbackInvalid="This is required!" v-model="memberStore.showMember.gender" class="mb-2">
                                             <option value="">Choose...</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            <option value="Male">Brother</option>
+                                            <option value="Female">Sister</option>
                                         </CFormSelect>
                                     </span>
                                 </CCol>
@@ -158,7 +160,7 @@
                                         <CFormInput
                                             class="mb-2"
                                             type="date"
-                                            placeholder="Date of Baptized"
+                                            placeholder="Date of Baptism"
                                             v-model="dobap"
                                             :value="getHumanDate(dobap)"
                                         />
@@ -271,7 +273,29 @@
                             </CRow>
                             <CRow>
                                 <CCol :md="4" :sm="6" class="fw-semibold">City/Town</CCol>
-                                <CCol :md="8" :sm="6">- Loon</CCol>
+                                <CCol :md="8" :sm="6">
+                                    <span v-if="!memberStore.edit">
+                                        - {{ memberStore.showMember.city_town?.city_name }}
+                                    </span>
+                                    <span v-else>
+                                        <CFormSelect
+                                            required
+                                            feedbackInvalid="This is required!"
+                                            @change="changeCityTown($event)"
+                                            v-model="formData.city_code"
+                                            class="mb-2"
+                                        >
+                                        <option value="">Choose...</option>
+                                        <option
+                                            v-for="city in memberStore.def_cities" :key="city"
+                                            :selected="city.city_code == memberStore.showMember.address.city_town_code"
+                                            :value="city.city_code"
+                                        >
+                                            {{ city.city_name }}
+                                        </option>
+                                        </CFormSelect>
+                                    </span>
+                                </CCol>
                             </CRow>
                             <CRow>
                                 <CCol :md="4" :sm="6" class="fw-semibold">Brgy</CCol>
@@ -315,9 +339,11 @@
                                     </div>
                                 </CCol>
                             </CRow>
-                            <hr>
+                            <hr class="mb-4">
                         </CCol>
                         <AuxiMonths/>
+                        <CheckedPub/>
+
                     </CCol>
                     <CCol :sm="12" :md="5">
                         <CoGroupMembers/>
@@ -326,6 +352,7 @@
                 </CRow>
             </CCardBody>
             </CForm>
+
         </CCard>
       </CCol>
     </CRow>
@@ -349,6 +376,7 @@
     import MemberFieldServiceReport from '@/components/reports/MemberFieldServiceReport.vue'
     import AuxiMonths from '@/components/members/AuxiMonths'
     import CoGroupMembers from '@/components/members/CoGroupMembers'
+    import CheckedPub from '@/components/members/CheckedPub'
 
     const memberStore = useMemberStore()
     const positionStore = usePositionStore()
@@ -367,8 +395,6 @@
             await authStore.getUser()
             positionStore.getPositions()
             congregationStore.getCongregations()
-
-            addressStore.fetchBrgys(authStore.showCongregation?.city_town_code)
         },
 
         async mounted() {
@@ -381,9 +407,12 @@
                 'group_no' : memberStore.showMember.group_no
             })
             this.formData.position_id = memberStore.defPosition
-
+            addressStore.fetchCities(memberStore.member.address?.province_code)
+            addressStore.fetchBrgys(memberStore.member.address?.city_town_code)
         },
-        components: { Multiselect, MemberFieldServiceReport, AuxiMonths, CoGroupMembers, },
+
+        components: { Multiselect, MemberFieldServiceReport, AuxiMonths, CoGroupMembers, CheckedPub, },
+
         data() {
             return {
                 memberStore: memberStore,
@@ -429,8 +458,13 @@
             },
 
             changeBrgy(event) {
-                // console.log(event.target.value)
                 this.formData.brgy_code = event.target.value
+            },
+
+            changeCityTown(event) {
+                this.formData.brgy_code = ''
+                this.formData.city_town_code = event.target.value
+                addressStore.fetchBrgys(event.target.value)
             },
 
             handleUpdate(event) {

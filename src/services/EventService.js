@@ -50,6 +50,10 @@ export default {
 
     //end of admin side
 
+    getToken() {
+        return apiClient.get(`/sanctum/csrf-cookie`)
+    },
+
     register(payloads) {
         return apiClient.post(`/api/register`, payloads)
     },
@@ -132,6 +136,10 @@ export default {
 
     search(payload) {
         return apiClient.get(`/api/search?q=`+payload)
+    },
+
+    searchEMS(payload) {
+        return apiClient.get(`/api/search-ems?q=`+payload)
     },
 
     searchSong(payload) {
@@ -242,14 +250,6 @@ export default {
         return apiClient.get(`/api/meeting-christian-living/titles/${payload}`)
     },
 
-    downloadMidweekSchedule(payload) {
-        return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
-    },
-
-    downloadContacts() {
-        return apiClientReport.get(`/api/generate/contacts`)
-    },
-
     fetchAuxiDates(payload) {
         return apiClient.get(`/api/auxilary/show-dates/${payload}`)
     },
@@ -277,6 +277,37 @@ export default {
     getCoMembers(payloads) {
         return apiClient.get(`/api/members/co-members/${payloads.congregation_id}/${payloads.group_no}`)
     },
+
+    isCountAP(payloads) {
+        return apiClient.post(`/api/members/is-count-ap`, payloads)
+    },
+
+    getNoReportsPubs(payload) {
+        return apiClient.get(`/api/no-of-reports-publishers/show-reports/${payload}`)
+    },
+
+    calcNoReportsPubs(payloads) {
+        return apiClient.post(`/api/no-of-reports-publishers/calc-reports/${payloads.date_rendered}/${payloads.type}`)
+    },
+
+
+    // downloads info
+        downloadMidweekSchedule(payload) {
+            return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
+        },
+
+        downloadContacts() {
+            return apiClientReport.get(`/api/generate/contacts`)
+        },
+
+        downloadInformations(payloads) {
+            return apiClientReport.post(`/api/generate/informations`, payloads)
+        },
+
+        downloadPublishers(payloads) {
+            return apiClientReport.post(`/api/generate/publishers`, payloads)
+        },
+    // end of downloads info
 
     //helper
     fetchWeeks() {

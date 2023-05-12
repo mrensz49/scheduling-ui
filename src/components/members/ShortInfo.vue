@@ -10,7 +10,7 @@
 
     <CRow class="mt-2">
         <CCol :md="4" :sm="12" :xs="12">
-            <span class="me-2 fw-semibold">Date of Baptized :</span>
+            <span class="me-2 fw-semibold">Date of Baptism :</span>
         </CCol>
         <CCol :md="8" :sm="12" :xs="12">
             {{ getHumanDate(detail.dobap) }} / {{ getHumanAge(detail.dobap) }}

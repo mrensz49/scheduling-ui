@@ -21,6 +21,8 @@ export const useHelperStore = defineStore({
         visibleModalTreasure: false,
         visibleModal: false,
 
+        selectedModal: '',
+
         edit_name: [],
     }),
 

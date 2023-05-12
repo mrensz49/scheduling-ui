@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import EventService from "@/services/EventService.js";
-import { notify } from "@kyvg/vue3-notification"
+import { useToast } from 'vue-toastification'
 
 import { useHelperStore } from '@/services/helper'
+
 const helperStore = useHelperStore()
+const toast = useToast()
 
 export const useTreasureStore = defineStore({
 
@@ -46,7 +48,7 @@ export const useTreasureStore = defineStore({
 
                 this.appendTreasure(response.data)
                 helperStore.loading = false
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY ADDED" });
+                toast.success("Successfully Added")
                 helperStore.visibleModalTreasure=false
             })
             .catch(error => {
@@ -79,7 +81,7 @@ export const useTreasureStore = defineStore({
             .then(response => {
                 this.updateTreasure(response.data)
                 helperStore.loading = false
-                notify({ type: "success", duration: 6000, title: "SUCCESSFULLY UPDATED" });
+                toast.success("Successfully Updated")
                 helperStore.visibleModalTreasure=false
             })
             .catch(error => {
@@ -99,7 +101,7 @@ export const useTreasureStore = defineStore({
                     helperStore.loading_delete = false
                     helperStore.confirm = 0
                     this.removeTreasure(id)
-                    notify({ type: "success", duration: 6000, title: "SUCCESSFULLY DELETED" });
+                    toast.success("Successfully deleted")
                 })
                 .catch(error => {
                     if (typeof error.response !== 'undefined') {
