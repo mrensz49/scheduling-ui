@@ -294,10 +294,10 @@
 
     <CRow>
         <CCol md="6">
-            <MeetingAttendance v-show = "activeBtn === 'ro'" />
+            <MeetingAttendance v-if = "activeBtn === 'ro'" />
         </CCol>
         <CCol md="6">
-            <ActivePublishers v-show = "activeBtn === 'ro'" />
+            <ActivePublishers v-if = "activeBtn === 'ro'" />
         </CCol>
         <CCol md="6">
             <NoReportPublishers v-if = "activeBtn === 'ro'" />
