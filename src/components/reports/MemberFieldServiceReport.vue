@@ -7,8 +7,30 @@
                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.reports_loading || loading"/>
                     <a class="pointer" style="float:right" @click="showReport()" v-if="!delayShow">SHOW REPORT</a>
                 </CCardHeader>
+
                 <CCardBody v-if="delayShow">
-                    <CRow>
+
+                    <CRow v-if="fieldServiceStore.member_reports.rp">
+                        <CCol :sm="5"></CCol>
+                        <CCol :sm="7" class="">
+                        <CButtonGroup
+                            class="float-end me-3"
+                            role="group"
+                            aria-label="Basic outlined example"
+                        >
+                            <template v-for="year in fieldServiceStore.member_reports.years" :key="year">
+                                <CButton
+                                    color="secondary"
+                                    variant="outline"
+                                    @click="activeBtn=year.service_year"
+                                    :class="{active: activeBtn === year.service_year}"
+                                >{{ getHumanDate(year.from) }} - {{ getHumanDate(year.to) }}</CButton>
+                            </template>
+                        </CButtonGroup>
+                        </CCol>
+                    </CRow>
+
+                    <CRow v-else>
                         <CCol :sm="5"></CCol>
                         <CCol :sm="7" class="">
                         <CButtonGroup
@@ -28,7 +50,7 @@
                         </CCol>
                     </CRow>
 
-                    <template v-for="(year, index) in fieldServiceStore.member_reports.years" :key="year">
+                    <template v-for="(year, index) in fieldServiceStore.service_year" :key="year">
                         <CCard class="p-2 mt-4" v-if="activeBtn==year">
                             <CChartLine
                                 :height="height"
@@ -47,7 +69,7 @@
                         </CCard>
                     </template>
 
-                    <template v-for="(year, index) in fieldServiceStore.member_reports.years" :key="year">
+                    <template v-for="(year, index) in fieldServiceStore.service_year" :key="year">
                         <CCard class="p-2 mt-4" v-if="activeBtn==year">
                             <CChartLine
                                 :height="height"
@@ -92,6 +114,7 @@
 
 <script>
 
+import moment from 'moment'
 import { CChartLine } from '@coreui/vue-chartjs'
 
 import { useFieldServiceStore } from '@/store/field_service'
@@ -138,10 +161,20 @@ export default {
             fieldServiceStore.memberReports(this.$route.params.id)
 
             setTimeout(()=>{
-                this.activeBtn = fieldServiceStore.member_reports.years[0]
+                if (fieldServiceStore.member_reports.rp) {
+                    this.activeBtn = fieldServiceStore.member_reports.years[0]['service_year']
+                }
+                else {
+                    this.activeBtn = fieldServiceStore.member_reports.years[0]
+                }
+
                 this.delayShow=true;
                 this.loading=false;
             },1000)
+        },
+
+        getHumanDate(date) {
+            return moment(date, 'YYYY-MM-DD').format('MMM Y');
         },
     },
 

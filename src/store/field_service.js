@@ -38,6 +38,7 @@ export const useFieldServiceStore = defineStore({
             return_visits: 0,
             bible_studies: 0,
         },
+        service_year: [],
         date_rendered: '',
         active_publishers: '',
         list_publishers: '',
@@ -158,24 +159,42 @@ export const useFieldServiceStore = defineStore({
 
         lineChartData(data) {
 
+            var service_year = []
+            if (data.rp) {
+                service_year = data.years.map(year => {
+                    return year.service_year
+                })
+                this.service_year = service_year
+                this.processChart(data, service_year)
+            }
+            else {
+                this.service_year = data.years
+                this.processChart(data, data.years)
+            }
+
+        },
+
+        processChart(data, service_year) {
+
             let index=0
-            for(let year in data.years) {
-                let y = data.years[year]
+            for(let year in service_year) {
+                let y = service_year[year]
+                console.log('y - ', y)
                 var list_months = data.reports[y].map(month => {
                     return this.getHumanDate(month.date_rendered)
                 })
                 this.lineMonths.push({[index]: list_months})
                 index++
             }
-
+            console.log('this.lineMonths - ', this.lineMonths)
             let index2=0
-            for(let year in data.years) {
+            for(let year in service_year) {
 
                 var list_placements = []
                 var list_video_showings = []
                 var list_return_visits = []
                 var list_bible_studies = []
-                let y = data.years[year]
+                let y = service_year[year]
                 var list_hours = data.reports[y].map(month => {
 
                     list_placements.push(month.placements)
