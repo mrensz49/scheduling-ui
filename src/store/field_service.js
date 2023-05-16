@@ -160,7 +160,7 @@ export const useFieldServiceStore = defineStore({
         lineChartData(data) {
 
             var service_year = []
-            if (data.rp) {
+            if (parseInt(data.rp)) {
                 service_year = data.years.map(year => {
                     return year.service_year
                 })
@@ -179,14 +179,13 @@ export const useFieldServiceStore = defineStore({
             let index=0
             for(let year in service_year) {
                 let y = service_year[year]
-                console.log('y - ', y)
                 var list_months = data.reports[y].map(month => {
                     return this.getHumanDate(month.date_rendered)
                 })
                 this.lineMonths.push({[index]: list_months})
                 index++
             }
-            console.log('this.lineMonths - ', this.lineMonths)
+
             let index2=0
             for(let year in service_year) {
 

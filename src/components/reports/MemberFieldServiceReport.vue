@@ -10,7 +10,7 @@
 
                 <CCardBody v-if="delayShow">
 
-                    <CRow v-if="fieldServiceStore.member_reports.rp">
+                    <CRow v-if="parseInt(fieldServiceStore.member_reports.rp)">
                         <CCol :sm="5"></CCol>
                         <CCol :sm="7" class="">
                         <CButtonGroup
@@ -161,7 +161,7 @@ export default {
             fieldServiceStore.memberReports(this.$route.params.id)
 
             setTimeout(()=>{
-                if (fieldServiceStore.member_reports.rp) {
+                if (parseInt(fieldServiceStore.member_reports.rp)) {
                     this.activeBtn = fieldServiceStore.member_reports.years[0]['service_year']
                 }
                 else {
