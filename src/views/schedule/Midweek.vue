@@ -25,7 +25,7 @@
               </CCol>
 
               <CCol :md="12" v-if="this.date_start">
-                <CCard class="mt-4 mb-4">
+                <CCard class="mt-4 mb-4 shadow-lg bg-body rounded">
                   <CCardBody class="table-responsive mb-4">
                     <table width="100%">
                       <tr>

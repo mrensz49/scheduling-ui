@@ -307,11 +307,31 @@ export default {
         downloadPublishers(payloads) {
             return apiClientReport.post(`/api/generate/publishers`, payloads)
         },
+
+        downloadPioneers(payloads) {
+            return apiClientReport.post(`/api/generate/pioneers`, payloads)
+        },
     // end of downloads info
+
+    showInformations(payloads) {
+        return apiClient.post(`/api/generate/informations`, payloads)
+    },
+
+    showPublishers(payloads) {
+        return apiClient.post(`/api/generate/publishers`, payloads)
+    },
+
+    showPioneers(payloads) {
+        return apiClient.post(`/api/generate/pioneers`, payloads)
+    },
 
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)
+    },
+
+    getServiceYears() {
+        return apiClient.get(`/api/service-years`)
     },
 
     fetchMonthYear() {

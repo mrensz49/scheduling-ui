@@ -4,7 +4,7 @@
         <h1>{{ getHumanDate() }} Reports</h1>
         <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="congregationStore.loading"/>
 
-        <CCard class="mt-2">
+        <CCard class="mt-2 shadow bg-body rounded">
             <CCardBody>
             <CRow class="ms-1">
                 <CCol
@@ -81,7 +81,7 @@
         </CRow>
 
 
-        <div class="accordion mt-3" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+        <div class="accordion mt-3 shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.auxillary_pioneer" :key="group" :item-key="index">
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <div class="accordion" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
             <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.special_pioneer" :key="group" :item-key="index">
                 <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
                     <div class="accordion-body">
@@ -121,7 +121,7 @@
             </div>
         </div>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -149,7 +149,7 @@
             </CCardBody>
         </CCard>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -177,7 +177,7 @@
             </CCardBody>
         </CCard>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -205,7 +205,7 @@
             </CCardBody>
         </CCard>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -233,7 +233,7 @@
             </CCardBody>
         </CCard>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -261,7 +261,7 @@
             </CCardBody>
         </CCard>
 
-        <CCard class="mt-4 mb-4" v-show = "activeBtn === 'ro'">
+        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
             <CCardBody>
                 <CTable striped hover responsive>
                     <CTableHead>
@@ -305,7 +305,7 @@
     </CRow>
     <CRow v-if = "activeBtn === 'stat'">
         <CCol :md="4" v-for="(dataset, key, index) in fieldServiceStore.data.stats.datasets" :key="index">
-            <CCard class="mt-4 mb-1">
+            <CCard class="mt-4 mb-1 shadow bg-body rounded">
                 <CCardBody>
                     <CChartBar :data="defaultData({
                         'key': key,

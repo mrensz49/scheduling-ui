@@ -176,6 +176,11 @@ const routes = [
         name: 'Publishers',
         component: () => import('@/views/generate/Publishers'),
       },
+      {
+        path: 'pioneers',
+        name: 'Pioneers',
+        component: () => import('@/views/generate/Pioneers'),
+      },
     ]
   },
 

@@ -6,7 +6,7 @@
 
     <CRow>
       <CCol :md="12" :sm="12">
-        <CCard class="mb-4">
+        <CCard class="mb-4 shadow bg-body rounded">
           <CCardHeader>
             <h4>{{ authStore.user.congregation?.name }}</h4>
             <span v-if="congregationStore.loading"><CSpinner color="primary" class="ms-1" component="span" size="sm" aria-hidden="true"/></span>
@@ -64,7 +64,7 @@
     </CRow>
     <CRow>
       <CCol :md="8" :sm="12">
-        <CCard class="mb-4">
+        <CCard class="mb-4 shadow bg-body rounded">
           <CCardHeader>
             <h5>Stats</h5>
           </CCardHeader>
@@ -170,7 +170,7 @@
         </CCard>
       </CCol>
       <CCol :md="4" :sm="12">
-        <CCard class="mb-4">
+        <CCard class="mb-4 shadow bg-body rounded">
           <CCardHeader>
             <h5>Avg. Meeting Att.</h5>
           </CCardHeader>

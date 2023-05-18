@@ -1,5 +1,5 @@
 <template>
-    <CCard class="mb-4"  width="50%">
+    <CCard class="mb-4 shadow bg-body rounded"  width="50%">
         <CCardBody>
             <h5>Active Publishers</h5>
             <p>Count all persons in the congregation who reported at least once in the last 6 months.</p>

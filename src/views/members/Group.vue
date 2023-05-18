@@ -24,7 +24,7 @@
                 <CRow>
                     <template v-for="group in congregationStore.showGroups" :key="group.group">
                         <CCol :md="6">
-                            <CListGroup class="mt-4">
+                            <CListGroup class="mt-4 shadow bg-body rounded">
                                 <CListGroupItem color="dark">
                                     <strong>Group {{ group.group }}</strong>
                                 </CListGroupItem>

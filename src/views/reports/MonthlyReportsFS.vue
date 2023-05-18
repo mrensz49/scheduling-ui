@@ -30,7 +30,7 @@
                         <template v-for="(report, index) in fieldServiceStore.monthly_reports" :key="index">
 
                             <CCol :md="4">
-                            <CCard class="mb-3">
+                            <CCard class="mb-3 shadow bg-body rounded">
                                     <CCardBody>
                                         <CCardTitle>
                                             <a href="javascript:void" class="text-decoration-none" @click="view_field_service(report.year, report.month)">

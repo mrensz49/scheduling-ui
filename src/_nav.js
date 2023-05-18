@@ -101,6 +101,12 @@ export default [
         name: 'Publishers',
         to: '/generate/publishers',
       },
+
+      {
+        component: 'CNavItem',
+        name: 'Regular Pioneers',
+        to: '/generate/pioneers',
+      },
     ],
   },
 
