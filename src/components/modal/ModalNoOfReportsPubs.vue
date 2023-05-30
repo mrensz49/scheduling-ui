@@ -22,8 +22,8 @@
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <NoOfReportsPubExt :positions="reportsPubs.members.publishers"/>
-                        <NoOfReportsPubExt :counter="reportsPubs.members.publishers.length" row_color="warning" :positions="reportsPubs.members.unbaptized_publishers"/>
+                        <NoOfReportsPubExt :positions="reportsPubs.members?.publishers"/>
+                        <NoOfReportsPubExt :counter="reportsPubs.members.publishers?.length" row_color="warning" :positions="reportsPubs.members.unbaptized_publishers"/>
                     </CTableBody>
                     </CTable>
                 </CCol>
@@ -43,7 +43,7 @@
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <NoOfReportsPubExt :positions="reportsPubs.members.auxiliary_pioneers"/>
+                        <NoOfReportsPubExt :positions="reportsPubs.members?.auxiliary_pioneers"/>
                     </CTableBody>
                     </CTable>
                 </CCol>
@@ -63,8 +63,8 @@
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                       <NoOfReportsPubExt :positions="reportsPubs.members.regular_pioneers"/>
-                       <NoOfReportsPubExt :counter="reportsPubs.members.regular_pioneers.length" row_color="warning" :positions="reportsPubs.members.special_pioneers"/>
+                       <NoOfReportsPubExt :positions="reportsPubs.members?.regular_pioneers"/>
+                       <NoOfReportsPubExt :counter="reportsPubs.members.regular_pioneers?.length" row_color="warning" :positions="reportsPubs.members.special_pioneers"/>
                     </CTableBody>
                     </CTable>
                 </CCol>

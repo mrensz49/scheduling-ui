@@ -2,16 +2,16 @@
     <CRow>
       <CCol>
         <h1>{{ getHumanDate() }} Reports</h1>
-        <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="congregationStore.loading"/>
-
         <CCard class="mt-2 shadow bg-body rounded">
             <CCardBody>
+            <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="congregationStore.loading"/>
             <CRow class="ms-1">
+                <template v-for="(report, key, index) in fieldServiceStore.data.reports" :key="index">
                 <CCol
                     class="border-start border-start-4 border-start-info py-1 px-3 mb-2"
                     :sm="4"
                     :md="2"
-                    v-for="(report, key, index) in fieldServiceStore.data.reports" :key="index"
+                    v-if="key == 'elder' || key == 'ministerial'"
                 >
                     <div class="text-medium-emphasis small">{{ changeText(key)  }}</div>
                     <div class="fw-semibold" style="font-size:12px;border-spacing: 0px;">
@@ -39,6 +39,7 @@
                         </table>
                     </div>
                 </CCol>
+                </template>
             </CRow>
         </CCardBody>
         </CCard>
@@ -53,9 +54,9 @@
                 <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
                 <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
                 <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
-                <CButton color="primary" disabled>
+                <!-- <CButton color="primary" disabled>
                     <CIcon icon="cil-cloud-download" />
-                </CButton>
+                </CButton> -->
                 </CButtonGroup>
 
             </CCol>
@@ -72,223 +73,240 @@
                         :selected="defShowGroup == n ? true : false"
                     > Group {{ n }}</option>
                 </CFormSelect>
-                <CButton type="button" color="secondary" @click="edit == 1 ? edit=0 : edit=1">
-                    <span v-if="!edit" class="text-primary"><CIcon icon="cil-pencil" class="me-2 ms-1" /></span>
+                <CButton type="button" color="secondary" @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1">
+                    <span v-if="!helperStore.editFS" class="text-primary"><CIcon icon="cil-pencil" class="me-2 ms-1" /></span>
                     <span class="text-primary" v-else>close</span>
                 </CButton>
                 </CInputGroup>
             </CCol>
         </CRow>
+        <ShowBy v-if="activeBtn === 'ar' || activeBtn === 'ro'"/>
+        <span v-show="helperStore.screen == 'smaller'">
+            <div v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'" class="mt-4">
+                <FieldServiceGrid
+                    :defShowGroup="defShowGroup"
+                    :date_rendered="date_rendered"
+                />
+            </div>
+        </span>
 
-
-        <div class="accordion mt-3 shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
-            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
-                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
-                    <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Publisher" :date_rendered="date_rendered"/>
+        <span v-show="helperStore.screen == 'wider'">
+            <div class="accordion mt-3 shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+                <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
+                    <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                        <div class="accordion-body">
+                            <FieldServiceTable :group="group" designate="Publisher" :date_rendered="date_rendered"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
-            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
-                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
-                    <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Regular Pioneer" :date_rendered="date_rendered"/>
+            <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+                <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
+                    <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                        <div class="accordion-body">
+                            <FieldServiceTable :group="group" designate="Regular Pioneer" :date_rendered="date_rendered"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
-            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.auxillary_pioneer" :key="group" :item-key="index">
-                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
-                    <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Auxillary Pioneer" :date_rendered="date_rendered"/>
+            <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+                <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.auxillary_pioneer" :key="group" :item-key="index">
+                    <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                        <div class="accordion-body">
+                            <FieldServiceTable :group="group" designate="Auxillary Pioneer" :date_rendered="date_rendered"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
-            <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.special_pioneer" :key="group" :item-key="index">
-                <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
-                    <div class="accordion-body">
-                        <FieldServiceTable :group="group" :edit="edit" designate="Special Pioneer" :date_rendered="date_rendered"/>
+            <div class="accordion shadow bg-body rounded" v-if="typeof congregationStore.groups.members !== 'undefined'" v-show = "activeBtn === 'ar'">
+                <div class="accordion-item" v-for="(group, index) in congregationStore.groups.members.special_pioneer" :key="group" :item-key="index">
+                    <div class = "accordion-collapse collapse" :class="defShowGroup == index ? 'show' : ''">
+                        <div class="accordion-body">
+                            <FieldServiceTable :group="group" designate="Special Pioneer" :date_rendered="date_rendered"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </span>
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Totals</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Grand Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['video_showings'] }}</CTableHeaderCell>
-                            <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['return_visits'] }}</CTableHeaderCell>
-                            <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['bible_studies'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+        <span v-show="helperStore.screen == 'smaller' && activeBtn === 'ro'">
+            <GroupsMonthlyReports/>
+        </span>
+        <span v-show="helperStore.screen == 'wider'">
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark" class="text-warning">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Publishers</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_vs'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_rv'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_bs'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark">
+                                <CTableHeaderCell colspan="2" scope="col" width="25%">Totals</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Credit Hours</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Grand Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['video_showings'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['return_visits'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['credit_hours'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark" class="text-warning">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Auxiliary Pioneers</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['video_showings'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['return_visits'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['bible_studies'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark" class="text-warning">
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Publishers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_vs'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_rv'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_bs'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark" class="text-warning">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special/Regular Pioneers</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] + fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] + fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark" class="text-warning">
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Auxiliary Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['video_showings'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['return_visits'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Regular Pioneers</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark" class="text-warning">
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special/Regular Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] + fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] + fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
 
-        <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
-            <CCardBody>
-                <CTable striped hover responsive>
-                    <CTableHead>
-                        <CTableRow color="dark">
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special Pioneers</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                        </CTableRow>
-                        <CTableRow>
-                            <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
-                                <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
-                                Total :
-                            </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                </CTable>
-            </CCardBody>
-        </CCard>
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark">
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Regular Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
 
+            <CCard class="mt-4 mb-4 shadow bg-body rounded" v-show = "activeBtn === 'ro'">
+                <CCardBody>
+                    <CTable striped hover responsive>
+                        <CTableHead>
+                            <CTableRow color="dark">
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                            </CTableRow>
+                            <CTableRow>
+                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                    <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
+                                    Total :
+                                </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                    </CTable>
+                </CCardBody>
+            </CCard>
+        </span>
         </CCol>
     </CRow>
 
@@ -323,12 +341,15 @@
 
 <script>
 
-    import ModalActivePublishers from '@/components/modal/ModalActivePublishers.vue'
-    import ModalNoOfReportsPubs from '@/components/modal/ModalNoOfReportsPubs.vue'
-    import FieldServiceTable from '@/components/reports/FieldServiceTable.vue'
-    import MeetingAttendance from '@/components/reports/MeetingAttendance.vue'
-    import ActivePublishers from '@/components/reports/ActivePublishers.vue'
-    import NoReportPublishers from '@/components/reports/NoReportPublishers.vue'
+    import ModalActivePublishers from '@/components/modal/ModalActivePublishers'
+    import ModalNoOfReportsPubs from '@/components/modal/ModalNoOfReportsPubs'
+    import FieldServiceTable from '@/components/reports/FieldServiceTable'
+    import FieldServiceGrid from '@/components/reports/FieldServiceGrid'
+    import MeetingAttendance from '@/components/reports/MeetingAttendance'
+    import ActivePublishers from '@/components/reports/ActivePublishers'
+    import NoReportPublishers from '@/components/reports/NoReportPublishers'
+    import GroupsMonthlyReports from '@/components/reports/GroupsMonthlyReports'
+    import ShowBy from '@/components/icon/ShowBy'
 
     import { CChartBar } from '@coreui/vue-chartjs'
 
@@ -391,6 +412,9 @@
             ModalActivePublishers,
             NoReportPublishers,
             ModalNoOfReportsPubs,
+            ShowBy,
+            FieldServiceGrid,
+            GroupsMonthlyReports
         },
         computed: {
 

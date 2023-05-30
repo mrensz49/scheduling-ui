@@ -25,6 +25,9 @@ export const useHelperStore = defineStore({
         selectedModal: '',
 
         edit_name: [],
+
+        editFS: 0,
+        screen: 'smaller',
     }),
 
     getters: {

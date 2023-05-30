@@ -40,6 +40,8 @@ import {
     cilCog,
     cilCheckCircle,
     cilCircle,
+    cilViewModule,
+    cilScreenSmartphone,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -57,6 +59,8 @@ import {
     cilCog,
     cilCheckCircle,
     cilCircle,
+    cilViewModule,
+    cilScreenSmartphone,
 }
 
 const pinia = createPinia()

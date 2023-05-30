@@ -4,14 +4,13 @@
             <CTable striped hover responsive>
                 <CTableHead>
                     <CTableRow>
-                        <CTableHeaderCell colspan="2" scope="col">Attendance</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="35%"><i>Midweek</i></CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="35%"><i>Weekend</i></CTableHeaderCell>
+                        <CTableHeaderCell colspan="2" scope="col">Average Meeting Attendance</CTableHeaderCell>
                     </CTableRow>
                     <CTableRow>
-                        <CTableHeaderCell colspan="2" scope="col" class="text-end">
-                            Average :
-                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col" width="50%"><i>Midweek</i></CTableHeaderCell>
+                        <CTableHeaderCell scope="col" width="50%"><i>Weekend</i></CTableHeaderCell>
+                    </CTableRow>
+                    <CTableRow>
                         <CTableHeaderCell scope="col">
                             <CInputGroup>
                                 <CFormInput

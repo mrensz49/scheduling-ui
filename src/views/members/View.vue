@@ -21,24 +21,24 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow>
-                                <CTableHeaderCell scope="col">No</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="!$isMobile()">No</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Group</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="18%">Designate</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="18%" v-if="!$isMobile()">Designate</CTableHeaderCell>
                                 <!-- <CTableHeaderCell scope="col">Gender</CTableHeaderCell> -->
-                                <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
-                                <CTableHeaderCell scope="col">Date of Baptism</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="!$isMobile()">Date of Birth</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="!$isMobile()">Date of Baptism</CTableHeaderCell>
                                 <!-- <CTableHeaderCell scope="col">Phone</CTableHeaderCell> -->
-                                <CTableHeaderCell scope="col">Address</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="!$isMobile()">Address</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                             </CTableRow>
                     </CTableHead>
                     <CTableBody>
                         <CTableRow v-for="(member, index) in memberStore.showMembers" :key="member.id">
-                            <CTableDataCell>{{ index+1 }}</CTableDataCell>
+                            <CTableDataCell v-if="!$isMobile()">{{ index+1 }}</CTableDataCell>
                             <CTableDataCell>{{ member.full_name }}</CTableDataCell>
                             <CTableDataCell>{{ member.group_no }}</CTableDataCell>
-                            <CTableDataCell>
+                            <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="typeof member.positions !== 'undefined' && member.positions.length">
                                     <template v-for="(position, index) in member.positions" :key="index">
                                         <CBadge v-if="typeof position !== 'undefined'" color="success" class="m-1">
@@ -47,17 +47,17 @@
                                     </template>
                                 </template>
                             </CTableDataCell>
-                            <CTableDataCell>
+                            <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="member.dobirth.date">
                                     {{ getHumanDate(member.dobirth.date) }} / {{ member.dobirth.age }} <sup>yrs. old</sup>
                                 </template>
                             </CTableDataCell>
-                            <CTableDataCell>
+                            <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="member.dobap.date">
                                     {{ getHumanDate(member.dobap.date) }} / {{ member.dobap.human }}
                                 </template>
                             </CTableDataCell>
-                            <CTableDataCell>
+                            <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="typeof member.brgy !== 'undefined'">
                                     {{ member.brgy.brgy_name }}
                                 </template>

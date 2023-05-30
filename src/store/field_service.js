@@ -18,6 +18,7 @@ export const useFieldServiceStore = defineStore({
         fs_report: [],
         member_reports: [],
         all_reports: [],
+        group_reports: [],
         monthly_reports: [],
         lineMonths: [],
         linePlacements: [],
@@ -25,6 +26,7 @@ export const useFieldServiceStore = defineStore({
         lineHours: [],
         lineReturnVisits: [],
         lineBibleStudies: [],
+        lineCreditHours: [],
         data: {
             stats: {},
             reports: {
@@ -37,6 +39,7 @@ export const useFieldServiceStore = defineStore({
             hours: 0,
             return_visits: 0,
             bible_studies: 0,
+            credit_hours: 0,
         },
         service_year: [],
         date_rendered: '',
@@ -114,6 +117,7 @@ export const useFieldServiceStore = defineStore({
             }
 
             this.all_reports.push({[reports[1]]: sum_report}) // stored all total reports
+            // this.group_reports.push({'group': reports[0], [reports[1]]: sum_report}) // stored all total reports
             return sum_report
         },
 
@@ -193,6 +197,7 @@ export const useFieldServiceStore = defineStore({
                 var list_video_showings = []
                 var list_return_visits = []
                 var list_bible_studies = []
+                var list_credit_hours = []
                 let y = service_year[year]
                 var list_hours = data.reports[y].map(month => {
 
@@ -200,6 +205,7 @@ export const useFieldServiceStore = defineStore({
                     list_video_showings.push(month.video_showings)
                     list_return_visits.push(month.return_visits)
                     list_bible_studies.push(month.bible_studies)
+                    list_credit_hours.push(month.credit_hours)
 
                     return month.hours
 
@@ -210,6 +216,7 @@ export const useFieldServiceStore = defineStore({
                 this.lineVideoShowings.push({[index2]: list_video_showings})
                 this.lineReturnVisits.push({[index2]: list_return_visits})
                 this.lineBibleStudies.push({[index2]: list_bible_studies})
+                this.lineCreditHours.push({[index2]: list_credit_hours})
 
                 index2++
             }

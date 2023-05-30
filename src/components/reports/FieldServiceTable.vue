@@ -2,22 +2,25 @@
     <CTable striped hover responsive>
         <CTableHead color="dark">
             <CTableRow>
-                <CTableHeaderCell scope="col" width="20%">{{ designate }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="19.5%">{{ designate }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col" width="17.5%">Designate</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="12.5%">
+                <CTableHeaderCell scope="col" width="10.5%">
                     <span v-c-tooltip="{content: 'Printed and Electronic', placement: 'top'}">Placements</span>
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="12.5%">Video Showings</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="12.5%">Hours</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="12.5%">Return Visits</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="12.5%">Bible Studies</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="10.5%">
+                    <span v-c-tooltip="{content: 'Video Showings', placement: 'top'}">V.S.</span>
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="10.5%">Hours</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="10.5%">Return Visits</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="10.5%">Bible Studies</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="10.5%">Credit Hours</CTableHeaderCell>
             </CTableRow>
         </CTableHead>
         <CTableBody>
             <CTableRow v-for="(member, index) in group" :key="member">
                 <CTableDataCell>
                     <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
-                        {{ index + 1}}. {{ member.last_name + ' ' + member.first_name }} {{ (member.middle_name) ? member.middle_name: '' }}
+                        {{ index + 1}}. {{ member.full_name }}
                     </a>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -28,10 +31,9 @@
                     </template>
                 </CTableDataCell>
                 <CTableDataCell>
-                    <span v-if="!edit">{{ member.placements ?? 0 }}</span>
+                    <span v-if="!helperStore.editFS">{{ member.placements ?? 0 }}</span>
                     <span v-else>
                         <CFormInput
-                            style="width:35%"
                             size="sm"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'placements', n, $event.target.value)"
                             v-model="member.placements"
@@ -41,10 +43,9 @@
                 </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!edit">{{ member.video_showings ?? 0 }}</span>
+                    <span v-if="!helperStore.editFS">{{ member.video_showings ?? 0 }}</span>
                     <span v-else>
                         <CFormInput
-                            style="width:35%"
                             size="sm"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'video_showings', n, $event.target.value)"
                             v-model="member.video_showings"
@@ -54,10 +55,9 @@
                 </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!edit">{{ member.hours ?? 0 }}</span>
+                    <span v-if="!helperStore.editFS">{{ member.hours ?? 0 }}</span>
                     <span v-else>
                         <CFormInput
-                            style="width:35%"
                             size="sm"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', n, $event.target.value)"
                             v-model="member.hours"
@@ -67,10 +67,9 @@
                 </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!edit">{{ member.return_visits ?? 0 }}</span>
+                    <span v-if="!helperStore.editFS">{{ member.return_visits ?? 0 }}</span>
                     <span v-else>
                         <CFormInput
-                            style="width:35%"
                             size="sm"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'return_visits', n, $event.target.value)"
                             v-model="member.return_visits"
@@ -80,14 +79,25 @@
                 </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!edit">{{ member.bible_studies ?? 0 }}</span>
+                    <span v-if="!helperStore.editFS">{{ member.bible_studies ?? 0 }}</span>
                     <span v-else>
                         <CFormInput
-                            style="width:35%"
                             size="sm"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'bible_studies', n, $event.target.value)"
                             v-model="member.bible_studies"
                             :placeholder="!member.bible_studies ? 0 : ''"
+                        />
+                    </span>
+                </CTableDataCell>
+
+                <CTableDataCell>
+                    <span v-if="!helperStore.editFS">{{ member.credit_hours ?? 0 }}</span>
+                    <span v-else>
+                        <CFormInput
+                            size="sm"
+                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'credit_hours', n, $event.target.value)"
+                            v-model="member.credit_hours"
+                            :placeholder="!member.credit_hours ? 0 : ''"
                         />
                     </span>
                 </CTableDataCell>
@@ -102,6 +112,7 @@
                 <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'hours']) }}</i></CTableDataCell>
                 <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'return_visits']) }}</i></CTableDataCell>
                 <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'bible_studies']) }}</i></CTableDataCell>
+                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'credit_hours']) }}</i></CTableDataCell>
             </CTableRow>
         </CTableFoot>
     </CTable>
@@ -110,20 +121,23 @@
 <script>
 
     import { useFieldServiceStore } from '@/store/field_service'
+    import { useHelperStore } from '@/services/helper'
     import router from '@/router'
 
     const fieldServiceStore = useFieldServiceStore()
+    const helperStore = useHelperStore()
 
     export default {
 
         name: 'FieldService',
 
-        props: ['group', 'edit', 'designate', 'date_rendered'],
+        props: ['group', 'designate', 'date_rendered'],
 
         data() {
 
             return {
                 fieldServiceStore: fieldServiceStore,
+                helperStore: helperStore,
             }
         },
 

@@ -9,11 +9,11 @@
                     <CCol md="12" sm="12" xs="12">
                         <CRow class="g-3">
                             <CCol md="6" sm="7" xs="7">
-                                <CFormSelect size="sm"  v-model="select_year" class="mb-3" aria-label="Small select example">
+                                <CFormSelect size="sm" @change="selectYear($event)" v-model="select_year" class="mb-3" aria-label="Small select example">
                                     <option
                                         v-for="service_year in helperStore.service_years"
                                         :key="service_year"
-                                        @click="selectYear(service_year)"
+                                        :value="[service_year.from, service_year.to]"
                                     >{{ helperStore.getMonthYear(service_year.from) }} - {{ helperStore.getMonthYear(service_year.to) }}</option>
                                 </CFormSelect>
                             </CCol>
@@ -33,33 +33,35 @@
                 <h3>{{ data.congregationName }}</h3>
                 <CSpinner component="span" size="sm" aria-hidden="true" v-if="preview_loading"/>
 
-                <CTable small striped bordered hover class="shadow-lg bg-body rounded p-2">
-                    <CTableHead>
-                        <CTableRow color="light">
-                            <CTableHeaderCell scope="col" colspan="15" class="text-center">
-                                <h4>Regular Pioneers Field Service Report:  Year {{ data.service_year }}</h4>
-                            </CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                    <CTableHead>
-                        <CTableRow color="light">
-                            <CTableHeaderCell scope="col" width="3%">No</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" >Name</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" v-for="date in data.dates" :key="date">{{ helperStore.getMonth(date) }}</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" class="text-center">Total Hours</CTableHeaderCell>
-                        </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                        <CTableRow v-for="(member, index) in data.pioneers" :key="member.id">
-                            <CTableDataCell>{{ index+=1 }}</CTableDataCell>
-                            <CTableDataCell>{{ member.full_name }}</CTableDataCell>
-                            <CTableDataCell scope="col" v-for="date in data.dates" :key="date" with="5%">
-                                {{ reports(member.member_id, date, data.field_services[member.member_id]) }}
-                            </CTableDataCell>
-                            <CTableDataCell class="fw-semibold text-center"> {{ total_hours(data.field_services[member.member_id]) }}</CTableDataCell>
-                        </CTableRow>
-                    </CTableBody>
-                </CTable>
+                <div class="table-responsive">
+                    <CTable small striped bordered hover class="shadow-lg bg-body rounded p-2">
+                        <CTableHead>
+                            <CTableRow color="light">
+                                <CTableHeaderCell scope="col" colspan="15" class="text-center">
+                                    <h4>Regular Pioneers Field Service Report:  Year {{ data.service_year }}</h4>
+                                </CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                        <CTableHead>
+                            <CTableRow color="light">
+                                <CTableHeaderCell scope="col" width="3%">No</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" >Name</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-for="date in data.dates" :key="date">{{ helperStore.getMonth(date) }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" class="text-center">Total Hours</CTableHeaderCell>
+                            </CTableRow>
+                        </CTableHead>
+                        <CTableBody>
+                            <CTableRow v-for="(member, index) in data.pioneers" :key="member.id">
+                                <CTableDataCell>{{ index+=1 }}</CTableDataCell>
+                                <CTableDataCell>{{ member.full_name }}</CTableDataCell>
+                                <CTableDataCell scope="col" v-for="date in data.dates" :key="date" with="5%">
+                                    {{ reports(member.member_id, date, data.field_services[member.member_id]) }}
+                                </CTableDataCell>
+                                <CTableDataCell class="fw-semibold text-center"> {{ total_hours(data.field_services[member.member_id]) }}</CTableDataCell>
+                            </CTableRow>
+                        </CTableBody>
+                    </CTable>
+                </div>
             </CCardBody>
         </CCard>
       </CCol>
@@ -156,9 +158,10 @@ export default {
             }
         },
 
-        selectYear(service) {
-            this.formData.from = service.from
-            this.formData.to = service.to
+        selectYear(event) {
+            var date = event.target.value.split(',')
+            this.formData.from = date[0]
+            this.formData.to = date[1]
             this.showPioneers()
         }
     },
