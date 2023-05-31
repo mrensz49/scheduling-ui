@@ -39,6 +39,7 @@
                     </CCardBody>
                 </CCard>
             </CCardBody>
+            <scroll-top/>
         </CCard>
       </CCol>
     </CRow>

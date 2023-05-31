@@ -431,6 +431,7 @@
         </CCard>
       </CCol>
     </CRow>
+    <scroll-top/>
 
     <CRow>
     </CRow>

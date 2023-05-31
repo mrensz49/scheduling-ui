@@ -49,12 +49,12 @@
                             </CTableDataCell>
                             <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="member.dobirth.date">
-                                    {{ getHumanDate(member.dobirth.date) }} / {{ member.dobirth.age }} <sup>yrs. old</sup>
+                                    {{ helperStore.getHumanDateDay(member.dobirth.date) }} / {{ member.dobirth.age }} <sup>yrs. old</sup>
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell v-if="!$isMobile()">
                                 <template v-if="member.dobap.date">
-                                    {{ getHumanDate(member.dobap.date) }} / {{ member.dobap.human }}
+                                    {{ helperStore.getHumanDateDay(member.dobap.date) }} / {{ member.dobap.human }}
                                 </template>
                             </CTableDataCell>
                             <CTableDataCell v-if="!$isMobile()">
@@ -87,6 +87,7 @@
                 <ModalConfirmation data="Are you sure you want to delete this?" type="members" />
             </CRow>
           </CCardBody>
+          <scroll-top/>
         </CCard>
       </CCol>
     </CRow>
@@ -95,7 +96,6 @@
   <script>
 
     import router from '@/router'
-    import moment from 'moment'
     import Pagination from '@/components/Pagination.vue'
     import ModalConfirmation from '@/components/ModalConfirmation.vue'
 
@@ -127,10 +127,6 @@
             memberStore.getMembers()
         },
         methods: {
-            getHumanDate(date) {
-                return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY - dd');
-            },
-
             viewedit(id) {
                 router.push({name: 'View Member', params: { id: id } })
             }

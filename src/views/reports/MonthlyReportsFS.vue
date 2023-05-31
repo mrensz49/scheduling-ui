@@ -68,6 +68,7 @@
                         </template>
                     </CRow>
                 </CCardBody>
+                <scroll-top/>
             </CCard>
         </CCol>
     </CRow>

@@ -237,6 +237,7 @@
                 </CForm>
             </CRow>
           </CCardBody>
+          <scroll-top/>
         </CCard>
       </CCol>
     </CRow>

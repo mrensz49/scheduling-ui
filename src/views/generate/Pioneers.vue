@@ -63,6 +63,7 @@
                     </CTable>
                 </div>
             </CCardBody>
+            <scroll-top/>
         </CCard>
       </CCol>
     </CRow>

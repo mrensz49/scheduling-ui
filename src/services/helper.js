@@ -125,7 +125,13 @@ export const useHelperStore = defineStore({
             if (date) {
                 return moment().diff(date, 'years');
             }
-        }
+        },
+
+        getYMDDate(date) {
+            if (date) {
+                return moment(date, 'YYYY-MM-DD').format('YYYY/MM/DD');
+            }
+        },
 
     }
 })

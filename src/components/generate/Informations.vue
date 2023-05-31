@@ -5,8 +5,8 @@
             <CTableHeaderCell scope="col" width="5%">No</CTableHeaderCell>
             <CTableHeaderCell scope="col" width="25%">Name</CTableHeaderCell>
             <CTableHeaderCell scope="col" v-show="formData.group_no">Group No</CTableHeaderCell>
-            <CTableHeaderCell scope="col" v-show="formData.dobirth">DOBirth</CTableHeaderCell>
-            <CTableHeaderCell scope="col" v-show="formData.dobaptism">DOBaptism</CTableHeaderCell>
+            <CTableHeaderCell scope="col" v-show="formData.dobirth">DOBirth <sup>yrs.</sup> </CTableHeaderCell>
+            <CTableHeaderCell scope="col" v-show="formData.dobaptism">DOBaptism <sup>yrs.</sup> </CTableHeaderCell>
             <CTableHeaderCell scope="col" v-show="formData.numbers">Numbers</CTableHeaderCell>
             <CTableHeaderCell scope="col" v-show="formData.address">Address</CTableHeaderCell>
             </CTableRow>
@@ -17,11 +17,11 @@
                 <CTableDataCell>{{ member.full_name }}</CTableDataCell>
                 <CTableDataCell v-show="formData.group_no">{{ member.group_no }}</CTableDataCell>
                 <CTableDataCell v-show="formData.dobirth">
-                    {{ helperStore.getLatestReportDate(member.dobirth) }}
+                    {{ helperStore.getHumanDateDay(member.dobirth) }}
                     <sup>{{ helperStore.getHumanAge(member.dobirth) }}</sup>
                 </CTableDataCell>
                 <CTableDataCell v-show="formData.dobaptism">
-                    {{ helperStore.getLatestReportDate(member.dobap) }}
+                    {{ helperStore.getHumanDateDay(member.dobap) }}
                     <sup>{{ helperStore.getHumanAge(member.dobap) }}</sup>
                 </CTableDataCell>
                 <CTableDataCell v-show="formData.numbers">

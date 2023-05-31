@@ -46,7 +46,7 @@ export default [
 
   {
     component: 'CNavTitle',
-    name: 'Reports',
+    name: 'Monthly Report',
   },
   {
     component: 'CNavItem',
@@ -57,8 +57,34 @@ export default [
 
   {
     component: 'CNavTitle',
-    name: 'Setup & Generate',
+    name: 'Reports & Setup',
   },
+
+  {
+    component: 'CNavGroup',
+    name: 'Reports',
+    icon: 'cil-cloud-download',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Information',
+        to: '/generate/information',
+      },
+
+      {
+        component: 'CNavItem',
+        name: 'Publishers',
+        to: '/generate/publishers',
+      },
+
+      {
+        component: 'CNavItem',
+        name: 'Regular Pioneers',
+        to: '/generate/pioneers',
+      },
+    ],
+  },
+
   {
     component: 'CNavGroup',
     name: 'Setup',
@@ -85,30 +111,6 @@ export default [
     ]
   },
 
-  {
-    component: 'CNavGroup',
-    name: 'Generate',
-    icon: 'cil-cloud-download',
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'Information',
-        to: '/generate/information',
-      },
-
-      {
-        component: 'CNavItem',
-        name: 'Publishers',
-        to: '/generate/publishers',
-      },
-
-      {
-        component: 'CNavItem',
-        name: 'Regular Pioneers',
-        to: '/generate/pioneers',
-      },
-    ],
-  },
 
   // {
   //   component: 'CNavTitle',

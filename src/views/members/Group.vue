@@ -52,7 +52,8 @@
                     </template>
                 </CRow>
             </CCardBody>
-            </CCard>
+            <scroll-top/>
+        </CCard>
         </CCol>
     </CRow>
 </template>

@@ -43,6 +43,7 @@
                     </CTableBody>
                 </CTable>
             </CCardBody>
+            <scroll-top/>
         </CCard>
       </CCol>
     </CRow>

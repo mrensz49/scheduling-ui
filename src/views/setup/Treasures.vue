@@ -23,7 +23,7 @@
                     </CTableHead>
                     <CTableBody>
                         <CTableRow v-for="treasure in treasureStore.treasures" :key="treasure.id">
-                            <CTableDataCell width="30%">{{ getHumanDate(treasure.date_start) }} - {{ getHumanDate(treasure.date_end) }}</CTableDataCell>
+                            <CTableDataCell width="30%">{{ helperStore.getHumanDate(treasure.date_start) }} - {{ helperStore.getHumanDate(treasure.date_end) }}</CTableDataCell>
                             <CTableDataCell>{{ treasure.title }}</CTableDataCell>
                             <CTableDataCell>
                                 <CButton
@@ -43,6 +43,7 @@
                     </CTableBody>
                 </CTable>
             </CCardBody>
+            <scroll-top/>
         </CCard>
       </CCol>
     </CRow>
@@ -57,8 +58,6 @@
 </template>
 
 <script>
-
-    import moment from 'moment'
 
     import ModalConfirmation from '@/components/ModalConfirmation.vue'
     import ModalFormTreasure from '@/components/modal/ModalFormTreasure.vue'
@@ -111,16 +110,8 @@
                 this.type = "EditTreasure"
                 this.formData.id = treasure.id
                 this.formData.title = treasure.title
-                this.formData.date_start = this.getHumanDateFilter(treasure.date_start)
-                this.formData.date_end = this.getHumanDateFilter(treasure.date_end)
-            },
-
-            getHumanDate(date) {
-                return moment(date, 'YYYY-MM-DD').format('MMM. DD, YYYY');
-            },
-
-            getHumanDateFilter(date) {
-                return moment(date, 'YYYY-MM-DD').format('YYYY/MM/DD');
+                this.formData.date_start = helperStore.getYMDDate(treasure.date_start)
+                this.formData.date_end = helperStore.getYMDDate(treasure.date_end)
             },
         }
     }

@@ -336,7 +336,7 @@
     </CRow>
     <ModalActivePublishers v-show="helperStore.selectedModal == 'active_pub'"/>
     <ModalNoOfReportsPubs  v-show="helperStore.selectedModal == 'report_pub'"/>
-
+    <scroll-top/>
 </template>
 
 <script>
@@ -352,8 +352,6 @@
     import ShowBy from '@/components/icon/ShowBy'
 
     import { CChartBar } from '@coreui/vue-chartjs'
-
-    import moment from 'moment'
 
     import { useCongregationStore } from '@/store/congregation'
     import { useFieldServiceStore } from '@/store/field_service'
@@ -416,9 +414,7 @@
             FieldServiceGrid,
             GroupsMonthlyReports
         },
-        computed: {
 
-        },
         methods: {
             defaultData(datas) {
                 return {
@@ -455,7 +451,7 @@
             },
 
             getHumanDate() {
-                return moment(this.date_rendered, 'YYYY-MM-DD').format('MMM. YYYY');
+                return helperStore.getMonthYear(this.date_rendered)
             },
 
         }

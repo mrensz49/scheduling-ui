@@ -130,7 +130,7 @@
                                     <template v-if="!memberStore.edit">
                                             -
                                             <template v-if="memberStore.showMember.dobirth?.date">
-                                                {{ getHumanDate(memberStore.showMember.dobirth?.date) }} /
+                                                {{ helperStore.getHumanDateDay(memberStore.showMember.dobirth?.date) }} /
                                                 {{ memberStore.showMember.dobirth?.age }} <sup>yrs. old</sup>
                                             </template>
                                     </template>
@@ -140,7 +140,7 @@
                                             type="date"
                                             placeholder="Date of Birth"
                                             v-model="dobirth"
-                                            :value="getHumanDate(dobirth)"
+                                            :value="helperStore.getHumanDate(dobirth)"
                                         />
                                     </template>
                                 </CCol>
@@ -152,7 +152,7 @@
                                     <template v-if="!memberStore.edit">
                                         -
                                         <template v-if="memberStore.showMember.dobap?.date">
-                                            {{ getHumanDate(memberStore.showMember.dobap?.date) }} /
+                                            {{ helperStore.getHumanDateDay(memberStore.showMember.dobap?.date) }} /
                                             {{ memberStore.showMember.dobap?.human }}
                                         </template>
                                     </template>
@@ -162,7 +162,7 @@
                                             type="date"
                                             placeholder="Date of Baptism"
                                             v-model="dobap"
-                                            :value="getHumanDate(dobap)"
+                                            :value="helperStore.getHumanDate(dobap)"
                                         />
                                     </template>
                                 </CCol>
@@ -358,12 +358,11 @@
     </CRow>
 
     <MemberFieldServiceReport :member_id="memberStore.member.id" v-if="formData"/>
-
+    <scroll-top/>
   </template>
 
 <script>
 
-    import moment from 'moment'
     import { useMemberStore } from '@/store/member'
     import { useCongregationStore } from '@/store/congregation'
     import { usePositionStore } from '@/store/position'
@@ -371,6 +370,7 @@
     import { useAddressStore } from '@/store/address'
     import { useNumberStore } from '@/store/number'
     import { useFieldServiceStore } from '@/store/field_service'
+    import { useHelperStore } from '@/services/helper'
 
     import Multiselect from '@vueform/multiselect'
     import MemberFieldServiceReport from '@/components/reports/MemberFieldServiceReport.vue'
@@ -385,6 +385,7 @@
     const addressStore = useAddressStore()
     const numberStore = useNumberStore()
     const fieldServiceStore = useFieldServiceStore()
+    const helperStore = useHelperStore()
 
     export default {
 
@@ -421,6 +422,7 @@
                 numberStore: numberStore,
                 authStore: authStore,
                 fieldServiceStore: fieldServiceStore,
+                helperStore: helperStore,
 
                 rows: [], // hide phone rows when deleted
                 edit: 0,
@@ -434,18 +436,6 @@
         },
 
         methods: {
-
-            getHumanDate(date) {
-                if (date) {
-                    return moment(date, 'YYYY-MM-DD').format('MMM. DD, YYYY - dd');
-                }
-            },
-
-            getHumanDateUpdate(date) {
-                if (date) {
-                    return moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY');
-                }
-            },
 
             editInfo(val) {
                 memberStore.edit = val

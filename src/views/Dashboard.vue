@@ -78,7 +78,7 @@
                 >
                   <div class="progress-group-header">
                     <CIcon icon="cil-user" class="me-2" size="lg" />
-                    <span class="title">Male</span>
+                    <span class="title">Brother</span>
                     <span class="ms-auto fw-semibold">
                       {{ congregationStore.genders.member_male_count }} <sup>or</sup> {{ congregationStore.genders.member_male_percent }}%
                     </span>
@@ -93,7 +93,7 @@
                 >
                   <div class="progress-group-header">
                     <CIcon icon="cil-user-female" class="me-2" size="lg" />
-                    <span class="title">Female</span>
+                    <span class="title">Sister</span>
                     <span class="ms-auto fw-semibold">
                       {{ congregationStore.genders.member_female_count }} <sup>or</sup> {{ congregationStore.genders.member_female_percent }}%
                     </span>

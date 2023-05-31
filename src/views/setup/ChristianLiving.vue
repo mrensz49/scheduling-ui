@@ -25,7 +25,7 @@
                     </CTableHead>
                     <CTableBody>
                         <CTableRow v-for="living in christianLivingStore.livings" :key="living.id">
-                            <CTableDataCell width="30%">{{ getHumanDate(living.date_start) }} - {{ getHumanDate(living.date_end) }}</CTableDataCell>
+                            <CTableDataCell width="30%">{{ helperStore.getHumanDate(living.date_start) }} - {{ helperStore.getHumanDate(living.date_end) }}</CTableDataCell>
                             <CTableDataCell>{{ living.title }}</CTableDataCell>
                             <CTableDataCell>{{ living.duration }}</CTableDataCell>
                             <CTableDataCell>{{ living.order_by }}</CTableDataCell>
@@ -47,6 +47,7 @@
                     </CTableBody>
                 </CTable>
             </CCardBody>
+            <scroll-top/>
         </CCard>
       </CCol>
     </CRow>
@@ -59,8 +60,6 @@
 </template>
 
 <script>
-
-    import moment from 'moment'
 
     import ModalConfirmation from '@/components/ModalConfirmation.vue'
     import ModalFormChristianLiving from '@/components/modal/ModalFormChristianLiving.vue'
@@ -120,14 +119,6 @@
                     duration : '',
                     order_by : '',
                 }
-            },
-
-            getHumanDate(date) {
-                return moment(date, 'YYYY-MM-DD').format('MMM. DD, YYYY');
-            },
-
-            getHumanDateFilter(date) {
-                return moment(date, 'YYYY-MM-DD').format('YYYY/MM/DD');
             },
         }
     }
