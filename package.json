@@ -40,7 +40,6 @@
     "pinia": "^2.0.23",
     "select-philippines-address": "^1.0.6",
     "vue": "^3.2.23",
-    "vue-backtotop": "^1.6.1",
     "vue-html2pdf": "^1.8.0",
     "vue-mobile-detection": "^2.0.1",
     "vue-moment": "^4.1.0",

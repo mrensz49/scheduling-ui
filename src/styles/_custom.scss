@@ -13,11 +13,10 @@
     font-size: 20px;
 }
 
-.btn-to-top {
-    width: 60px;
-    height: 60px;
-    padding: 10px 16px;
-    border-radius: 50%;
-    font-size: 22px;
-    line-height: 22px;
+.scroll-top {
+    position:fixed;
+    right:0;
+    bottom: 0;
+    margin-bottom:55px;
+    margin-right: 20px;
 }

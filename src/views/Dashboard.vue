@@ -193,7 +193,7 @@
         </CCard>
       </CCol>
     </CRow>
-
+    <scroll-top/>
   </div>
 </template>
 
