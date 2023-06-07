@@ -1,5 +1,5 @@
 <template>
-    <CAvatar v-show="scY > 300" @click="toTop" class="scroll-top pointer" color="warning" text-color="white" size="lg">
+    <CAvatar v-show="scY > 450" @click="toTop" class="scroll-top pointer" color="warning" text-color="white" size="lg">
         <CIcon icon="cil-chevron-circle-up-alt" size="xl"/>
     </CAvatar>
 </template>

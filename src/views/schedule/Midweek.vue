@@ -541,6 +541,8 @@
         this.date_start = c[0]
         this.date_end = c[1]
 
+        this.resetEdit()
+
         treasureStore.showTreasure({'date_start': c[0], 'date_end' : c[1]})
         christianLivingStore.fetchChristianLivingTitles(c[0].replace(/\//g, '-'))
 
@@ -625,6 +627,13 @@
 
       addLiving() {
         this.$router.push('/setup/christian-living')
+      },
+
+      resetEdit() {
+        helperStore.edit_name['edit_cl'] = 0
+        helperStore.edit_name['edit_intro'] = 0
+        helperStore.edit_name['edit_treasures'] = 0
+        helperStore.edit_name['edit_em'] = 0
       },
 
       getHumanDate(date, format) {

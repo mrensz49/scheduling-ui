@@ -3,6 +3,7 @@
 
     <VerifyEmailNotification />
     <ModalNoSetupCongregation v-if="typeof authStore.user?.current_congregation_id !== 'undefined' && !authStore.user?.current_congregation_id"/>
+    <ModalNotificationInform />
 
     <CRow>
       <CCol :md="12" :sm="12">
@@ -203,6 +204,7 @@
   import { CChartBar } from '@coreui/vue-chartjs'
   import VerifyEmailNotification from '@/components/VerifyEmailNotification.vue'
   import  ModalNoSetupCongregation from '@/components/modal/ModalNoSetupCongregation.vue'
+  import  ModalNotificationInform from '@/components/modal/ModalNotificationInform'
 
 
   import { useCongregationStore } from '@/store/congregation'
@@ -210,12 +212,16 @@
   import { useAttendanceStore } from '@/store/attendance'
   import { useAuthStore } from '@/store/auth'
   import { useFieldServiceStore } from '@/store/field_service'
+  import { useHelperStore } from '@/services/helper'
 
   const congregationStore = useCongregationStore()
   const positionStore = usePositionStore()
   const authStore = useAuthStore()
   const fieldServiceStore = useFieldServiceStore()
   const attendanceStore = useAttendanceStore()
+  const helperStore = useHelperStore()
+
+  helperStore.getNotificationInform()
 
   congregationStore.getCongregationGenders()
   congregationStore.getCongregationDetails()
@@ -238,12 +244,13 @@
         authStore:authStore,
         fieldServiceStore:fieldServiceStore,
         attendanceStore:attendanceStore,
+        helperStore:helperStore,
       }
     },
     mounted() {},
     components: {
 
-      VerifyEmailNotification, CChartBar, ModalNoSetupCongregation
+      VerifyEmailNotification, CChartBar, ModalNoSetupCongregation, ModalNotificationInform,
     },
     methods: {
 

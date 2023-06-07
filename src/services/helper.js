@@ -9,8 +9,11 @@ export const useHelperStore = defineStore({
     state: () => ({
         loading_delete: false,
         loading: false,
+        loading_seen: false,
         confirm: false,
         errors: {},
+
+        notification_inform: [],
 
         weeks: {},
         year: 0,
@@ -21,6 +24,7 @@ export const useHelperStore = defineStore({
         visibleModalSongsMeeting: false,
         visibleModalTreasure: false,
         visibleModal: false,
+        visibleModalNotificationInform: false,
 
         selectedModal: '',
 
@@ -88,6 +92,32 @@ export const useHelperStore = defineStore({
             .catch(error => {
                 this.errors = error.response.data.message
                 this.loading = false
+            })
+        },
+
+        getNotificationInform() {
+            EventService.getNotificationInform()
+            .then(response => {
+                if (!parseInt(response.data.message) && response.data.message != '') {
+                    this.visibleModalNotificationInform=true
+                    this.notification_inform = response.data
+                }
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+            })
+        },
+
+        seenNotificationInform() {
+            this.loading_seen = true
+            EventService.seenNotificationInform()
+            .then(() => {
+                this.loading_seen = false
+                this.visibleModalNotificationInform=false
+            })
+            .catch(error => {
+                this.loading_seen = false
+                this.errors = error.response.data.message
             })
         },
 

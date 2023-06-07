@@ -78,6 +78,14 @@ export default {
         return apiClient.post(`/api/update-user-password`, payloads)
     },
 
+    getNotificationInform() {
+        return apiClient.get(`/api/notifications/inform`)
+    },
+
+    seenNotificationInform() {
+        return apiClient.post(`/api/notifications/inform-seen`)
+    },
+
     getUser() {
         return apiClient.get(`/api/user`)
     },
