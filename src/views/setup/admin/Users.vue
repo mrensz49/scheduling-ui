@@ -2,8 +2,9 @@
     <CRow>
       <CCol :md="12">
         <CCard class="mb-4">
-          <CCardHeader> Traffic &amp; Sales </CCardHeader>
+          <CCardHeader> Users </CCardHeader>
           <CCardBody>
+            <CSpinner v-if="userStore.loading" color="primary" component="span" size="sm" aria-hidden="true"/>
             <CTable align="middle" class="mb-0 border" hover responsive>
               <CTableHead color="light">
                 <CTableRow>
@@ -38,8 +39,9 @@
                             required
                             feedbackInvalid="This is required!"
                             @change="setCongregation($event, user.id)"
+                            :disabled="index+1 == edit ? false:true"
                         >
-                          <option value="" :disabled="index+1 == edit ? false:true">Choose...</option>
+                          <option value="">Choose...</option>
                               <option
                                   v-for="congregation in congregationStore.congregations"
                                   :key="congregation"

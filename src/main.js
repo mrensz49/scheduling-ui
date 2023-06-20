@@ -22,6 +22,8 @@ import 'vue-select/dist/vue-select.css';
 
 import ScrollTop from '@/components/icon/ScrollTop.vue'
 
+import acl from './acl';
+
 // toast
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
@@ -45,6 +47,7 @@ import {
     cilViewModule,
     cilScreenSmartphone,
     cilChevronCircleUpAlt,
+    cilInfo,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -65,6 +68,7 @@ import {
     cilViewModule,
     cilScreenSmartphone,
     cilChevronCircleUpAlt,
+    cilInfo,
 }
 
 const pinia = createPinia()
@@ -85,5 +89,6 @@ app.use(MonthPicker)
 app.use(MonthPickerInput)
 app.use(Toast, options);
 app.component('ScrollTop', ScrollTop)
+app.use(acl);
 
 app.mount('#app')

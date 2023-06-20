@@ -108,6 +108,12 @@ export default [
         to: '/setup/christian-living',
         // icon: 'cil-notes',
       },
+      {
+        component: 'CNavItem',
+        name: 'Users',
+        to: '/setup/users',
+        // icon: 'cil-notes',
+      },
     ]
   },
 

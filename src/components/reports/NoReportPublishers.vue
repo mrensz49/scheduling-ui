@@ -22,6 +22,7 @@
             </table>
             <div class="mt-2">
                 <CButton
+                    v-if="$can('can-generate-active-publishers')"
                     size="sm"
                     color="primary"
                     variant="ghost"

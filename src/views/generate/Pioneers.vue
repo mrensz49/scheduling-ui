@@ -18,7 +18,7 @@
                                 </CFormSelect>
                             </CCol>
                             <CCol md="6" sm="5" xs="5">
-                                <CButton color="primary" @click="downloadPioneers()" size="sm" :disabled="loading">
+                                <CButton v-if="$can('can-download-reports')" color="primary" @click="downloadPioneers()" size="sm" :disabled="loading">
                                     <CIcon icon="cil-cloud-download" v-if="!loading"/>
                                     <CSpinner component="span"  size="sm" v-if="loading" aria-hidden="true"/>
                                     Generate

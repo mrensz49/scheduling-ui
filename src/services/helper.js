@@ -163,5 +163,18 @@ export const useHelperStore = defineStore({
             }
         },
 
+        getHumanDateTime(date) {
+            if (date) {
+                // return moment(date, 'YYYY-MM-DD').format('YYYY/MM/DD');
+                return moment(date).format('LLL');
+            }
+        },
+
+        searchRole(role_id, roles) {
+            const foundRole = roles.find((role) => {
+                return role.id === role_id
+            })
+            return foundRole
+        },
     }
 })

@@ -6,7 +6,7 @@
                 <CIcon icon="cil-notes" />
                 Christian Living
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="christianLivingStore.loading"/>
-                <a href="javascript:void" @click="handleAdd()" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAdd()" class="text-sm">
                     <span style="float:right">
                         Add Assignment
                     </span>
@@ -20,7 +20,7 @@
                                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Duration</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Order By</CTableHeaderCell>
-                                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="$can('can-add-setup')">Action</CTableHeaderCell>
                             </CTableRow>
                     </CTableHead>
                     <CTableBody>
@@ -31,12 +31,14 @@
                             <CTableDataCell>{{ living.order_by }}</CTableDataCell>
                             <CTableDataCell>
                                 <CButton
+                                    v-if="$can('can-edit-setup')"
                                     color="primary"
                                     shape="rounded-pill"
-                                    class="btn-sm"
+                                    class="btn-sm me-2"
                                     @click="handleEditChristianLiving(living)"
-                                    ><CIcon icon="cil-pencil" /></CButton> |
+                                    ><CIcon icon="cil-pencil" /></CButton>
                                 <CButton
+                                    v-if="$can('can-delete-setup')"
                                     color="warning"
                                     shape="rounded-pill"
                                     class="btn-sm"

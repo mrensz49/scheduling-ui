@@ -4,6 +4,11 @@
         <CCard>
           <CCardHeader> <CIcon icon="cil-user-follow" /> Add a Member </CCardHeader>
           <CCardBody>
+            <CRow v-if="!$can('can-add-member')">
+                <CCol>
+                    <CAlert color="warning"> <CIcon icon="cil-info" class="me-2"/>Only Elder or Secretary can add a member.</CAlert>
+                </CCol>
+            </CRow>
             <CRow>
                 <CForm
                     class="row g-3"
@@ -225,7 +230,11 @@
                             >{{ index }}</option>
                         </CFormSelect>
                     </CCol>
-                    <CCol :xs="12" class="mb-3">
+                    <CCol
+                        v-can:can-edit-member
+                        :xs="12"
+                        class="mb-3"
+                    >
                         <CButton disabled v-if="memberStore.loading">
                             <CSpinner component="span" size="sm" aria-hidden="true"/>
                             Adding member...

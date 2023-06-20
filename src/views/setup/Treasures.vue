@@ -6,7 +6,7 @@
                 <CIcon icon="cil-lightbulb" />
                 Bahandi Gikan sa Pulong sa Diyos
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="treasureStore.loading"/>
-                <a href="javascript:void" @click="handleAddSong(song)" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAddSong(song)" class="text-sm">
                     <span style="float:right">
                         Add Treasuer
                     </span>
@@ -18,7 +18,7 @@
                             <CTableRow>
                                 <CTableHeaderCell scope="col" width="10%">Petsa</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" v-if="$can('can-add-setup')">Action</CTableHeaderCell>
                             </CTableRow>
                     </CTableHead>
                     <CTableBody>
@@ -27,12 +27,14 @@
                             <CTableDataCell>{{ treasure.title }}</CTableDataCell>
                             <CTableDataCell>
                                 <CButton
+                                    v-if="$can('can-edit-setup')"
                                     color="primary"
                                     shape="rounded-pill"
-                                    class="btn-sm"
+                                    class="btn-sm me-2"
                                     @click="handleEditTreasure(treasure)"
-                                    ><CIcon icon="cil-pencil" /></CButton> |
+                                    ><CIcon icon="cil-pencil" /></CButton>
                                 <CButton
+                                    v-if="$can('can-delete-setup')"
                                     color="warning"
                                     shape="rounded-pill"
                                     class="btn-sm"

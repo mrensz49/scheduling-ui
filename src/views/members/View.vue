@@ -70,6 +70,7 @@
                                     @click="viewedit(member.id)
                                 "><CIcon icon="cil-user" /></CButton>
                                 <CButton
+                                    v-can:can-edit-member
                                     color="warning"
                                     shape="rounded-pill"
                                     class="btn-sm m-1"
@@ -126,7 +127,9 @@
             positionStore.getPositions()
             memberStore.getMembers()
         },
+
         methods: {
+
             viewedit(id) {
                 router.push({name: 'View Member', params: { id: id } })
             }

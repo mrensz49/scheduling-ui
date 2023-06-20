@@ -13,7 +13,7 @@
                             <CFormCheck inline id="active" @click="showPublishers()" v-model="formData.active" value="active" label="Active"/>
                             <CFormCheck inline id="inactive" @click="showPublishers()" v-model="formData.inactive" value="inactive" label="Inactive"/>
                         </div>
-                        <CButton color="primary" @click="downloadPublishers()" size="sm" :disabled="loading">
+                        <CButton v-if="$can('can-download-reports')" color="primary" @click="downloadPublishers()" size="sm" :disabled="loading">
                             <CIcon icon="cil-cloud-download" v-if="!loading"/>
                             <CSpinner component="span" v-if="loading" size="sm" aria-hidden="true"/>
                             Generate

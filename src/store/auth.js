@@ -113,6 +113,9 @@ export const useAuthStore = defineStore({
                 // router.push({name: 'Dashboard'})
                 location.href = url+'/?#/dashboard';
                 toast.success("Successfully Login")
+                setTimeout(()=>{
+                    window.location.reload()
+                },250)
             })
             .catch(error => {
                 this.errors_login = error.response.data.errors

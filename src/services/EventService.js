@@ -86,6 +86,10 @@ export default {
         return apiClient.post(`/api/notifications/inform-seen`)
     },
 
+    fetchUserAccess() {
+        return apiClient.get(`/api/user-access`)
+    },
+
     getUser() {
         return apiClient.get(`/api/user`)
     },
@@ -331,6 +335,18 @@ export default {
 
     showPioneers(payloads) {
         return apiClient.post(`/api/generate/pioneers`, payloads)
+    },
+
+    fetchCongregationUsers() {
+        return apiClient.get(`/api/congregation-users`)
+    },
+
+    getRoles() {
+        return apiClient.get(`/api/roles`)
+    },
+
+    updateRoles(payloads) {
+        return apiClient.post(`/api/roles/update/${payloads.id}`, payloads)
     },
 
     //helper

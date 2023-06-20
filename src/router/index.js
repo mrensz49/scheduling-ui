@@ -1,5 +1,6 @@
 import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import acl from '../acl';
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -141,8 +142,13 @@ const routes = [
       },
       {
         path: 'admin/users',
-        name: 'Users',
+        name: 'Admin / Users',
         component: () => import('@/views/setup/admin/Users'),
+      },
+      {
+        path: 'users',
+        name: 'UsersRole',
+        component: () => import('@/views/setup/Users'),
       },
     ]
   },
@@ -508,6 +514,7 @@ const router = createRouter({
   hash: false,
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
+  acl,
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }

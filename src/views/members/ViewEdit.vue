@@ -28,7 +28,7 @@
                     <CCol :sm="12" :md="7" class="mb-2">
                         <CCol :sm="12" :md="12">
                             <h2>Personal Information</h2>
-                            <span v-if="!memberStore.edit" style="float:right;margin-top: -8%;">
+                            <span v-can:can-edit-member v-if="!memberStore.edit" style="float:right;margin-top: -8%;">
                                 <a href="javascript:void" @click="editInfo(1)">
                                     <CIcon icon="cil-pencil" class="me-4" />
                                 </a>
@@ -357,7 +357,12 @@
       </CCol>
     </CRow>
 
-    <MemberFieldServiceReport :member_id="memberStore.member.id" v-if="formData"/>
+    <span v-if="parseInt(authStore.user.role_id) != 3 || (parseInt(authStore.user.role_id) == 3 && parseInt(authStore.user.role_id) == parseInt(memberStore.showMember?.group_no))">
+        <MemberFieldServiceReport
+        :member_id="memberStore.member.id"
+        v-if="formData"
+        />
+    </span>
     <scroll-top/>
   </template>
 

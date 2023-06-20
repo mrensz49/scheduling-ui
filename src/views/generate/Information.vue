@@ -15,7 +15,7 @@
                             <CFormCheck inline id="numbers" @click="showContacts()" v-model="formData.numbers" value="numbers" label="Numbers"/>
                             <CFormCheck inline id="address" @click="showContacts()" v-model="formData.address" value="address" label="Address"/>
                         </div>
-                        <CButton color="primary" @click="downloadContacts()" size="sm" :disabled="loading">
+                        <CButton v-if="$can('can-download-reports')" color="primary" @click="downloadContacts()" size="sm" :disabled="loading">
                             <CIcon icon="cil-cloud-download" v-if="!loading"/>
                             <CSpinner component="span" v-if="loading" size="sm" aria-hidden="true"/>
                             Generate

@@ -63,17 +63,25 @@
             <CCol :sm="4">
                 <CInputGroup v-show = "activeBtn === 'ar'">
                 <CButton type="button" color="secondary" >Show</CButton>
-                <CFormSelect
-                    @change="defShowGroup=$event.target.value"
-                >
-                    <option
-                        v-for="n in parseInt(total_groups)"
-                        :key="n"
-                        :value="n"
-                        :selected="defShowGroup == n ? true : false"
-                    > Group {{ n }}</option>
-                </CFormSelect>
-                <CButton type="button" color="secondary" @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1">
+
+                <span v-if="authStore.user.role_id != 3">
+                    <CFormSelect
+                        class="rounded-0"
+                        @change="defShowGroup=$event.target.value"
+                    >
+                        <option
+                            v-for="n in parseInt(total_groups)"
+                            :key="n"
+                            :value="n"
+                            :selected="defShowGroup == n ? true : false"
+                        > Group {{ n }}</option>
+                    </CFormSelect>
+                </span>
+                <span v-else>
+                    <CFormInput class="rounded-0" :value="'Group '+defShowGroup" readonly/>
+                </span>
+
+                <CButton v-if="$can('can-add-fs_report')" type="button" color="secondary" @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1">
                     <span v-if="!helperStore.editFS" class="text-primary"><CIcon icon="cil-pencil" class="me-2 ms-1" /></span>
                     <span class="text-primary" v-else>close</span>
                 </CButton>
@@ -355,11 +363,13 @@
 
     import { useCongregationStore } from '@/store/congregation'
     import { useFieldServiceStore } from '@/store/field_service'
+    import { useAuthStore } from '@/store/auth'
     import { useHelperStore } from '@/services/helper'
 
     const congregationStore = useCongregationStore()
     const fieldServiceStore = useFieldServiceStore()
     const helperStore = useHelperStore()
+    const authStore = useAuthStore()
 
     export default {
 
@@ -373,8 +383,10 @@
             this.total_groups = congregationStore.groups.congregation.total_groups
             fieldServiceStore.grandTotalReports(this.date_rendered)
 
+            parseInt(authStore.user.role_id) == 3 ? this.defShowGroup = authStore.user.group_no : ''
             this.forms = congregationStore.showGroups
             fieldServiceStore.all_reports=[] // reset all the total reports
+
         },
         data() {
 
@@ -382,6 +394,7 @@
                 congregationStore: congregationStore,
                 fieldServiceStore: fieldServiceStore,
                 helperStore: helperStore,
+                authStore: authStore,
 
                 selectedModal: '',
                 defShowGroup: 1, // default value

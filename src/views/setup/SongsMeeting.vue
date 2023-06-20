@@ -6,7 +6,7 @@
                 <CIcon icon="cil-music-note" />
                 Malipayong Mag-awit—Tigom
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="songStore.loading"/>
-                <a href="javascript:void" @click="handleAddSong(song)" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAddSong(song)" class="text-sm">
                     <span style="float:right">
                         Add Song
                     </span>
@@ -18,21 +18,26 @@
                             <CTableRow>
                                 <CTableHeaderCell scope="col" width="10%">Awit No.</CTableHeaderCell>
                                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                                <span v-if="$can('can-add-setup')">
+                                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                                </span>
                             </CTableRow>
                     </CTableHead>
                     <CTableBody>
                         <CTableRow v-for="song in songStore.meetings" :key="song.id">
                             <CTableDataCell>{{ song.song_no }}</CTableDataCell>
                             <CTableDataCell>{{ song.title }}</CTableDataCell>
-                            <CTableDataCell>
+                            <CTableDataCell v-if="$can('can-add-setup')">
                                 <CButton
+                                    v-if="$can('can-edit-setup')"
                                     color="primary"
                                     shape="rounded-pill"
-                                    class="btn-sm"
+                                    class="btn-sm me-2"
                                     @click="handleEditSong(song)"
-                                    ><CIcon icon="cil-pencil" /></CButton> |
+                                    ><CIcon icon="cil-pencil" /></CButton>
+
                                 <CButton
+                                    v-if="$can('can-delete-setup')"
                                     color="warning"
                                     shape="rounded-pill"
                                     class="btn-sm"

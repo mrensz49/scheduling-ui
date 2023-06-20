@@ -18,7 +18,7 @@
                                     @keyup="attendanceStore.saveAttendance({'type': 'midweek', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
                                     v-model="attendanceStore.attendances.midweek"
                                 />
-                                <CInputGroupText class="pointer" @click="!editAttendance.midweek ? editAttendance.midweek=1 : editAttendance.midweek=0">
+                                <CInputGroupText v-if="$can('can-add-attendance')" class="pointer" @click="!editAttendance.midweek ? editAttendance.midweek=1 : editAttendance.midweek=0">
                                     <span v-if="editAttendance.midweek">
                                             close
                                         </span>
@@ -27,7 +27,7 @@
                                         </span>
                                 </CInputGroupText>
 
-                                </CInputGroup>
+                            </CInputGroup>
                             </CTableHeaderCell>
                             <CTableHeaderCell scope="col">
                                 <CInputGroup>
@@ -36,7 +36,7 @@
                                     @keyup="attendanceStore.saveAttendance({'type': 'weekend', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
                                     v-model="attendanceStore.attendances.weekend"
                                 />
-                                <CInputGroupText class="pointer" @click="!editAttendance.weekend ? editAttendance.weekend=1 : editAttendance.weekend=0">
+                                <CInputGroupText v-if="$can('can-add-attendance')" class="pointer" @click="!editAttendance.weekend ? editAttendance.weekend=1 : editAttendance.weekend=0">
                                         <span v-if="editAttendance.weekend">
                                             close
                                         </span>

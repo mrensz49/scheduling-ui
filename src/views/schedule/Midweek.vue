@@ -114,7 +114,7 @@
                             {{  treasureStore.treasure.title }}
                           </span>
                           <span v-else class="text-primar">
-                            <span class="pointer text-decoration-underline text-primary" @click="addTreasure()" title="Click here to add a Title">+add</span>
+                            <span v-if="$can('can-add-setup')" class="pointer text-decoration-underline text-primary" @click="addTreasure()" title="Click here to add a Title">+add</span>
                           </span>
                           <small class="ms-3">(10 min)</small>
 
@@ -319,7 +319,7 @@
                         <td></td>
                         <td></td>
                         <td class="ps-2">
-                          <CIcon icon="cil-plus" class="pointer text-primary text-size-20 me-1" @click="addLiving()" title="Add new title if necessarry."/>
+                          <CIcon v-if="$can('can-add-setup')" icon="cil-plus" class="pointer text-primary text-size-20 me-1" @click="addLiving()" title="Add new title if necessarry."/>
                           <EditClose
                             edit_val = 'edit_cl'
                             @click="helperStore.edit_name['edit_cl']

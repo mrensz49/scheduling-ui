@@ -6,6 +6,7 @@
 
             <CInputGroup class="flex-nowrap">
                 <CInputGroupText
+                    v-if="$can('can-generate-active-publishers')"
                     id="addon-wrapping"
                     class="pointer"
                     @click="fieldServiceStore.activePublishers({
