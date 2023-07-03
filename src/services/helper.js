@@ -170,9 +170,15 @@ export const useHelperStore = defineStore({
             }
         },
 
+        getHumanTime(date) {
+            if (date) {
+                return moment(date).format('h:mma');
+            }
+        },
+
         searchRole(role_id, roles) {
             const foundRole = roles.find((role) => {
-                return role.id === role_id
+                return parseInt(role.id) === parseInt(role_id)
             })
             return foundRole
         },

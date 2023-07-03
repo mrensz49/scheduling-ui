@@ -56,6 +56,8 @@
                     >
                         <option value="">Choose...</option>
                         <option value="5 min.">5 min.</option>
+                        <option value="7 min.">7 min.</option>
+                        <option value="8 min.">8 min.</option>
                         <option value="10 min.">10 min.</option>
                         <option value="15 min.">15 min.</option>
                     </CFormSelect>

@@ -48,6 +48,11 @@ export default {
         return apiClient.put(`/api/admin/user/${payloads.id}`, payloads)
     },
 
+
+    fetchUsersActivity(pages) {
+        return apiClient.get(`/api/admin/users-activity?page=${pages}`)
+    },
+
     //end of admin side
 
     getToken() {

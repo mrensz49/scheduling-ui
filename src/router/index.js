@@ -141,14 +141,19 @@ const routes = [
         component: () => import('@/views/setup/ChristianLiving'),
       },
       {
+        path: 'users',
+        name: 'UsersRole',
+        component: () => import('@/views/setup/Users'),
+      },
+      {
         path: 'admin/users',
         name: 'Admin / Users',
         component: () => import('@/views/setup/admin/Users'),
       },
       {
-        path: 'users',
-        name: 'UsersRole',
-        component: () => import('@/views/setup/Users'),
+        path: 'admin/users-activity',
+        name: 'Admin / Users Activity',
+        component: () => import('@/views/setup/admin/UserActivity'),
       },
     ]
   },

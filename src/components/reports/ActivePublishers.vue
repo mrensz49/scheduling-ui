@@ -6,7 +6,7 @@
 
             <CInputGroup class="flex-nowrap">
                 <CInputGroupText
-                    v-if="$can('can-generate-active-publishers')"
+                    v-if="$can('can-generate-active-publishers') && myProps.enable_edit"
                     id="addon-wrapping"
                     class="pointer"
                     @click="fieldServiceStore.activePublishers({
@@ -42,9 +42,13 @@
 
 <script setup>
 
+    import { defineProps } from 'vue'
     import { useFieldServiceStore } from '@/store/field_service'
     const fieldServiceStore = useFieldServiceStore()
 
+    const myProps = defineProps({
+        enable_edit: String,
+    })
     fieldServiceStore.activePublishers({
         'date': fieldServiceStore.date_rendered,
         'type': 'show',

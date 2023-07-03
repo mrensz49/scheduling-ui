@@ -3,7 +3,7 @@
     <CAccordion :active-item-key="1" always-open class="mb-4 mt-n3">
         <div v-for="(group, index) in congregationStore.groups.members.publisher" :key="group" :item-key="index">
             <div v-show="defShowGroup == index">
-                <FServiceGridExt :group="group" :date_rendered="date_rendered"/>
+                <FServiceGridExt :group="group" :date_rendered="date_rendered" :enable_edit="congregationStore.groups.enable_edit"/>
             </div>
         </div>
     </CAccordion>
@@ -12,7 +12,7 @@
     <CAccordion :active-item-key="1" always-open class="mb-4 mt-n3">
         <div v-for="(group, index) in congregationStore.groups.members.regular_pioneer" :key="group" :item-key="index">
             <div v-show="defShowGroup == index">
-                <FServiceGridExt :group="group" :date_rendered="date_rendered"/>
+                <FServiceGridExt :group="group" :date_rendered="date_rendered" :enable_edit="congregationStore.groups.enable_edit"/>
             </div>
         </div>
     </CAccordion>
@@ -21,7 +21,7 @@
     <CAccordion :active-item-key="1" always-open class="mb-4 mt-n3">
         <div v-for="(group, index) in congregationStore.groups.members.auxillary_pioneer" :key="group" :item-key="index">
             <div v-show="defShowGroup == index">
-                <FServiceGridExt :group="group" :date_rendered="date_rendered"/>
+                <FServiceGridExt :group="group" :date_rendered="date_rendered" :enable_edit="congregationStore.groups.enable_edit"/>
             </div>
         </div>
     </CAccordion>
@@ -30,7 +30,7 @@
     <CAccordion :active-item-key="1" always-open class="mb-4 mt-n3">
         <div v-for="(group, index) in congregationStore.groups.members.special_pioneer" :key="group" :item-key="index">
             <div v-show="defShowGroup == index">
-                <FServiceGridExt :group="group" :date_rendered="date_rendered"/>
+                <FServiceGridExt :group="group" :date_rendered="date_rendered" :enable_edit="congregationStore.groups.enable_edit"/>
             </div>
         </div>
     </CAccordion>

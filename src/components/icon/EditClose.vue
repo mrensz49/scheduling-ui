@@ -1,5 +1,5 @@
 <template>
-    <span v-if="$can('can-add-schedule')">
+    <span v-if="$can('can-add-schedule') && treasureStore.treasure.enable_edit">
         <span v-if="!helperStore.edit_name[edit_val]">
             <CIcon icon="cil-pencil" class="me-2 ms-1 pointer" />
         </span>
@@ -11,14 +11,18 @@
 
 <script>
     import { useHelperStore } from '@/services/helper'
+    import { useTreasureStore } from '@/store/treasure'
+
     const helperStore = useHelperStore()
+    const treasureStore = useTreasureStore()
 
     export default {
 
         props: ['edit_val'],
         data() {
             return {
-                helperStore:helperStore,
+                helperStore: helperStore,
+                treasureStore: treasureStore,
             }
         }
     }

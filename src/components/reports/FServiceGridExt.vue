@@ -56,7 +56,11 @@
                         />
                     </CListGroupItem>
                     <div class="ms-3">
-                        <span v-if="!helperStore.editFS" class="text-primary pointer" @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1">
+                        <span
+                            v-if="!helperStore.editFS && $can('can-add-fs_report') && enable_edit"
+                            class="text-primary pointer"
+                            @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1
+                        ">
                             <CIcon icon="cil-pencil" class="me-2 ms-1" />
                         </span>
                         <CIcon icon="cil-user" class="pointer" @click="viewedit(member.id)"/>
@@ -92,13 +96,17 @@
 
         name: 'FieldServiceGridExt',
 
-        props: ['group', 'date_rendered'],
+        props: ['group', 'date_rendered', 'enable_edit'],
 
         data() {
 
             return {
                 fieldServiceStore: fieldServiceStore,
                 helperStore: helperStore,
+
+                old_type: '',
+                timeout: 0,
+                delay: 1500,
             }
         },
 
@@ -106,18 +114,30 @@
             saveReport(id, stat, type, group, val)
             {
                 group = group-=1
-
                 this.formData = {} // reset all objects
                 this.formData.date_rendered = this.date_rendered
                 this.formData[type] = val * 1
                 // this.formData[type] = this.forms[group].members[index][type] * 1
 
+                if (this.old_type == '' || this.old_type == type) {
+                    clearTimeout(this.timeout);
+                }
+
+                this.timeout = setTimeout(function(formData, stat, id) {
+                    this.saveReportNow(formData, stat, id)
+                }.bind(this), this.delay, this.formData, stat, id);
+
+                this.old_type = type
+            },
+
+            saveReportNow(formData, stat, id) {
+
                 if (stat == 'exist') {
-                    fieldServiceStore.saveReport(this.formData, id)
+                    fieldServiceStore.saveReport(formData, id)
                 }
                 else {
-                    this.formData.member_id = id
-                    fieldServiceStore.storeReport(this.formData)
+                    formData.member_id = id
+                    fieldServiceStore.storeReport(formData)
                 }
             },
 

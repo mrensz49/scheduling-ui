@@ -138,25 +138,41 @@
             return {
                 fieldServiceStore: fieldServiceStore,
                 helperStore: helperStore,
+
+                old_type: '',
+                timeout: 0,
+                delay: 1500,
             }
         },
 
         methods: {
+
             saveReport(id, stat, type, group, val)
             {
                 group = group-=1
-
                 this.formData = {} // reset all objects
                 this.formData.date_rendered = this.date_rendered
                 this.formData[type] = val * 1
                 // this.formData[type] = this.forms[group].members[index][type] * 1
 
+                if (this.old_type == '' || this.old_type == type) {
+                    clearTimeout(this.timeout);
+                }
+
+                this.timeout = setTimeout(function(formData, stat, id) {
+                    this.saveReportNow(formData, stat, id)
+                }.bind(this), this.delay, this.formData, stat, id);
+
+                this.old_type = type
+            },
+
+            saveReportNow(formData, stat, id) {
                 if (stat == 'exist') {
-                    fieldServiceStore.saveReport(this.formData, id)
+                    fieldServiceStore.saveReport(formData, id)
                 }
                 else {
-                    this.formData.member_id = id
-                    fieldServiceStore.storeReport(this.formData)
+                    formData.member_id = id
+                    fieldServiceStore.storeReport(formData)
                 }
             },
 

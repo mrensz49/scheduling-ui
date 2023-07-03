@@ -70,7 +70,7 @@
                             <option
                                 v-for="index in parseInt(authStore.user.congregation.total_groups)"
                                 :key="index"
-                                :selected="index == user.group_no ? true:false"
+                                :selected="index == parseInt(user.group_no) ? true:false"
                                 :value="index"
                             >{{ index }}</option>
                         </CFormSelect>

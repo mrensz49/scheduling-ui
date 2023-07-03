@@ -22,7 +22,7 @@
             </table>
             <div class="mt-2">
                 <CButton
-                    v-if="$can('can-generate-active-publishers')"
+                    v-if="$can('can-generate-active-publishers') && enable_edit"
                     size="sm"
                     color="primary"
                     variant="ghost"
@@ -54,6 +54,8 @@ const reportsPubs = useReportsPubsStore()
 export default {
 
     name: 'ReportsPubs',
+
+    props: ['enable_edit'],
 
     created() {
         this.date_rendered = this.$route.params.year+'-'+this.$route.params.month+'-01'

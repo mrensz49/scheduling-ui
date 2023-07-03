@@ -48,6 +48,7 @@ import {
     cilScreenSmartphone,
     cilChevronCircleUpAlt,
     cilInfo,
+    cilReportSlash,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -69,6 +70,7 @@ import {
     cilScreenSmartphone,
     cilChevronCircleUpAlt,
     cilInfo,
+    cilReportSlash,
 }
 
 const pinia = createPinia()

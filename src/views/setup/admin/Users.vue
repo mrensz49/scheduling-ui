@@ -13,6 +13,7 @@
                   </CTableHeaderCell>
                   <CTableHeaderCell>User</CTableHeaderCell>
                   <CTableHeaderCell width="25%">Congregation</CTableHeaderCell>
+                  <CTableHeaderCell>Email</CTableHeaderCell>
                   <CTableHeaderCell>Registered</CTableHeaderCell>
                   <CTableHeaderCell>Email Verified</CTableHeaderCell>
                 </CTableRow>
@@ -29,7 +30,7 @@
                     <CTableDataCell>
                       <div>{{ user.name }}</div>
                       <div class="small text-medium-emphasis">
-                        <span>Role</span>
+                        <span>{{ user.role?.name }}</span>
                       </div>
                     </CTableDataCell>
 
@@ -63,12 +64,16 @@
                     </CTableDataCell>
 
                     <CTableDataCell>
-                      {{ getHumanDate(user.created_at) }}
-                  </CTableDataCell>
+                      {{ user.email }}
+                    </CTableDataCell>
 
-                  <CTableDataCell>
+                    <CTableDataCell>
+                      {{ getHumanDate(user.created_at) }}
+                    </CTableDataCell>
+
+                    <CTableDataCell>
                       {{ getHumanDate(user.email_verified_at) }}
-                  </CTableDataCell>
+                    </CTableDataCell>
 
                 </CTableRow>
               </CTableBody>

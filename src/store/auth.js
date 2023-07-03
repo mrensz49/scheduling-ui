@@ -115,7 +115,7 @@ export const useAuthStore = defineStore({
                 toast.success("Successfully Login")
                 setTimeout(()=>{
                     window.location.reload()
-                },250)
+                },500)
             })
             .catch(error => {
                 this.errors_login = error.response.data.errors

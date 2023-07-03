@@ -357,7 +357,7 @@
       </CCol>
     </CRow>
 
-    <span v-if="parseInt(authStore.user.role_id) != 3 || (parseInt(authStore.user.role_id) == 3 && parseInt(authStore.user.role_id) == parseInt(memberStore.showMember?.group_no))">
+    <span v-if="parseInt(authStore.user.role_id) != 4 || (parseInt(authStore.user.role_id) == 4 && parseInt(authStore.user.group_no) == parseInt(memberStore.showMember?.group_no))">
         <MemberFieldServiceReport
         :member_id="memberStore.member.id"
         v-if="formData"

@@ -47,13 +47,13 @@
         <CRow class="mt-4 mb-2">
             <CCol :sm="8">
                 <CButtonGroup
-                class="mb-2"
-                role="group"
-                aria-label="Basic outlined example"
+                    class="mb-2"
+                    role="group"
+                    aria-label="Basic outlined example"
                 >
-                <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
-                <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
-                <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
+                    <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
+                    <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
+                    <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
                 <!-- <CButton color="primary" disabled>
                     <CIcon icon="cil-cloud-download" />
                 </CButton> -->
@@ -61,10 +61,10 @@
 
             </CCol>
             <CCol :sm="4">
-                <CInputGroup v-show = "activeBtn === 'ar'">
+                <CInputGroup v-show = "activeBtn === 'ar'" class="">
                 <CButton type="button" color="secondary" >Show</CButton>
 
-                <span v-if="authStore.user.role_id != 3">
+                <span v-if="authStore.user.role_id != 4">
                     <CFormSelect
                         class="rounded-0"
                         @change="defShowGroup=$event.target.value"
@@ -80,8 +80,12 @@
                 <span v-else>
                     <CFormInput class="rounded-0" :value="'Group '+defShowGroup" readonly/>
                 </span>
-
-                <CButton v-if="$can('can-add-fs_report')" type="button" color="secondary" @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1">
+                <CButton
+                    v-if="$can('can-add-fs_report') && congregationStore.groups.enable_edit"
+                    type="button"
+                    color="secondary"
+                    @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1"
+                >
                     <span v-if="!helperStore.editFS" class="text-primary"><CIcon icon="cil-pencil" class="me-2 ms-1" /></span>
                     <span class="text-primary" v-else>close</span>
                 </CButton>
@@ -320,13 +324,13 @@
 
     <CRow>
         <CCol md="6">
-            <MeetingAttendance v-if = "activeBtn === 'ro'" />
+            <MeetingAttendance :enable_edit="congregationStore.groups.enable_edit" v-if = "activeBtn === 'ro'" />
         </CCol>
         <CCol md="6">
-            <ActivePublishers v-if = "activeBtn === 'ro'" />
+            <ActivePublishers :enable_edit="congregationStore.groups.enable_edit" v-if = "activeBtn === 'ro'" />
         </CCol>
         <CCol md="6">
-            <NoReportPublishers v-if = "activeBtn === 'ro'" />
+            <NoReportPublishers :enable_edit="congregationStore.groups.enable_edit" v-if = "activeBtn === 'ro'" />
         </CCol>
     </CRow>
     <CRow v-if = "activeBtn === 'stat'">
@@ -383,7 +387,7 @@
             this.total_groups = congregationStore.groups.congregation.total_groups
             fieldServiceStore.grandTotalReports(this.date_rendered)
 
-            parseInt(authStore.user.role_id) == 3 ? this.defShowGroup = authStore.user.group_no : ''
+            parseInt(authStore.user.role_id) == 4 ? this.defShowGroup = authStore.user.group_no : ''
             this.forms = congregationStore.showGroups
             fieldServiceStore.all_reports=[] // reset all the total reports
 

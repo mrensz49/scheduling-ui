@@ -15,10 +15,10 @@
                             <CInputGroup>
                                 <CFormInput
                                     :readonly="!editAttendance.midweek"
-                                    @keyup="attendanceStore.saveAttendance({'type': 'midweek', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
+                                    @keyup="saveAttendance({'type': 'midweek', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
                                     v-model="attendanceStore.attendances.midweek"
                                 />
-                                <CInputGroupText v-if="$can('can-add-attendance')" class="pointer" @click="!editAttendance.midweek ? editAttendance.midweek=1 : editAttendance.midweek=0">
+                                <CInputGroupText v-if="$can('can-add-attendance') && enable_edit" class="pointer" @click="!editAttendance.midweek ? editAttendance.midweek=1 : editAttendance.midweek=0">
                                     <span v-if="editAttendance.midweek">
                                             close
                                         </span>
@@ -33,10 +33,10 @@
                                 <CInputGroup>
                                 <CFormInput
                                     :readonly="!editAttendance.weekend"
-                                    @keyup="attendanceStore.saveAttendance({'type': 'weekend', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
+                                    @keyup="saveAttendance({'type': 'weekend', 'type_value' : $event.target.value, 'year_month' : this.date_rendered})"
                                     v-model="attendanceStore.attendances.weekend"
                                 />
-                                <CInputGroupText v-if="$can('can-add-attendance')" class="pointer" @click="!editAttendance.weekend ? editAttendance.weekend=1 : editAttendance.weekend=0">
+                                <CInputGroupText v-if="$can('can-add-attendance') && enable_edit" class="pointer" @click="!editAttendance.weekend ? editAttendance.weekend=1 : editAttendance.weekend=0">
                                         <span v-if="editAttendance.weekend">
                                             close
                                         </span>
@@ -70,6 +70,8 @@ const attendanceStore = useAttendanceStore()
 
         name: 'MeetingAttendance',
 
+        props: ['enable_edit'],
+
         created() {
             this.date_rendered = this.$route.params.year+'-'+this.$route.params.month+'-01'
             attendanceStore.getAttendances(this.date_rendered)
@@ -79,12 +81,36 @@ const attendanceStore = useAttendanceStore()
             return {
                 attendanceStore: attendanceStore,
 
+                old_type: '',
+                timeout: 0,
+                delay: 1500,
+
                 date_rendered: '',
                 editAttendance: {
                     midweek: 0,
                     weekend: 0
                 }
             }
+        },
+
+        methods: {
+            saveAttendance(payloads) {
+
+                if (this.old_type == '' || this.old_type == payloads.type) {
+                    clearTimeout(this.timeout);
+                }
+
+                this.timeout = setTimeout(function(payloads) {
+                    this.saveAttendanceNow(payloads)
+                }.bind(this), this.delay, payloads);
+
+                this.old_type = payloads.type
+            },
+
+            saveAttendanceNow(payloads) {
+                attendanceStore.saveAttendance(payloads)
+            }
+
         },
     }
 </script>
