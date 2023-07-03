@@ -50,10 +50,20 @@
                     class="mb-2"
                     role="group"
                     aria-label="Basic outlined example"
+                    size="sm"
                 >
                     <CButton color="secondary" variant="outline" @click="activeBtn='ar'" :class="{active: activeBtn === 'ar'}">All results</CButton>
                     <CButton color="secondary" variant="outline" @click="activeBtn='ro'" :class="{active: activeBtn === 'ro'}">Monthly Report</CButton>
                     <CButton color="secondary" variant="outline" @click="activeBtn='stat'" :class="{active: activeBtn === 'stat'}">Statistic</CButton>
+                    <CButton
+                        color="secondary"
+                        variant="outline"
+                        @click="fieldServiceStore.downloadMonthlyFSReports({date_rendered: date_rendered})"
+                        v-if="activeBtn === 'stat' && $can('can-download-reports')"
+                    >
+                        <CIcon icon="cil-cloud-download" v-if="!fieldServiceStore.loading"/>
+                        <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.loading"/>
+                    </CButton>
                 <!-- <CButton color="primary" disabled>
                     <CIcon icon="cil-cloud-download" />
                 </CButton> -->
@@ -61,12 +71,13 @@
 
             </CCol>
             <CCol :sm="4">
-                <CInputGroup v-show = "activeBtn === 'ar'" class="">
-                <CButton type="button" color="secondary" >Show</CButton>
+                <CInputGroup v-show = "activeBtn === 'ar'" >
+                <CButton type="button" color="secondary" size="sm">Show</CButton>
 
                 <span v-if="authStore.user.role_id != 4">
                     <CFormSelect
                         class="rounded-0"
+                        size="sm"
                         @change="defShowGroup=$event.target.value"
                     >
                         <option
@@ -81,7 +92,7 @@
                     <CFormInput class="rounded-0" :value="'Group '+defShowGroup" readonly/>
                 </span>
                 <CButton
-                    v-if="$can('can-add-fs_report') && congregationStore.groups.enable_edit"
+                    v-if="congregationStore.groups.enable_edit"
                     type="button"
                     color="secondary"
                     @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1"

@@ -57,7 +57,7 @@
                     </CListGroupItem>
                     <div class="ms-3">
                         <span
-                            v-if="!helperStore.editFS && $can('can-add-fs_report') && enable_edit"
+                            v-if="!helperStore.editFS && enable_edit"
                             class="text-primary pointer"
                             @click="helperStore.editFS == 1 ? helperStore.editFS=0 : helperStore.editFS=1
                         ">

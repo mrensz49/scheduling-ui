@@ -328,6 +328,10 @@ export default {
         downloadPioneers(payloads) {
             return apiClientReport.post(`/api/generate/pioneers`, payloads)
         },
+
+        downloadMonthlyFSReports(payloads) {
+            return apiClientReport.post(`/api/generate/monthly-fs-reports`, payloads)
+        },
     // end of downloads info
 
     showInformations(payloads) {

@@ -271,6 +271,31 @@ export const useFieldServiceStore = defineStore({
             })
         },
 
+        downloadMonthlyFSReports(payload) {
+            this.loading = true
+            let month_year = helperStore.getMonthYear(payload.date_rendered)
+
+            EventService.downloadMonthlyFSReports(payload)
+            .then(response => {
+                var fileURL = window.URL.createObjectURL(
+                    new Blob([response.data], {type:'application/pdf'})
+                );
+
+                var fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', 'Field_Service_Report_'+month_year+'.pdf');
+                document.body.appendChild(fileLink);
+                fileLink.click();
+                this.loading = false
+
+                toast.success("Successfully Downloaded!")
+            })
+            .catch(error => {
+                this.errors = error.response.data.message
+                this.loading = false
+            })
+        },
+
         clearData() {
             this.lineMonths = []
             this.lineHours = []
