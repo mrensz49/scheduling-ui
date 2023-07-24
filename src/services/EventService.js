@@ -1,15 +1,19 @@
 import axios from 'axios'
+// import { useToast } from 'vue-toastification'
+// const toast = useToast()
 
+let time_out = 5000
 const apiClient = axios.create({
     baseURL: process.env.NODE_ENV == 'development'
             ? process.env.VUE_APP_URL : 'https://rscheduling.xyz/be/',
     //   baseURL: `http://localhost:8081/`,
-//   withCredentials: false, // This is the default
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  timeout: 15000
+    //   withCredentials: false, // This is the default
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    },
+    timeout: time_out,
+    // signal: newAbortSignal(time_out),
 })
 auth(apiClient)
 
@@ -20,7 +24,7 @@ const apiClientReport = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json'
     },
-    timeout: 15000
+    timeout: time_out,
 })
 
 auth(apiClientReport)
@@ -35,6 +39,21 @@ function auth(apiC) {
         return config;
     }, null, { synchronous: true });
 }
+
+// function newAbortSignal(timeoutMs) {
+//     const abortController = new AbortController();
+//     console.log(1)
+//     // setTimeout(() => abortController.abort(), timeoutMs || 0);
+//     setTimeout(() => {
+//         abortController.abort()
+//         console.log('signal 3 - ', abortController.signal?.reason)
+//         // toast.error('Exceed timeout of ' + time_out / 1000 + ' seconds.\nPlease try again.')
+//     }, timeoutMs || 0)
+//     console.log(2)
+//     console.log('signal - ', abortController.signal)
+//     console.log('signal2 - ', abortController.signal.AbortSignal)
+//     // return abortController.signal;
+//   }
 
 export default {
 
