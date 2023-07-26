@@ -25,6 +25,7 @@ export const useHelperStore = defineStore({
         visibleModalTreasure: false,
         visibleModal: false,
         visibleModalNotificationInform: false,
+        visibleModalMemberAssigments: false,
 
         selectedModal: '',
 

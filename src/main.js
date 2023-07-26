@@ -49,6 +49,7 @@ import {
     cilChevronCircleUpAlt,
     cilInfo,
     cilReportSlash,
+    cilHistory,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -71,6 +72,7 @@ import {
     cilChevronCircleUpAlt,
     cilInfo,
     cilReportSlash,
+    cilHistory,
 }
 
 const pinia = createPinia()

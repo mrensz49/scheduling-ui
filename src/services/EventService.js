@@ -377,6 +377,10 @@ export default {
         return apiClient.post(`/api/roles/update/${payloads.id}`, payloads)
     },
 
+    viewMemberAssignments(payload) {
+        return apiClient.get(`/api/meeting-assignment/member/${payload}`)
+    },
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

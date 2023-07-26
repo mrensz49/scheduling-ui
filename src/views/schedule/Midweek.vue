@@ -23,6 +23,11 @@
               <CCol>
                 <CSpinner class="mt-2" v-if="assignmentStore.loading" component="span" size="sm" aria-hidden="true"/>
               </CCol>
+              <CCol>
+                <p class="text-end pointer" @click="helperStore.visibleModalMemberAssigments=true">
+                  <CIcon icon="cil-history" /> view assignments
+                </p>
+              </CCol>
 
               <CCol :md="12" v-if="this.date_start">
                 <CCard class="mt-4 mb-4 shadow-lg bg-body rounded">
@@ -432,6 +437,7 @@
       </CCol>
     </CRow>
     <scroll-top/>
+    <ModalMemberAssignments/>
 
     <CRow>
     </CRow>
@@ -446,6 +452,7 @@
   import EventService from "@/services/EventService.js"
   import EditClose from "@/components/icon/EditClose"
   import ScheduleMidweekDownload from "@/components/reports/ScheduleMidweekDownload.vue"
+  import ModalMemberAssignments from "@/components/modal/ModalMemberAssigments"
 
   import { useAuthStore } from '@/store/auth'
   import { useAssignmentStore } from '@/store/assignment'
@@ -494,7 +501,7 @@
             }
         }
     },
-    components: { EditClose, ScheduleMidweekDownload },
+    components: { EditClose, ScheduleMidweekDownload, ModalMemberAssignments },
     methods: {
 
       setData(name) {
