@@ -63,9 +63,11 @@ import { useToast } from 'vue-toastification'
 
 import { useHelperStore } from '@/services/helper'
 import { useAssignmentStore } from '@/store/assignment'
+import { useMinistryStore } from '@/store/ministry'
 
 const helperStore = useHelperStore()
 const assignmentStore = useAssignmentStore()
+const ministryStore = useMinistryStore()
 const toast = useToast()
 
 export default {
@@ -76,8 +78,10 @@ export default {
         return {
             helperStore: helperStore,
             assignmentStore: assignmentStore,
+            ministryStore: ministryStore,
 
             options: [],
+            roles: [],
             member: '',
             member_id: '',
         }
@@ -126,27 +130,32 @@ export default {
                 parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ||
                 parseInt(assignments.first_partner_member_id) == parseInt(this.member_id)
             ) {
-                let type = (assignmentStore.eff_ministries.find(assignment => assignment.id === assignments.first_effective_ministries_id).type)
+                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.first_effective_ministries_id)
+                // roles.push(type[0]['type'] + ' - ' + role)
+                let type = ministryStore.ministries[(assignments.first_effective_ministries_id - 1)]
                 let role = parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type + ' - ' + role)
+                roles.push(type.type + ' - ' + role)
             }
 
             if(
                 parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ||
                 parseInt(assignments.second_partner_member_id) == parseInt(this.member_id)
             ) {
-                let type = (assignmentStore.eff_ministries.find(assignment => assignment.id === assignments.second_effective_ministries_id).type)
+                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.second_effective_ministries_id)
+                let type = ministryStore.ministries[(assignments.second_effective_ministries_id - 1)]
                 let role = parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type + ' - ' + role)
+                roles.push(type.type + ' - ' + role)
             }
 
             if(
                 parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ||
                 parseInt(assignments.third_partner_member_id) == parseInt(this.member_id)
             ) {
-                let type = (assignmentStore.eff_ministries.find(assignment => assignment.id === assignments.third_effective_ministries_id).type)
+                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.third_effective_ministries_id)
+                // roles.push(type[0]['type'] + ' - ' + role)
+                let type = ministryStore.ministries[(assignments.third_effective_ministries_id - 1)]
                 let role = parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type + ' - ' + role)
+                roles.push(type.type + ' - ' + role)
             }
 
 
@@ -168,7 +177,8 @@ export default {
             }
 
             return roles;
-        }
+        },
+
     },
 
     watch: {

@@ -9,7 +9,6 @@ export const useAssignmentStore = defineStore({
         countsAP: [],
         data: [],
         assignments: [],
-        eff_ministries: [],
         loading: false,
         ap_loading: false,
         errors: {},
@@ -55,7 +54,6 @@ export const useAssignmentStore = defineStore({
             EventService.viewMemberAssignments(payload)
             .then(response => {
                 this.assignments = response.data.assignments
-                this.eff_ministries = response.data.effective_ministries
                 this.loading = false
             })
             .catch(error => {
