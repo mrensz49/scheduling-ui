@@ -28,6 +28,7 @@ export const useMemberStore = defineStore({
         co_members: [],
         member: [],
         members: [],
+        unchecked_members: [],
         phones: [],
         loading_ap: false,
         loading: false,
@@ -168,6 +169,19 @@ export const useMemberStore = defineStore({
             EventService.getCoMembers(payloads)
             .then(response => {
                 this.co_members = response.data
+                this.loading = false
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loading = false
+            })
+        },
+
+        fetchUncheckedMembers() {
+            this.loading = true
+            EventService.fetchUncheckedMembers()
+            .then(response => {
+                this.unchecked_members = response.data
                 this.loading = false
             })
             .catch(error => {

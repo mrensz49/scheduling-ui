@@ -50,6 +50,7 @@ import {
     cilInfo,
     cilReportSlash,
     cilHistory,
+    cilWindow,
 } from '@coreui/icons'
 
   const iconsi = {
@@ -73,6 +74,7 @@ import {
     cilInfo,
     cilReportSlash,
     cilHistory,
+    cilWindow,
 }
 
 const pinia = createPinia()

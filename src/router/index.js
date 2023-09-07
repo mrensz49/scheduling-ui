@@ -195,6 +195,19 @@ const routes = [
     ]
   },
 
+    {
+    path: '/others',
+    name: 'Others',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'unchecked-members',
+        name: 'Unchecked Members',
+        component: () => import('@/views/others/UncheckedMembers'),
+      },
+    ]
+  },
+
   {
     path: '/',
     name: 'Home',

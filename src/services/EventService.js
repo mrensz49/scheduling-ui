@@ -381,6 +381,10 @@ export default {
         return apiClient.get(`/api/meeting-assignment/member/${payload}`)
     },
 
+    fetchUncheckedMembers() {
+        return apiClient.get(`/api/others/unchecked-members`)
+    },
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

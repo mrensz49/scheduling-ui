@@ -118,6 +118,18 @@ export default [
   },
 
 
+  {
+    component: 'CNavGroup',
+    name: 'Others',
+    icon: 'cil-window',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Unchecked Members',
+        to: '/others/unchecked-members',
+      },
+    ]
+  },
   // {
   //   component: 'CNavTitle',
   //   name: 'Admin',
