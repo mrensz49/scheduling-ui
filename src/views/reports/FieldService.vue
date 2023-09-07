@@ -77,7 +77,7 @@
                 <span v-if="authStore.user.role_id != 4">
                     <CFormSelect
                         class="rounded-0"
-                        size="sm"
+                        size="md"
                         @change="defShowGroup=$event.target.value"
                     >
                         <option
@@ -195,7 +195,8 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Publishers</CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="25%">Publishers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
@@ -203,10 +204,11 @@
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.publishers ?? 0 }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_placements'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_vs'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_hours'] }}</CTableHeaderCell>
@@ -223,7 +225,8 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Auxiliary Pioneers</CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="25%">Auxiliary Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
@@ -231,10 +234,11 @@
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.auxiliary_pioneers ?? 0 }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['placements'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['video_showings'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
@@ -251,7 +255,8 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special/Regular Pioneers</CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="25%">Special/Regular Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
@@ -259,10 +264,11 @@
                                     <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.regular_pioneers ?? 0 }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
                                 <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
@@ -380,11 +386,13 @@
     import { useFieldServiceStore } from '@/store/field_service'
     import { useAuthStore } from '@/store/auth'
     import { useHelperStore } from '@/services/helper'
+    import { useReportsPubsStore } from '@/store/reportspubs'
 
     const congregationStore = useCongregationStore()
     const fieldServiceStore = useFieldServiceStore()
     const helperStore = useHelperStore()
     const authStore = useAuthStore()
+    const reportsPubs = useReportsPubsStore()
 
     export default {
 
@@ -410,6 +418,7 @@
                 fieldServiceStore: fieldServiceStore,
                 helperStore: helperStore,
                 authStore: authStore,
+                reportsPubs: reportsPubs,
 
                 selectedModal: '',
                 defShowGroup: 1, // default value

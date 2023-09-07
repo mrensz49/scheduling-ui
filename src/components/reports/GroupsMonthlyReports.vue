@@ -51,6 +51,12 @@
             </CAccordionHeader>
             <CAccordionBody>
                 <GroupsMonthlyReportsExt
+                    floatId="floatingNoOfReports"
+                    label="No. of Reports"
+                    :data="reportsPubs.reports.publishers ?? 0"
+                />
+
+                <GroupsMonthlyReportsExt
                     floatId="floatingPlacement"
                     label="Placements"
                     :data="fieldServiceStore.data['publshr_placements']"
@@ -90,6 +96,12 @@
             </CAccordionHeader>
             <CAccordionBody>
                 <GroupsMonthlyReportsExt
+                    floatId="floatingNoOfReports"
+                    label="No. of Reports"
+                    :data="reportsPubs.reports.auxiliary_pioneers ?? 0"
+                />
+
+                <GroupsMonthlyReportsExt
                     floatId="floatingPlacement"
                     label="Placements"
                     :data="fieldServiceStore.data['reports']['auxillary_pioneer']['placements']"
@@ -128,6 +140,12 @@
                <h3 class="text-warning">Special/Regular Pioneers</h3>
             </CAccordionHeader>
             <CAccordionBody>
+                <GroupsMonthlyReportsExt
+                    floatId="floatingNoOfReports"
+                    label="No. of Reports"
+                    :data="reportsPubs.reports.regular_pioneers ?? 0"
+                />
+
                 <GroupsMonthlyReportsExt
                     floatId="floatingPlacement"
                     label="Placements"
@@ -245,8 +263,10 @@
 
     import GroupsMonthlyReportsExt from '@/components/reports/GroupsMonthlyReportsExt'
     import { useFieldServiceStore } from '@/store/field_service'
+    import { useReportsPubsStore } from '@/store/reportspubs'
 
     const fieldServiceStore = useFieldServiceStore()
+    const reportsPubs = useReportsPubsStore()
 
     export default {
 
@@ -255,6 +275,7 @@
 
             return {
                 fieldServiceStore: fieldServiceStore,
+                reportsPubs: reportsPubs,
             }
         },
 
