@@ -40,13 +40,18 @@
         </CCol>
 
         <CCol md="4">
-            <CButton type="submit" color="primary" :disabled="loading">
+            <CButton type="submit" @click="formData.report='congregation'" color="primary" :disabled="loading">
                 <CIcon icon="cil-cloud-download" v-if="!loading" />
                 <CSpinner class="mt-2" component="span" v-if="loading" size="sm" aria-hidden="true"/>
+            </CButton> |
+
+            <CButton type="submit" @click="formData.report='chairman'" color="warning" :disabled="loading">
+                <CIcon icon="cil-cloud-download" v-if="!loading" />
+                <CSpinner class="mt-2" component="span" v-if="loading" size="sm" aria-hidden="true"/> Assg. slip
             </CButton>
         </CCol>
 
-        </CForm>
+    </CForm>
     </CCardBody>
 </template>
 
@@ -72,6 +77,7 @@ export default {
             formData: {
                 date_start: '',
                 date_end: '',
+                report: '',
             }
         }
     },
@@ -98,7 +104,9 @@ export default {
                 let date_end = this.getHumanDate(this.formData.date_end, 'YYYY-MM-DD')
 
                 let data = {
-                    date_start: date_start, date_end: date_end
+                    date_start: date_start,
+                    date_end: date_end,
+                    report: this.formData.report
                 }
 
                 this.loading = 1
@@ -111,7 +119,7 @@ export default {
 
                     var fileLink = document.createElement('a');
                     fileLink.href = fileURL;
-                    fileLink.setAttribute('download', 'weekend_sched_'+this.getHumanDate(this.formData.date_start, 'MMM_DD')+'__'+this.getHumanDate(this.formData.date_end, 'MMM_DD')+'.pdf');
+                    fileLink.setAttribute('download', 'weekend_sched_'+this.formData.report+'_'+this.getHumanDate(this.formData.date_start, 'MMM_DD')+'__'+this.getHumanDate(this.formData.date_end, 'MMM_DD')+'.pdf');
                     document.body.appendChild(fileLink);
                     fileLink.click();
                     this.loading = 0

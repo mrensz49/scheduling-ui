@@ -329,7 +329,8 @@ export default {
 
     // downloads info
         downloadMidweekSchedule(payload) {
-            return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}`)
+            console.log('payload - ', payload)
+            return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}/${payload.report}`)
         },
 
         downloadContacts() {

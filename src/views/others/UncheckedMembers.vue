@@ -6,7 +6,7 @@
           <CCardBody>
 
             <CAlert color="warning" class="mt-2">
-                The names found below may have been transferred to another congregation, are not enrolled or are enrolled but not yet an unbaptized publisher.
+                The names found below may have been transferred to another congregation, deceased, are not enrolled or are enrolled but not yet an unbaptized publisher.
             </CAlert>
 
             <CSpinner  v-if="memberStore.loading"  color="primary" component="span" size="sm" aria-hidden="true"/>

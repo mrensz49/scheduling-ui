@@ -501,7 +501,13 @@
             }
         }
     },
-    components: { EditClose, ScheduleMidweekDownload, ModalMemberAssignments },
+
+    components: {
+      EditClose,
+      ScheduleMidweekDownload,
+      ModalMemberAssignments,
+    },
+
     methods: {
 
       setData(name) {
