@@ -11,6 +11,11 @@
                   <span v-for="error in authStore.errors_login" :key="error"> * {{ error[0] }}<br/></span>
                 </CAlert>
 
+                <div class="text-center">
+                  <a href="javascript:void" @click="handleHomePageLink()">
+                    <img src="@/assets/images/logo/calendar-clock.png" :height="60" alt="logo">
+                  </a>
+                </div>
                 <CForm
                   novalidate
                   @submit.prevent="handleLogin"
@@ -66,15 +71,28 @@
               </CCardBody>
             </CCard>
             <CCard class="text-white bg-primary py-5">
-              <CCardBody class="text-center">
+              <CCardBody >
                 <div>
-                  <h2>Join</h2>
-                  <p>
-                    Sign up here to get the latest report, assigning schedule, monitoring and etc.
+                  <h2 class="text-center">Join</h2>
+                  <p class="text-center">
+                    Stay up-to-date and manage your tasks effectively with our comprehensive platform.
                   </p>
-                  <CButton color="light" variant="outline" class="mt-3" :disabled="authStore.user_loading" @click="handleRegisterLink()">
-                    Register Now!
-                  </CButton>
+                   <ul>
+                    <li><i>Access the latest reports and insights</i></li>
+                    <li><i>Create and manage personalized schedules</i></li>
+                    <li><i>Monitor progress and stay on top of deadlines</i></li>
+                    <li><i>And much more!</i></li>
+                  </ul>
+
+                  <p class="text-center">
+                    Sign up today and experience the power of our easy-to-use tools.
+                  </p>
+
+                  <div class="text-center">
+                    <CButton color="light" variant="outline" class="mt-3" :disabled="authStore.user_loading" @click="handleRegisterLink()">
+                      Register Now!
+                    </CButton>
+                  </div>
                 </div>
               </CCardBody>
             </CCard>
@@ -144,8 +162,11 @@ export default {
     },
 
     handleForgotPasswordLink() {
-
       this.$router.push('/auth/forgot-password')
+    },
+
+    handleHomePageLink() {
+      this.$router.push('/')
     }
   },
 

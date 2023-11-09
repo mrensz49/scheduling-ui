@@ -10,6 +10,12 @@
                   <span v-for="error in authStore.errors_register" :key="error"> * {{ error[0] }}<br/></span>
                 </CAlert>
 
+                <div class="text-center">
+                  <a href="javascript:void" @click="handleHomePageLink()">
+                    <img src="@/assets/images/logo/calendar-clock.png" :height="60" alt="logo">
+                  </a>
+                </div>
+
                 <CForm
                   class="row g-3 needs-validation"
                   @submit.prevent="handleRegister"
@@ -161,7 +167,12 @@
 
       handleLoginLink() {
         this.$router.push('/auth/login')
-      }
+      },
+
+      handleHomePageLink() {
+        this.$router.push('/')
+      },
+
     }
   }
 

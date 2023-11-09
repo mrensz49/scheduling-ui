@@ -133,7 +133,7 @@ export const useAuthStore = defineStore({
                 this.user_loading = false
                 localStorage.removeItem('scheduling_token')
                 localStorage.removeItem('scheduling_id')
-                router.push({name: 'Login'})
+                router.push({name: 'Index'})
                 toast.success("Successfully Logout")
 
             })

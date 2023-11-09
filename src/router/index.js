@@ -209,7 +209,7 @@ const routes = [
   },
 
   {
-    path: '/',
+    path: '/dashboard',
     name: 'Home',
     component: DefaultLayout,
     redirect: '/dashboard',
@@ -232,6 +232,20 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue'),
+      },
+    ]
+  },
+
+  {
+    path: '/',
+    name: 'Index',
+    redirect: '/index',
+    children: [
+      {
+        path: '/index',
+        name: 'Index',
+        component: () =>
+          import(/* webpackChunkName: "dashboard" */ '@/views/Index.vue'),
       },
     ]
   },
