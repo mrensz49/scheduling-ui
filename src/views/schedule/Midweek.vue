@@ -380,7 +380,7 @@
                           </span>
                           <span v-else>
                             <v-select label="name" v-model="formData.cvs_member_id" placeholder="CVS Incharge" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-2"></v-select>
-                            <v-select label="name" v-model="formData.cvs_reading_member_id" placeholder="CVS Reader" :filterable="false" :options="optionsEMS" @search="onSearchEMS" class="mt-1"></v-select>
+                            <v-select label="name" v-model="formData.cvs_reading_member_id" placeholder="CVS Reader" :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
                           </span>
 
                         </td>
