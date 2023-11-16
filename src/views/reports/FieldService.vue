@@ -165,25 +165,27 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark">
-                                <CTableHeaderCell colspan="2" scope="col" width="25%">Totals</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Credit Hours</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="22%">Totals</CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Ministries</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Credit Hours</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="22%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Grand Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['video_showings'] }}</CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['return_visits'] }}</CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['bible_studies'] }}</CTableHeaderCell>
-                                <CTableHeaderCell class="text-primary" scope="col" width="12.5%">{{ fieldServiceStore.data['credit_hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['video_showings'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['is_ministry'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['return_visits'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell class="text-primary" scope="col" width="26%">{{ fieldServiceStore.data['credit_hours'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>
@@ -195,25 +197,27 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="25%">Publishers</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="22%">Publishers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>No. of Reports</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Ministries</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="22%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.publishers ?? 0 }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_vs'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_rv'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['publshr_bs'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ reportsPubs.reports.publishers ?? 0 }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_vs'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_bs'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_is_min'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_hours'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['publshr_rv'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>
@@ -225,25 +229,25 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="25%">Auxiliary Pioneers</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="22%">Auxiliary Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>No. of Reports</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="22%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.auxiliary_pioneers ?? 0 }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['video_showings'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['return_visits'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ reportsPubs.reports.auxiliary_pioneers ?? 0 }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['video_showings'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['auxillary_pioneer']['return_visits'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>
@@ -255,25 +259,25 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark" class="text-warning">
-                                <CTableHeaderCell colspan="2" scope="col" width="25%">Special/Regular Pioneers</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>No. of Reports</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="22%">Special/Regular Pioneers</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>No. of Reports</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="25%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="22%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ reportsPubs.reports.regular_pioneers ?? 0 }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] + fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] + fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ reportsPubs.reports.regular_pioneers ?? 0 }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] + fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] + fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] + fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] + fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] + fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>
@@ -285,23 +289,23 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark">
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Regular Pioneers</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="48%">Regular Pioneers</CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="48%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['video_showings'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['regular_pioneer']['return_visits'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>
@@ -313,23 +317,23 @@
                     <CTable striped hover responsive>
                         <CTableHead>
                             <CTableRow color="dark">
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%">Special Pioneers</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Placements</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Video Showings</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Hours</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Return Visits</i></CTableHeaderCell>
-                                    <CTableHeaderCell scope="col" width="12.5%"><i>Bible Studies</i></CTableHeaderCell>
+                                <CTableHeaderCell colspan="2" scope="col" width="48%">Special Pioneers</CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Placements</i></CTableHeaderCell> -->
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Video Showings</i></CTableHeaderCell> -->
+                                    <CTableHeaderCell scope="col" width="26%"><i>Bible Studies</i></CTableHeaderCell>
+                                    <CTableHeaderCell scope="col" width="26%"><i>Hours</i></CTableHeaderCell>
+                                    <!-- <CTableHeaderCell scope="col" width="26%"><i>Return Visits</i></CTableHeaderCell> -->
                             </CTableRow>
                             <CTableRow>
-                                <CTableHeaderCell colspan="2" scope="col" width="37.5%" class="text-end">
+                                <CTableHeaderCell colspan="2" scope="col" width="48%" class="text-end">
                                     <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="fieldServiceStore.calc_loading"/>
                                     Total :
                                 </CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell>
-                                <CTableHeaderCell scope="col" width="12.5%">{{ fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['special_pioneer']['placements'] }}</CTableHeaderCell> -->
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['special_pioneer']['video_showings'] }}</CTableHeaderCell> -->
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['special_pioneer']['bible_studies'] }}</CTableHeaderCell>
+                                <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['special_pioneer']['hours'] }}</CTableHeaderCell>
+                                <!-- <CTableHeaderCell scope="col" width="26%">{{ fieldServiceStore.data['reports']['special_pioneer']['return_visits'] }}</CTableHeaderCell> -->
                             </CTableRow>
                         </CTableHead>
                     </CTable>

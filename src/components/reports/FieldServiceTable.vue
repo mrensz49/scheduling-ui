@@ -4,16 +4,19 @@
             <CTableRow>
                 <CTableHeaderCell scope="col" width="19.5%">{{ designate }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col" width="17.5%">Designate</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="10.5%">
+                <!-- <CTableHeaderCell scope="col" width="10.5%">
                     <span v-c-tooltip="{content: 'Printed and Electronic', placement: 'top'}">Placements</span>
                 </CTableHeaderCell>
                 <CTableHeaderCell scope="col" width="10.5%">
                     <span v-c-tooltip="{content: 'Video Showings', placement: 'top'}">V.S.</span>
+                </CTableHeaderCell> -->
+                <CTableHeaderCell scope="col" width="21%">
+                    <span v-if="designate == 'Publisher'" v-c-tooltip="{content: 'Check the box if brother/sister shared in any form of the ministry during the month.', placement: 'top'}">
+                        Is Ministry?
+                    </span>
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="10.5%">Hours</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="10.5%">Return Visits</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="10.5%">Bible Studies</CTableHeaderCell>
-                <CTableHeaderCell scope="col" width="10.5%">Credit Hours</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="21%">Bible Studies</CTableHeaderCell>
+                <CTableHeaderCell scope="col" width="21%"><span v-if="designate != 'Publisher'">Hours</span></CTableHeaderCell>
             </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -30,52 +33,15 @@
                         </CBadge>
                     </template>
                 </CTableDataCell>
-                <CTableDataCell>
-                    <span v-if="!helperStore.editFS">{{ member.placements ?? 0 }}</span>
-                    <span v-else>
-                        <CFormInput
-                            size="sm"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'placements', n, $event.target.value)"
-                            v-model="member.placements"
-                            :placeholder="!member.placements ? 0 : ''"
-                        />
-                    </span>
-                </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!helperStore.editFS">{{ member.video_showings ?? 0 }}</span>
-                    <span v-else>
-                        <CFormInput
-                            size="sm"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'video_showings', n, $event.target.value)"
-                            v-model="member.video_showings"
-                            :placeholder="!member.video_showings ? 0 : ''"
-                        />
-                    </span>
-                </CTableDataCell>
-
-                <CTableDataCell>
-                    <span v-if="!helperStore.editFS">{{ member.hours ?? 0 }}</span>
-                    <span v-else>
-                        <CFormInput
-                            size="sm"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', n, $event.target.value)"
-                            v-model="member.hours"
-                            :placeholder="!member.hours ? 0 : ''"
-                        />
-                    </span>
-                </CTableDataCell>
-
-                <CTableDataCell>
-                    <span v-if="!helperStore.editFS">{{ member.return_visits ?? 0 }}</span>
-                    <span v-else>
-                        <CFormInput
-                            size="sm"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'return_visits', n, $event.target.value)"
-                            v-model="member.return_visits"
-                            :placeholder="!member.return_visits ? 0 : ''"
-                        />
-                    </span>
+                    <CFormSwitch size="xl"
+                        @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked)"
+                        :checked="parseInt(member.is_ministry)"
+                        :disabled="!helperStore.editFS ? 1:0"
+                        v-model="member.is_ministry"
+                        v-if="designate=='Publisher'"
+                    />
                 </CTableDataCell>
 
                 <CTableDataCell>
@@ -91,15 +57,17 @@
                 </CTableDataCell>
 
                 <CTableDataCell>
-                    <span v-if="!helperStore.editFS">{{ member.credit_hours ?? 0 }}</span>
-                    <span v-else>
-                        <CFormInput
-                            size="sm"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'credit_hours', n, $event.target.value)"
-                            v-model="member.credit_hours"
-                            :placeholder="!member.credit_hours ? 0 : ''"
-                        />
-                    </span>
+                    <template v-if="designate != 'Publisher'">
+                        <span v-if="!helperStore.editFS">{{ member.hours ?? 0 }}</span>
+                        <span v-else>
+                            <CFormInput
+                                size="sm"
+                                @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', n, $event.target.value)"
+                                v-model="member.hours"
+                                :placeholder="!member.hours ? 0 : ''"
+                            />
+                        </span>
+                    </template>
                 </CTableDataCell>
 
             </CTableRow>
@@ -107,12 +75,9 @@
         <CTableFoot color="dark">
             <CTableRow>
                 <CTableDataCell colspan="2" class="text-end"><b >Total : </b> </CTableDataCell>
-                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'placements']) }}</i></CTableDataCell>
-                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'video_showings']) }}</i></CTableDataCell>
-                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'hours']) }}</i></CTableDataCell>
-                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'return_visits']) }}</i></CTableDataCell>
+                <CTableDataCell><i v-if="designate == 'Publisher'">{{ fieldServiceStore.showTotalReport([group, 'is_ministry']) }}</i></CTableDataCell>
                 <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'bible_studies']) }}</i></CTableDataCell>
-                <CTableDataCell><i>{{ fieldServiceStore.showTotalReport([group, 'credit_hours']) }}</i></CTableDataCell>
+                <CTableDataCell><i v-if="designate != 'Publisher'">{{ fieldServiceStore.showTotalReport([group, 'hours']) }}</i></CTableDataCell>
             </CTableRow>
         </CTableFoot>
     </CTable>
@@ -155,14 +120,18 @@
                 this.formData[type] = val * 1
                 // this.formData[type] = this.forms[group].members[index][type] * 1
 
-                if (this.old_type == '' || this.old_type == type) {
-                    clearTimeout(this.timeout);
+                if (type == 'is_ministry') {
+                    this.saveReportNow(this.formData, stat, id)
+                } else {
+
+                    if (this.old_type == '' || this.old_type == type) {
+                        clearTimeout(this.timeout);
+                    }
+
+                    this.timeout = setTimeout(function(formData, stat, id) {
+                        this.saveReportNow(formData, stat, id)
+                    }.bind(this), this.delay, this.formData, stat, id);
                 }
-
-                this.timeout = setTimeout(function(formData, stat, id) {
-                    this.saveReportNow(formData, stat, id)
-                }.bind(this), this.delay, this.formData, stat, id);
-
                 this.old_type = type
             },
 
@@ -180,7 +149,7 @@
                 router.push({name: 'View Member', params: { id: id } })
             },
 
-        }
+        },
     }
 
 </script>

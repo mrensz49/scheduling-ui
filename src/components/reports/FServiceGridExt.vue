@@ -7,38 +7,42 @@
             <CAccordionBody>
 
                 <CListGroup flush>
-                    <CListGroupItem>
+                    <!-- <CListGroupItem>
                         <CFormInput type="text" id="floatingPlacement" floatingLabel="Placements"
                             v-model="member.placements"
                             :disabled="!helperStore.editFS"
                             class="bg-white"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'placements', n, $event.target.value)"
                         />
-                    </CListGroupItem>
-                    <CListGroupItem>
+                    </CListGroupItem> -->
+                    <!-- <CListGroupItem>
                         <CFormInput type="text" id="floatingVideoShowings" floatingLabel="Video Showings"
                             v-model="member.video_showings"
                             :disabled="!helperStore.editFS"
                             class="bg-white"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'video_showings', n, $event.target.value)"
                         />
+                    </CListGroupItem> -->
+                    <CListGroupItem>
+                        <CFormSwitch size="xl" :id="'formSwitchCheckDefaultXL'+member.id" label="Is Ministry?"
+                            v-model="member.is_ministry"
+                            :disabled="!helperStore.editFS"
+                            class="bg-white"
+                            @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked)"
+                            v-if="designate == 'Publisher'"
+                        />
                     </CListGroupItem>
+
                     <CListGroupItem>
                         <CFormInput type="text" id="floatingHours" floatingLabel="Hours"
                             v-model="member.hours"
                             :disabled="!helperStore.editFS"
                             class="bg-white"
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'hours', n, $event.target.value)"
+                            v-if="designate != 'Publisher'"
                         />
                     </CListGroupItem>
-                    <CListGroupItem>
-                        <CFormInput type="text" id="floatingReturnVisits" floatingLabel="Return Visits"
-                            v-model="member.return_visits"
-                            :disabled="!helperStore.editFS"
-                            class="bg-white"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'return_visits', n, $event.target.value)"
-                        />
-                    </CListGroupItem>
+
                     <CListGroupItem>
                         <CFormInput type="text" id="floatingBibleStudies" floatingLabel="Bible Studies"
                             v-model="member.bible_studies"
@@ -47,14 +51,7 @@
                             @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'bible_studies', n, $event.target.value)"
                         />
                     </CListGroupItem>
-                    <CListGroupItem>
-                        <CFormInput type="text" id="floatingBibleStudies" floatingLabel="Credit Hours"
-                            v-model="member.credit_hours"
-                            :disabled="!helperStore.editFS"
-                            class="bg-white"
-                            @keyup="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'credit_hours', n, $event.target.value)"
-                        />
-                    </CListGroupItem>
+
                     <div class="ms-3">
                         <span
                             v-if="!helperStore.editFS && enable_edit"
@@ -72,12 +69,9 @@
 
     <div class="p-3 bg-white mb-4">
         <CRow>
-            <CCol md="2" class="fw-bolder">Placements: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'placements']) }}</span> </CCol>
-            <CCol md="2" class="fw-bolder">Video Showings: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'video_showings']) }}</span> </CCol>
-            <CCol md="2" class="fw-bolder">Hours: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'hours']) }}</span> </CCol>
-            <CCol md="2" class="fw-bolder">Return Visits: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'return_visits']) }}</span> </CCol>
+            <CCol md="2" class="fw-bolder" v-if="designate == 'Publisher'">Ministries: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'is_ministry']) }}</span> </CCol>
+            <CCol md="2" class="fw-bolder" v-if="designate != 'Publisher'">Hours: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'hours']) }}</span> </CCol>
             <CCol md="2" class="fw-bolder">Bible Studies: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'bible_studies']) }}</span> </CCol>
-            <CCol md="2" class="fw-bolder">Credit Hours: <span class="text-danger me-5" style="float:right">{{ fieldServiceStore.showTotalReport([group, 'credit_hours']) }}</span> </CCol>
         </CRow>
     </div>
 </template>
@@ -96,7 +90,7 @@
 
         name: 'FieldServiceGridExt',
 
-        props: ['group', 'date_rendered', 'enable_edit'],
+        props: ['group', 'date_rendered', 'enable_edit', 'designate'],
 
         data() {
 
@@ -119,13 +113,18 @@
                 this.formData[type] = val * 1
                 // this.formData[type] = this.forms[group].members[index][type] * 1
 
-                if (this.old_type == '' || this.old_type == type) {
-                    clearTimeout(this.timeout);
-                }
+                if (type == 'is_ministry') {
+                    this.saveReportNow(this.formData, stat, id)
+                } else {
 
-                this.timeout = setTimeout(function(formData, stat, id) {
-                    this.saveReportNow(formData, stat, id)
-                }.bind(this), this.delay, this.formData, stat, id);
+                    if (this.old_type == '' || this.old_type == type) {
+                        clearTimeout(this.timeout);
+                    }
+
+                    this.timeout = setTimeout(function(formData, stat, id) {
+                        this.saveReportNow(formData, stat, id)
+                    }.bind(this), this.delay, this.formData, stat, id);
+                }
 
                 this.old_type = type
             },

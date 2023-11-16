@@ -27,6 +27,7 @@ export const useFieldServiceStore = defineStore({
         lineReturnVisits: [],
         lineBibleStudies: [],
         lineCreditHours: [],
+        lineIsMinistry: [],
         data: {
             stats: {},
             reports: {
@@ -40,6 +41,7 @@ export const useFieldServiceStore = defineStore({
             return_visits: 0,
             bible_studies: 0,
             credit_hours: 0,
+            is_ministry: 0,
         },
         service_year: [],
         date_rendered: '',
@@ -107,13 +109,19 @@ export const useFieldServiceStore = defineStore({
         },
 
         showTotalReport(reports) {
-
             // report[0]
             // report[1] type of reports like placements, video_showings, etc
 
             let sum_report = 0
             for (const member of reports[0]) {
-                sum_report += member[reports[1]] * 1
+                var value = 0
+                if (reports[1] == 'is_ministry') {
+                    value = (member[reports[1]] * 1) >= 1 ? 1:0
+                } else {
+                    value = member[reports[1]] * 1
+                }
+
+                sum_report += value
             }
 
             this.all_reports.push({[reports[1]]: sum_report}) // stored all total reports
@@ -198,6 +206,7 @@ export const useFieldServiceStore = defineStore({
                 var list_return_visits = []
                 var list_bible_studies = []
                 var list_credit_hours = []
+                var list_is_ministry = []
                 let y = service_year[year]
                 var list_hours = data.reports[y].map(month => {
 
@@ -206,6 +215,7 @@ export const useFieldServiceStore = defineStore({
                     list_return_visits.push(month.return_visits)
                     list_bible_studies.push(month.bible_studies)
                     list_credit_hours.push(month.credit_hours)
+                    list_is_ministry.push(month.is_ministry)
 
                     return month.hours
 
@@ -217,6 +227,7 @@ export const useFieldServiceStore = defineStore({
                 this.lineReturnVisits.push({[index2]: list_return_visits})
                 this.lineBibleStudies.push({[index2]: list_bible_studies})
                 this.lineCreditHours.push({[index2]: list_credit_hours})
+                this.lineIsMinistry.push({[index2]: list_is_ministry})
 
                 index2++
             }
@@ -303,6 +314,7 @@ export const useFieldServiceStore = defineStore({
             this.lineVideoShowings = []
             this.lineReturnVisits = []
             this.lineBibleStudies = []
+            this.lineIsMinistry = []
         },
 
         getHumanDate(date) {
