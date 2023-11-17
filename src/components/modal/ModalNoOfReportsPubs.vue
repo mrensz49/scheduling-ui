@@ -14,16 +14,21 @@
                         <CTableRow color="dark">
                             <CTableHeaderCell scope="col" width="7%">No</CTableHeaderCell>
                             <CTableHeaderCell scope="col" width="33%">Publisher</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Placements</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">VS</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Hours</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">R.V.</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">B.S.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Ministry</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Placements</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">VS</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Hours</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">R.V.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">B.S.</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <NoOfReportsPubExt :positions="reportsPubs.members?.publishers"/>
-                        <NoOfReportsPubExt :counter="reportsPubs.members.publishers?.length" row_color="warning" :positions="reportsPubs.members.unbaptized_publishers"/>
+                        <NoOfReportsPubExt
+                            :counter="reportsPubs.members.publishers?.length"
+                            row_color="warning"
+                            :positions="reportsPubs.members.unbaptized_publishers"
+                            designate="Publishers"
+                        />
                     </CTableBody>
                     </CTable>
                 </CCol>
@@ -35,15 +40,19 @@
                         <CTableRow color="dark">
                             <CTableHeaderCell scope="col" width="7%">No</CTableHeaderCell>
                             <CTableHeaderCell scope="col" width="33%">Auxiliary Pioneer</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Placements</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">VS</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Hours</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">R.V.</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">B.S.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%"></CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Placements</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">VS</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Hours</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">R.V.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">B.S.</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <NoOfReportsPubExt :positions="reportsPubs.members?.auxiliary_pioneers"/>
+                        <NoOfReportsPubExt
+                            :positions="reportsPubs.members?.auxiliary_pioneers"
+                            designate="AP"
+                        />
                     </CTableBody>
                     </CTable>
                 </CCol>
@@ -55,16 +64,21 @@
                         <CTableRow color="dark">
                             <CTableHeaderCell scope="col" width="7%">No</CTableHeaderCell>
                             <CTableHeaderCell scope="col" width="33%">Regular/ <span class="text-warning">Special Pioneer</span> </CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Placements</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">VS</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">Hours</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">R.V.</CTableHeaderCell>
-                            <CTableHeaderCell scope="col" width="12%">B.S.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%"></CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Placements</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">VS</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">Hours</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">R.V.</CTableHeaderCell>
+                            <CTableHeaderCell scope="col" width="10%">B.S.</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                       <NoOfReportsPubExt :positions="reportsPubs.members?.regular_pioneers"/>
-                       <NoOfReportsPubExt :counter="reportsPubs.members.regular_pioneers?.length" row_color="warning" :positions="reportsPubs.members.special_pioneers"/>
+                       <NoOfReportsPubExt
+                            :counter="reportsPubs.members.regular_pioneers?.length"
+                            row_color="warning"
+                            :positions="reportsPubs.members.special_pioneers"
+                            designate="RP"
+                        />
                     </CTableBody>
                     </CTable>
                 </CCol>

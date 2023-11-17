@@ -24,13 +24,26 @@
                         />
                     </CListGroupItem> -->
                     <CListGroupItem>
-                        <CFormSwitch size="xl" :id="'formSwitchCheckDefaultXL'+member.id" label="Is Ministry?"
-                            v-model="member.is_ministry"
+
+                        <CFormSwitch size="xl" :id="'formSwitchCheckDefaultXL1'+member.id" label="Is Ministry?"
+                            @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked, $event.target.checked, member.is_ministry=0)"
                             :disabled="!helperStore.editFS"
-                            class="bg-white"
-                            @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked)"
+                            checked
+                            v-if="designate=='Publisher' && parseInt(member.is_ministry)"
+                        />
+
+                        <CFormSwitch size="xl" :id="'formSwitchCheckDefaultXL2'+member.id" label="Is Ministry?"
+                            @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked, member.is_ministry=1)"
+                            :disabled="!helperStore.editFS"
+                            v-if="designate=='Publisher' && !parseInt(member.is_ministry)"
+                        />
+
+                        <CFormSwitch size="xl" label="Is Ministry?"
+                            v-show="0"
+                            v-model="member.is_ministry"
                             v-if="designate == 'Publisher'"
                         />
+
                     </CListGroupItem>
 
                     <CListGroupItem>

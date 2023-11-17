@@ -36,12 +36,24 @@
 
                 <CTableDataCell>
                     <CFormSwitch size="xl"
-                        @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked)"
-                        :checked="parseInt(member.is_ministry)"
+                        @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked, member.is_ministry=0)"
                         :disabled="!helperStore.editFS ? 1:0"
+                        checked
+                        v-if="designate=='Publisher' && parseInt(member.is_ministry)"
+                    />
+
+                    <CFormSwitch size="xl"
+                        @change="saveReport(member.report_field_services_id ?? member.id, member.report_field_services_id ? 'exist':'not', 'is_ministry', n, $event.target.checked, member.is_ministry=1)"
+                        :disabled="!helperStore.editFS ? 1:0"
+                        v-if="designate=='Publisher' && !parseInt(member.is_ministry)"
+                    />
+
+                    <CFormSwitch size="xl"
+                        v-show="0"
                         v-model="member.is_ministry"
                         v-if="designate=='Publisher'"
                     />
+
                 </CTableDataCell>
 
                 <CTableDataCell>

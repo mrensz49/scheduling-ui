@@ -2,6 +2,14 @@
     <CTableRow :color="row_color" v-for="(pub, index) in positions" :key="pub.id">
         <CTableDataCell>{{ counter ? countPub(count_, index) : index+1 }}</CTableDataCell>
         <CTableDataCell>{{ pub.last_name + ', ' + pub.first_name }}</CTableDataCell>
+        <CTableDataCell v-if="showFS(pub)">
+            <template v-if="designate == 'Publishers'">
+                <CFormSwitch size="xl"
+                    v-model="pub.is_ministry"
+                    disabled
+                />
+            </template>
+        </CTableDataCell>
         <CTableDataCell v-if="showFS(pub)">{{ pub.placements }}</CTableDataCell>
         <CTableDataCell v-if="showFS(pub)">{{ pub.video_showings }}</CTableDataCell>
         <CTableDataCell v-if="showFS(pub)">{{ pub.hours }}</CTableDataCell>
@@ -23,7 +31,7 @@
     export default {
         name: 'NoOfReportsPubExt',
 
-        props: ['positions', 'row_color', 'counter'],
+        props: ['positions', 'row_color', 'counter', 'designate'],
 
         data() {
             return {
