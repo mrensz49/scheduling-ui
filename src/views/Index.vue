@@ -137,20 +137,55 @@
                 </ul>
             </div>
 
-            <div id="midweek-vid" class="col-md-12 mb-5 d-none" >
-            <CCard>
-                <CCardBody>
-                    <center>
-                        <video width="800" controls>
-                            <source src="@/assets/videos/Midweek.mp4" type="video/mp4">
-                            Your browser does not support HTML video.
-                        </video>
-                    </center>
-                </CCardBody>
-            </CCard>
+        </div>
+
+        <div class="exp-separator center-separator">
+            <div class="exp-separator-inner"></div>
+        </div>
+
+        <div class="row justify-content-md-center mt-5 mb-5">
+            <div class="col-md-8 pb-20 ">
+                <CCard>
+                    <CCardBody>
+                        <CCarousel controls indicators transition="crossfade">
+                            <CCarouselItem>
+                                <img class="d-block w-100" src="@/assets/images/guest/dashboard-2.png" alt="slide 1"/>
+                            </CCarouselItem>
+                            <CCarouselItem>
+                                <img class="d-block w-100" src="@/assets/images/guest/setup_midweek-2.png" alt="slide 2"/>
+                            </CCarouselItem>
+                            <CCarouselItem>
+                                <img class="d-block w-100" src="@/assets/images/guest/field_service_report-2.png" alt="slide 3"/>
+                            </CCarouselItem>
+                            <CCarouselItem>
+                                <img class="d-block w-100" src="@/assets/images/guest/statistic-2.png" alt="slide 4"/>
+                            </CCarouselItem>
+                        </CCarousel>
+                    </CCardBody>
+                </CCard>
             </div>
         </div>
+
+
+        <div class="row justify-content-md-center">
+            <div id="midweek-vid" class="col-md-8 mb-5 d-none" >
+                <div class="exp-separator center-separator mb-5">
+                    <div class="exp-separator-inner"></div>
+                </div>
+                <CCard>
+                    <CCardBody>
+                        <center>
+                            <video width="1000" controls>
+                                <source src="@/assets/videos/Midweek.mp4" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                        </center>
+                    </CCardBody>
+                </CCard>
+            </div>
         </div>
+
+    </div>
     </section>
 </template>
 
@@ -395,7 +430,7 @@
     }
 
     video {
-        width: 65%;
+        width: 100%;
         height: auto;
     }
 </style>
