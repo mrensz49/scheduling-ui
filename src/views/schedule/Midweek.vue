@@ -209,7 +209,7 @@
                                   <small>({{ assignmentStore.data.first_effective_ministries_id?.duration }})</small>
                                 </span>
                                 <span v-else>
-                                  <v-select label="type" v-model="formData.first_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                  <v-select label="type_duration" v-model="formData.first_effective_ministries_id" placeholder="Select" :filterable="true" :options="ministryStore.ministries" ></v-select>
                                 </span>
 
                               </td>
@@ -248,7 +248,7 @@
                                   <small>({{ assignmentStore.data.second_effective_ministries_id?.duration }})</small>
                                 </span>
                                 <span v-else>
-                                  <v-select label="type" v-model="formData.second_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                  <v-select label="type_duration" v-model="formData.second_effective_ministries_id" placeholder="Select" :filterable="true" :options="ministryStore.ministries" ></v-select>
                                 </span>
 
                               </td>
@@ -287,7 +287,7 @@
                                   <small>({{ assignmentStore.data.third_effective_ministries_id?.duration }})</small>
                                 </span>
                                 <span v-else>
-                                  <v-select label="type" v-model="formData.third_effective_ministries_id" placeholder="Select" :filterable="false" :options="ministryStore.ministries" ></v-select>
+                                  <v-select label="type_duration" v-model="formData.third_effective_ministries_id" placeholder="Select" :filterable="true" :options="ministryStore.ministries" ></v-select>
                                 </span>
 
                               </td>

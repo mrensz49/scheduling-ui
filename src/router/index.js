@@ -131,6 +131,11 @@ const routes = [
         component: () => import('@/views/setup/Treasures'),
       },
       {
+        path: 'effective-ministry',
+        name: 'Magmaepektibo sa Ministeryo',
+        component: () => import('@/views/setup/EffectiveMinistry'),
+      },
+      {
         path: 'ministries',
         name: 'Effective Ministries',
         component: () => import('@/views/setup/Ministries'),

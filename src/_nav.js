@@ -104,6 +104,11 @@ export default [
       },
       {
         component: 'CNavItem',
+        name: 'Effective Ministry',
+        to: '/setup/effective-ministry',
+      },
+      {
+        component: 'CNavItem',
         name: 'Christian Living',
         to: '/setup/christian-living',
         // icon: 'cil-notes',

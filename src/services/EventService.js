@@ -18,7 +18,8 @@ const apiClient = axios.create({
 auth(apiClient)
 
 const apiClientReport = axios.create({
-    baseURL: process.env.VUE_APP_URL,
+    baseURL: process.env.NODE_ENV == 'development'
+            ? process.env.VUE_APP_URL : 'https://rscheduling.xyz/be/',
     responseType: 'blob',
     headers: {
         Accept: 'application/json',
@@ -278,6 +279,14 @@ export default {
         return apiClient.get(`/api/meeting-effective-ministry`)
     },
 
+    addEffectiveMinistry(payloads) {
+        return apiClient.post(`/api/meeting-effective-ministry`, payloads)
+    },
+
+    editEffectiveMinistry(payloads) {
+        return apiClient.put(`/api/meeting-effective-ministry/${payloads.id}`, payloads.formData)
+    },
+
     showTreasure(payload) {
         return apiClient.post(`/api/meeting-treasures/show-treasure`, payload)
     },
@@ -329,7 +338,6 @@ export default {
 
     // downloads info
         downloadMidweekSchedule(payload) {
-            console.log('payload - ', payload)
             return apiClientReport.get(`/api/generate/midweek-schedule/${payload.date_start}/${payload.date_end}/${payload.report}`)
         },
 
