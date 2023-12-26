@@ -103,6 +103,14 @@
                     </CCol>
                   </CRow>
                 </CForm>
+                <CRow class="mt-4">
+                  <a
+                    href="javascript:void"
+                    v-if="authStore.isLoggedIn"
+                    @click="redirectDashboard()">
+                    Click here if you are not redirected automatically
+                  </a>
+                </CRow>
               </CCardBody>
             </CCard>
           </CCol>
@@ -172,6 +180,11 @@
       handleHomePageLink() {
         this.$router.push('/')
       },
+
+      redirectDashboard() {
+        let url = window.location.origin
+        location.href = url+'/?#/dashboard';
+      }
 
     }
   }

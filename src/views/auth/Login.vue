@@ -1,7 +1,7 @@
 <template>
   <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
     <CContainer>
-      <CRow class="justify-content-center">
+      <CRow class="justify-content-center  mt-4">
         <CCol :md="8">
           <CCardGroup>
             <CCard class="p-4">
@@ -68,6 +68,14 @@
                     </CCol>
                   </CRow>
                 </CForm>
+                <CRow class="mt-4">
+                  <a
+                    href="javascript:void"
+                    v-if="authStore.isLoggedIn"
+                    @click="redirectDashboard()">
+                    Click here if you are not redirected automatically
+                  </a>
+                </CRow>
               </CCardBody>
             </CCard>
             <CCard class="text-white bg-primary py-5">
@@ -167,6 +175,11 @@ export default {
 
     handleHomePageLink() {
       this.$router.push('/')
+    },
+
+    redirectDashboard() {
+      let url = window.location.origin
+      location.href = url+'/?#/dashboard';
     }
   },
 
