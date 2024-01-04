@@ -24,6 +24,12 @@
                     </CTableHead>
                     <CTableBody>
                         <NoOfReportsPubExt
+                            :counter=0
+                            row_color=""
+                            :positions="reportsPubs.members.publishers"
+                            designate="Publishers"
+                        />
+                        <NoOfReportsPubExt
                             :counter="reportsPubs.members.publishers?.length"
                             row_color="warning"
                             :positions="reportsPubs.members.unbaptized_publishers"
@@ -74,11 +80,18 @@
                     </CTableHead>
                     <CTableBody>
                        <NoOfReportsPubExt
+                            :counter=0
+                            row_color=""
+                            :positions="reportsPubs.members.regular_pioneers"
+                            designate="RP"
+                        />
+                        <NoOfReportsPubExt
                             :counter="reportsPubs.members.regular_pioneers?.length"
                             row_color="warning"
                             :positions="reportsPubs.members.special_pioneers"
-                            designate="RP"
+                            designate="SP"
                         />
+
                     </CTableBody>
                     </CTable>
                 </CCol>
