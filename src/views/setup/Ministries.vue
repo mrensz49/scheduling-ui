@@ -6,7 +6,7 @@
                 <CIcon icon="cil-notes" />
                 Be Effective in Ministry
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="ministryStore.loading"/>
-                <a href="javascript:void" @click="handleAddSong(song)" class="text-sm">
+                <a href="javascript:void(0)" @click="handleAddSong(song)" class="text-sm">
                     <span style="float:right">
                         Add Assignment
                     </span>

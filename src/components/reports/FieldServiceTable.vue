@@ -22,7 +22,7 @@
         <CTableBody>
             <CTableRow v-for="(member, index) in group" :key="member">
                 <CTableDataCell>
-                    <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
+                    <a href="javascript:void(0)" class="text-decoration-none" @click="viewedit(member.id)">
                         {{ index + 1}}. {{ member.full_name }}
                     </a>
                 </CTableDataCell>

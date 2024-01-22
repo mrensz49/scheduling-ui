@@ -12,7 +12,7 @@
                 </CAlert>
 
                 <div class="text-center">
-                  <a href="javascript:void" @click="handleHomePageLink()">
+                  <a href="javascript:void(0)" @click="handleHomePageLink()">
                     <img src="@/assets/images/logo/calendar-clock.png" :height="60" alt="logo">
                   </a>
                 </div>
@@ -70,7 +70,7 @@
                 </CForm>
                 <CRow class="mt-4">
                   <a
-                    href="javascript:void"
+                    href="javascript:void(0)"
                     v-if="authStore.isLoggedIn"
                     @click="redirectDashboard()">
                     Click here if you are not redirected automatically

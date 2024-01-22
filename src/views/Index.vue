@@ -8,8 +8,8 @@
                 <small style="font-size:12px"><b>rScheduling</b></small>
             </CNavbarBrand>
             <CForm class="d-flex me-5 ms-5">
-                <a href="javascript:void" class="text-decoration-none me-2" @click="handleRegisterLink()" style="color:#3C6C9C">Register</a>
-                <a href="javascript:void" class="text-decoration-none" @click="handleLoginLink()" style="color:#3C6C9C">Login</a>
+                <a href="javascript:void(0)" class="text-decoration-none me-2" @click="handleRegisterLink()" style="color:#3C6C9C">Register</a>
+                <a href="javascript:void(0)" class="text-decoration-none" @click="handleLoginLink()" style="color:#3C6C9C">Login</a>
             </CForm>
         </CContainer>
     </CNavbar>
@@ -93,11 +93,12 @@
                     <div class="iconlist-timeline"></div>
                 </li>
                 <li class="i-list-item">
-                    <div class="icon"> <i class="fa fa-heart-o"></i> </div>
+                    <div class="icon"> <i class="fa fa-mobile fa-lg"></i> </div>
                     <div class="icon-content">
-                        <h3 class="title">Others</h3>
+                        <h3 class="title">Notification</h3>
                         <p>
-                            Not included above.
+                            Brothers and sisters will get phone alerts for midweek meeting assignments.<br>
+                            Monthly field service report reminders for elders or assistant.
                         </p>
                     </div>
                 </li>
@@ -147,7 +148,7 @@
             <div class="col-md-8 pb-20 ">
                 <CCard>
                     <CCardBody>
-                        <CCarousel controls indicators transition="crossfade">
+                        <CCarousel controls indicators transition="crossfade" class="carousel-dark">
                             <CCarouselItem>
                                 <img class="d-block w-100" src="@/assets/images/guest/dashboard-2.png" alt="slide 1"/>
                             </CCarouselItem>
@@ -160,6 +161,9 @@
                             <CCarouselItem>
                                 <img class="d-block w-100" src="@/assets/images/guest/statistic-2.png" alt="slide 4"/>
                             </CCarouselItem>
+                            <CCarouselItem>
+                                <img class="d-block w-100" src="@/assets/images/guest/sms-alert.png" alt="slide 5"/>
+                            </CCarouselItem>                             
                         </CCarousel>
                     </CCardBody>
                 </CCard>

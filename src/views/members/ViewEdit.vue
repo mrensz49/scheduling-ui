@@ -11,7 +11,7 @@
 
             <CCardHeader> <CIcon icon="cil-address-book" />
                 View Member
-                <a href="javascript:void" class="text-decoration-none" style="float:right" @click="this.$router.go(-1)">back</a>
+                <a href="javascript:void(0)" class="text-decoration-none" style="float:right" @click="this.$router.go(-1)">back</a>
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="memberStore.loading"/>
             </CCardHeader>
             <CCardBody>
@@ -29,7 +29,7 @@
                         <CCol :sm="12" :md="12">
                             <h2>Personal Information</h2>
                             <span v-can:can-edit-member v-if="!memberStore.edit" style="float:right;margin-top: -8%;">
-                                <a href="javascript:void" @click="editInfo(1)">
+                                <a href="javascript:void(0)" @click="editInfo(1)">
                                     <CIcon icon="cil-pencil" class="me-4" />
                                 </a>
                             </span>
@@ -194,7 +194,7 @@
                                                         v-show="memberStore.edit"
                                                         @click="numberStore.deleteMemberPhone(phone.id); rows[phone.id]=1"
                                                         class="ms-2 fw-bolder text-decoration-none text-danger"
-                                                        href="javascript:void"
+                                                        href="javascript:void(0)"
                                                     >
                                                         <span v-c-tooltip="{content: 'Delete this number? ', placement: 'top'}">x</span>
                                                     </a>
@@ -209,7 +209,7 @@
                                         v-model="addPhoneNumber"
                                     />
                                     <small v-show = "memberStore.edit" @click="showAddPhone == 1 ? showAddPhone=0:showAddPhone=1, addPhone=''">
-                                    <a href="javascript:void" class="text-decoration-none">
+                                    <a href="javascript:void(0)" class="text-decoration-none">
                                         <span v-if="!showAddPhone">+ add phone number</span>
                                         <span v-else>cancel</span>
                                         </a>
@@ -357,7 +357,7 @@
       </CCol>
     </CRow>
 
-    <span v-if="parseInt(authStore.user.role_id) != 4 || (parseInt(authStore.user.role_id) == 4 && parseInt(authStore.user.group_no) == parseInt(memberStore.showMember?.group_no))">
+    <span v-if="parseInt(authStore.user?.role_id) != 4 || (parseInt(authStore.user?.role_id) == 4 && parseInt(authStore.user?.group_no) == parseInt(memberStore.showMember?.group_no))">
         <MemberFieldServiceReport
         :member_id="memberStore.member.id"
         v-if="formData"

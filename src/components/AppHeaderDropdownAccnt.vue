@@ -1,6 +1,6 @@
 <template>
   <CDropdown variant="nav-item">
-    <CDropdownToggle placement="bottom-end" class="py-0" :caret="true" href="javascript:void">
+    <CDropdownToggle placement="bottom-end" class="py-0" :caret="true" href="javascript:void(0)">
       <span class="me-2">{{ authStore.user?.name }}</span>
       <!-- <CAvatar :src="avatar" size="md" /> -->
       <CAvatar color="secondary" text-color="white" size="md" status="success">

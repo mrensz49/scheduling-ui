@@ -5,7 +5,7 @@
     <ModalNoSetupCongregation v-if="typeof authStore.user?.current_congregation_id !== 'undefined' && !authStore.user?.current_congregation_id"/>
     <ModalNotificationInform />
 
-    <CRow>
+    <CRow v-if="typeof authStore.user !== 'undefined'">
       <CCol :md="12" :sm="12">
         <CCard class="mb-4 shadow bg-body rounded">
           <CCardHeader>
@@ -22,7 +22,7 @@
                     >
                       <div class="text-medium-emphasis small">Members</div>
                       <div class="fs-5 fw-semibold">
-                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewAllMembers()">
+                        <a href="javascript:void(0)" class="text-dark text-decoration-none" @click="viewAllMembers()">
                           {{ congregationStore.genders.members_count}}
                         </a>
                       </div>
@@ -34,7 +34,7 @@
                     >
                       <div class="text-medium-emphasis small">Number of Group</div>
                       <div class="fs-5 fw-semibold">
-                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewgroup()">
+                        <a href="javascript:void(0)" class="text-dark text-decoration-none" @click="viewgroup()">
                           {{ authStore.user.congregation?.total_groups }}
                         </a>
                       </div>
@@ -49,7 +49,7 @@
 
                       <div class="text-medium-emphasis small">{{ position.name }}</div>
                       <div class="fs-5 fw-semibold">
-                        <a href="javascript:void" class="text-dark text-decoration-none" @click="viewposition(position.id)">
+                        <a href="javascript:void(0)" class="text-dark text-decoration-none" @click="viewposition(position.id)">
                           {{ position.congregation_designates_count }}
                         </a>
                       </div>
@@ -231,7 +231,7 @@
 
   fieldServiceStore.latestFSReport()
 
-  attendanceStore.congAttendances()
+  
 
   export default {
 
@@ -247,7 +247,9 @@
         helperStore:helperStore,
       }
     },
-    mounted() {},
+    mounted() {
+      attendanceStore.congAttendances()
+    },
     components: {
 
       VerifyEmailNotification, CChartBar, ModalNoSetupCongregation, ModalNotificationInform,

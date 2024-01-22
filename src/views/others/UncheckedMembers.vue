@@ -34,7 +34,7 @@
                   </CTableDataCell>
 
                   <CTableDataCell>
-                    <a href="javascript:void" class="text-decoration-none" @click="viewedit(member.id)">
+                    <a href="javascript:void(0)" class="text-decoration-none" @click="viewedit(member.id)">
                         <CButton
                             color="primary"
                             shape="rounded-pill"

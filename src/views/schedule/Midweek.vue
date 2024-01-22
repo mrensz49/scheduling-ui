@@ -313,6 +313,53 @@
 
                         </td>
                       </tr>
+                      <tr>
+                        <td class="ps-2" >
+                          <span v-if="helperStore.edit_name['edit_em'] || assignmentStore.data.fourth_effective_ministries_id?.type">
+                            0:00
+                          </span>
+                        </td>
+                        <td>
+                          <table width="100%">
+                            <tr>
+                              <td>
+
+                                <span v-if="!helperStore.edit_name['edit_em']">
+                                  <template v-if="assignmentStore.data.fourth_effective_ministries_id?.type">
+                                    <span style="color:#d39717;">&#x2022;</span>
+                                    {{ assignmentStore.data.fourth_effective_ministries_id?.type }}
+                                    <small>({{ assignmentStore.data.fourth_effective_ministries_id?.duration }})</small>
+                                  </template>
+                                </span>
+                                <span v-else>
+                                  <v-select label="type_duration" v-model="formData.fourth_effective_ministries_id" placeholder="Select" :filterable="true" :options="ministryStore.ministries" ></v-select>
+                                </span>
+
+                              </td>
+                              <td class="text-end text-muted" v-if="!helperStore.edit_name['edit_em']"><small v-show="helperStore.edit_name['edit_em']">{{ assignmentStore.data.fourth_effective_ministries_id?.participants }}:</small></td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td class="text-end fw-semibold"></td>
+                        <td class="ps-2">
+
+                          <span v-if="!helperStore.edit_name['edit_em']">
+                            <template v-if="assignmentStore.data.fourth_effective_ministries_id?.type">
+                              <span v-if="assignmentStore.data.fourth_hh_member_id?.gender == 'Female'">Sis.</span>
+                              <span v-else>Bro.</span>
+                              <small class="ms-1">
+                                {{ assignmentStore.data.fourth_hh_member_id?.name }} <span v-show="assignmentStore.data.fourth_effective_ministries_id?.id != 6">/</span> <!-- if student only -->
+                                {{ assignmentStore.data.fourth_partner_member_id?.name }}
+                              </small>
+                            </template>
+                          </span>
+                          <span v-else>
+                            <v-select label="name" v-model="formData.fourth_hh_member_id" placeholder="Stu." :filterable="false" :options="options" @search="onSearch" class="mt-2"></v-select>
+                            <v-select label="name" v-model="formData.fourth_partner_member_id" placeholder="Pr." :filterable="false" :options="options" @search="onSearch" class="mt-1"></v-select>
+                          </span>
+
+                        </td>
+                      </tr>                      
                       <!-- End of MAGMAEPEKTIBO SA MINISTERYO -->
                       <tr>
                         <td>&nbsp;</td>
@@ -353,7 +400,7 @@
                         <td>
                           <span style="color:#b73333;">&#x2022;</span> {{ living.title }} <small>({{ living.duration }})</small></td>
                         <td class="text-end fw-semibold"></td>
-                        <td class="ps-2">
+                        <td class="ps-2" v-if="assignmentStore.data.length">
                           <span v-if="!helperStore.edit_name['edit_cl']">
                             <span v-if="assignmentStore.data.living_member_ids[index]?.abbr_name == 'Female'">Sis.</span>
                             <span v-else>Bro.</span>
@@ -533,6 +580,10 @@
         this.formData.third_effective_ministries_id = assignmentStore.data.third_effective_ministries_id
         this.formData.third_hh_member_id = assignmentStore.data.third_hh_member_id
         this.formData.third_partner_member_id = assignmentStore.data.third_partner_member_id
+
+        this.formData.fourth_effective_ministries_id = assignmentStore.data.fourth_effective_ministries_id
+        this.formData.fourth_hh_member_id = assignmentStore.data.fourth_hh_member_id
+        this.formData.fourth_partner_member_id = assignmentStore.data.fourth_partner_member_id
 
         this.formData.cvs_member_id = assignmentStore.data.cvs_member_id
         this.formData.cvs_reading_member_id = assignmentStore.data.cvs_reading_member_id

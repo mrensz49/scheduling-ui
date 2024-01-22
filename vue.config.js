@@ -9,7 +9,7 @@
 module.exports = {
   // transpileDependencies: true,
   publicPath: '',
-  outputDir: '../for-production/dist/',
+  outputDir: '../for_production/scheduling-ui-master/dist/',
   devServer: {
       proxy: 'http://scheduling.test',
   },

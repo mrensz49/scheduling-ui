@@ -33,7 +33,7 @@
                             <CCard class="mb-3 shadow bg-body rounded">
                                     <CCardBody>
                                         <CCardTitle>
-                                            <a href="javascript:void" class="text-decoration-none" @click="view_field_service(report.year, report.month)">
+                                            <a href="javascript:void(0)" class="text-decoration-none" @click="view_field_service(report.year, report.month)">
                                                 {{ report.month_year }}
                                             </a>
                                         </CCardTitle>

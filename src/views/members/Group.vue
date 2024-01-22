@@ -15,7 +15,7 @@
                     >
                     <div class="text-medium-emphasis small">{{  position.name }}</div>
                     <div class="fs-5 fw-semibold">
-                        <a href="javascript:void" class="text-danger text-decoration-none" @click="viewposition(position.id)">
+                        <a href="javascript:void(0)" class="text-danger text-decoration-none" @click="viewposition(position.id)">
                             {{  position.congregation_designates_count }}
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                                     <strong>Group {{ group.group }}</strong>
                                 </CListGroupItem>
                                 <template v-for="member in group.members" :key="member">
-                                    <CListGroupItem component="a" href="javascript:void" @click="viewedit(member.id)">
+                                    <CListGroupItem component="a" href="javascript:void(0)" @click="viewedit(member.id)">
                                         <table width="100%">
                                             <tr>
                                                 <td width="50%">

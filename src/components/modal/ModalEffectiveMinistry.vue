@@ -37,6 +37,7 @@
                         v-model="formData.duration"
                     >
                         <option value="">Choose...</option>
+                        <option value="1 min.">1 min.</option>
                         <option value="2 min.">2 min.</option>
                         <option value="3 min.">3 min.</option>
                         <option value="4 min.">4 min.</option>

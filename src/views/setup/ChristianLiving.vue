@@ -6,7 +6,7 @@
                 <CIcon icon="cil-notes" />
                 Christian Living
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="christianLivingStore.loading"/>
-                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAdd()" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void(0)" @click="handleAdd()" class="text-sm">
                     <span style="float:right">
                         Add Assignment
                     </span>

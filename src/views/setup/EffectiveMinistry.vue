@@ -6,7 +6,7 @@
                 <CIcon icon="cil-lightbulb" />
                 Magmaepektibo sa Ministeryo
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="ministryStore.loading"/>
-                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAddEffectiveMinistry()" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void(0)" @click="handleAddEffectiveMinistry()" class="text-sm">
                     <span style="float:right">
                         Add
                     </span>

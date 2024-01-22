@@ -60,8 +60,8 @@ export const useMemberStore = defineStore({
         showMember() {
 
             if (Object.keys(this.member).length) {
-                this.member.brgy = this.locateAddrBrgy(this.member.address.brgy_code)
-                this.member.city_town = this.locateAddrCity(this.member.address.city_town_code)
+                this.member.brgy = this.locateAddrBrgy(this.member.address?.brgy_code)
+                this.member.city_town = this.locateAddrCity(this.member.address?.city_town_code)
                 this.member.positions = this.getPosition(this.member.designates)
                 return this.member
             }

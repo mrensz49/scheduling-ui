@@ -2,19 +2,19 @@
     <CPagination aria-label="Page navigation example">
         <CPaginationItem aria-label="Previous"
             :disabled="!items.prev_page_url"
-            href="javascript:void"
+            href="javascript:void(0)"
             @click="newPage(items.current_page - 1)"
         ><span aria-hidden="true">&laquo;</span></CPaginationItem>
             <CPaginationItem
                 v-for="(item, index) in items.last_page"
                 :key="index"
                 :active="index+1 == items.current_page"
-                href="javascript:void"
+                href="javascript:void(0)"
                 @click="newPage(index+1)"
             >{{ index+1 }}</CPaginationItem>
         <CPaginationItem aria-label="Next"
             :disabled="!items.next_page_url"
-            href="javascript:void"
+            href="javascript:void(0)"
             @click="newPage(items.current_page + 1)"
         ><span aria-hidden="true">&raquo;</span></CPaginationItem>
     </CPagination>

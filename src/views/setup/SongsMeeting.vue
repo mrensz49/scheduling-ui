@@ -6,7 +6,7 @@
                 <CIcon icon="cil-music-note" />
                 Malipayong Mag-awit—Tigom
                 <CSpinner color="primary" component="span" size="sm" aria-hidden="true" v-if="songStore.loading"/>
-                <a v-if="$can('can-add-setup')" href="javascript:void" @click="handleAddSong(song)" class="text-sm">
+                <a v-if="$can('can-add-setup')" href="javascript:void(0)" @click="handleAddSong(song)" class="text-sm">
                     <span style="float:right">
                         Add Song
                     </span>
