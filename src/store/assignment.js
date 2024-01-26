@@ -7,7 +7,9 @@ export const useAssignmentStore = defineStore({
 
     state: () => ({
         countsAP: [],
-        data: [],
+        data: {
+            living_member_ids: []
+        },
         assignments: [],
         loading: false,
         ap_loading: false,

@@ -400,7 +400,7 @@
                         <td>
                           <span style="color:#b73333;">&#x2022;</span> {{ living.title }} <small>({{ living.duration }})</small></td>
                         <td class="text-end fw-semibold"></td>
-                        <td class="ps-2" v-if="assignmentStore.data.length">
+                        <td class="ps-2">
                           <span v-if="!helperStore.edit_name['edit_cl']">
                             <span v-if="assignmentStore.data.living_member_ids[index]?.abbr_name == 'Female'">Sis.</span>
                             <span v-else>Bro.</span>
