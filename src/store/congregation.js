@@ -10,6 +10,7 @@ export const useCongregationStore = defineStore({
         genders: [],
         congregations: [],
         groups:[],
+        total_publishers: [],
         loading: false,
         errors: {},
     }),
@@ -141,5 +142,15 @@ export const useCongregationStore = defineStore({
                 this.loading = false
             })
         },
+
+        totalPubishers() {
+            EventService.totalPubishers()
+            .then(response => {
+                this.total_publishers = response.data
+            })
+            .catch(error => {
+                this.errors = error.response.data.errors
+            })
+        },         
     }
 })

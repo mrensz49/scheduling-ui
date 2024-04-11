@@ -394,6 +394,10 @@ export default {
         return apiClient.get(`/api/others/unchecked-members`)
     },
 
+    totalPubishers() {
+        return apiClient.get(`/api/congregation/total-publishers`)
+    },    
+
     //helper
     fetchWeeks() {
         return apiClient.get(`/api/weeks`)

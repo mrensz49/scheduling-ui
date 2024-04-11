@@ -20,14 +20,14 @@
                     <div
                       class="border-start border-start-4 border-start-info py-1 px-3 mb-3"
                     >
-                      <div class="text-medium-emphasis small">Members</div>
+                      <div class="text-medium-emphasis small"><b>Total Publishers</b></div>
                       <div class="fs-5 fw-semibold">
-                        <a href="javascript:void(0)" class="text-dark text-decoration-none" @click="viewAllMembers()">
-                          {{ congregationStore.genders.members_count}}
+                        <a href="javascript:void(0)" class="text-danger text-decoration-none">
+                          <b>{{ congregationStore.total_publishers.total }}</b>
                         </a>
                       </div>
                     </div>
-                  </CCol>
+                  </CCol> 
                   <CCol :sm="3">
                     <div
                       class="border-start border-start-4 border-start-success py-1 px-3 mb-3"
@@ -56,6 +56,19 @@
                     </div>
                   </CCol>
                 </template>
+                <CCol :sm="3">
+                  <div
+                    class="border-start border-start-4 border-start-danger py-1 px-3 mb-3"
+                  >
+                    <div class="text-medium-emphasis small">Members</div>
+                    <div class="fs-5 fw-semibold">
+                      <a href="javascript:void(0)" class="text-dark text-decoration-none" @click="viewAllMembers()">
+                        {{ congregationStore.genders.members_count}}
+                      </a>
+                    </div>
+                  </div>
+                </CCol>                
+               
                 </CRow>
               </CCol>
             </CRow>
@@ -249,6 +262,7 @@
     },
     mounted() {
       attendanceStore.congAttendances()
+      congregationStore.totalPubishers()
     },
     components: {
 

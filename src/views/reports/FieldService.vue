@@ -411,7 +411,7 @@
             fieldServiceStore.grandTotalReports(this.date_rendered)
 
             parseInt(authStore.user.role_id) == 4 ? this.defShowGroup = authStore.user.group_no : ''
-            this.forms = congregationStore.showGroups
+            // this.forms = congregationStore.showGroups
             fieldServiceStore.all_reports=[] // reset all the total reports
 
         },
