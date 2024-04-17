@@ -360,6 +360,10 @@ export default {
         downloadMonthlyFSReports(payloads) {
             return apiClientReport.post(`/api/generate/monthly-fs-reports`, payloads)
         },
+
+        downloadStudentDuration(payloads) {
+            return apiClientReport.post(`/api/generate/student-duration`, payloads)
+        },
     // end of downloads info
 
     showInformations(payloads) {

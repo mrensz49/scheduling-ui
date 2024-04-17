@@ -159,7 +159,7 @@
                           <table width="100%">
                             <tr>
                               <td>
-                                <span style="color:#4f5d73;">&#x2022;</span> Pagbasa sa Bibliya <small>(5 min)</small>
+                                <span style="color:#4f5d73;">&#x2022;</span> Pagbasa sa Bibliya <small>(4 min)</small>
                               </td>
                               <td class="text-end text-muted"><small>Estudyante:</small></td>
                             </tr>
