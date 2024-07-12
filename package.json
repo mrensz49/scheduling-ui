@@ -1,6 +1,6 @@
 {
   "name": "rscheduling",
-  "version": "1.9.9",
+  "version": "2.0.0",
   "description": "This tool is provided to assist with calculations when collecting reports, generating reports, assigning schedules, and preparing monthly reports. It does not replace or modify any of the organization's instructions for the secretary or other users. All records cards and forms provided by the organization must be promptly maintained as instructed.",
   "bugs": {
     "url": "https://rscheduling.xyz/issues"

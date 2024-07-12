@@ -24,8 +24,14 @@
                 <CSpinner class="mt-2" v-if="assignmentStore.loading" component="span" size="sm" aria-hidden="true"/>
               </CCol>
               <CCol>
-                <p class="text-end pointer" @click="helperStore.visibleModalMemberAssigments=true">
-                  <CIcon icon="cil-history" /> view assignments
+                <p class="text-end pointer" >
+                  <span @click="helperStore.visibleModalMemberAssigments=true">
+                    <CIcon icon="cil-history" /> view assignments
+                  </span> |
+                  <span  @click="downloadHosueholderRecords()">
+                    <CIcon icon="cil-cloud-download"/> Householder's Records
+                    <CSpinner class="mt-2" v-if="loading_hr" component="span" size="sm" aria-hidden="true"/>
+                  </span>
                 </p>
               </CCol>
 
@@ -359,7 +365,7 @@
                           </span>
 
                         </td>
-                      </tr>                      
+                      </tr>
                       <!-- End of MAGMAEPEKTIBO SA MINISTERYO -->
                       <tr>
                         <td>&nbsp;</td>
@@ -545,7 +551,8 @@
             optionSongs: [],
             formData: {
               living_member_ids: {}
-            }
+            },
+            loading_hr: 0
         }
     },
 
@@ -682,6 +689,25 @@
             if (error.response.status == 401) {
                 router.push({name: 'Login'})
             }
+          })
+      },
+
+      downloadHosueholderRecords() {
+        this.loading_hr = 1
+        EventService.downloadHosueholderRecords()
+          .then(response => {
+              var fileURL = window.URL.createObjectURL(
+                  new Blob([response.data], {type:'application/pdf'})
+              );
+
+              var fileLink = document.createElement('a');
+              fileLink.href = fileURL;
+              fileLink.setAttribute('download', 'weekend_sched_'+'.pdf');
+              document.body.appendChild(fileLink);
+              fileLink.click();
+              this.loading_hr = 0
+
+              toast.success("Successfully Downloaded")
           })
       },
 

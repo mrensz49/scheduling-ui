@@ -364,6 +364,10 @@ export default {
         downloadStudentDuration(payloads) {
             return apiClientReport.post(`/api/generate/student-duration`, payloads)
         },
+
+        downloadHosueholderRecords() {
+          return apiClientReport.post(`/api/generate/student-partners-assignment`)
+        },
     // end of downloads info
 
     showInformations(payloads) {
@@ -400,7 +404,7 @@ export default {
 
     totalPubishers() {
         return apiClient.get(`/api/congregation/total-publishers`)
-    },    
+    },
 
     //helper
     fetchWeeks() {
