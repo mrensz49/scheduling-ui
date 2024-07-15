@@ -34,6 +34,11 @@
                             <CTableRow v-for="(assignment) in assignmentStore.assignments" :key="assignment.id">
                                 <CTableDataCell>{{ helperStore.getHumanDate(assignment.date_start) }} - {{ helperStore.getHumanDate(assignment.date_end) }}</CTableDataCell>
                                 <CTableDataCell>
+                                    <!-- MAGMAEPEKTIBO SA MINISTERYO -->
+                                    <CBadge v-if(showType(assignment)) color="success" class="m-1">
+                                      {{ showType(assignment) }}
+                                    </CBadge>
+
                                     <template v-for="(assignment, index) in showAssignments(assignment)" :key="index">
                                         <CBadge  color="success" class="m-1"> {{ assignment }} </CBadge>
                                     </template>
@@ -110,6 +115,39 @@ export default {
             })
         },
 
+        showType(assignment) {
+          var type = '';
+          if(
+                parseInt(assignment.first_hh_member_id) == parseInt(this.member_id) ||
+                parseInt(assignment.first_partner_member_id) == parseInt(this.member_id)
+            ) {
+              type =  assignment.first_ministry.type + ' - ' + (parseInt(assignment.first_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner')
+          }
+
+          if(
+                parseInt(assignment.second_hh_member_id) == parseInt(this.member_id) ||
+                parseInt(assignment.second_partner_member_id) == parseInt(this.member_id)
+            ) {
+              type =  assignment.second_ministry.type + ' - ' + (parseInt(assignment.second_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner')
+          }
+
+          if(
+                parseInt(assignment.third_hh_member_id) == parseInt(this.member_id) ||
+                parseInt(assignment.third_partner_member_id) == parseInt(this.member_id)
+            ) {
+              type =  assignment.third_ministry?.type + ' - ' + (parseInt(assignment.third_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner')
+          }
+
+          if(
+                parseInt(assignment.fourth_hh_member_id) == parseInt(this.member_id) ||
+                parseInt(assignment.fourth_partner_member_id) == parseInt(this.member_id)
+            ) {
+              type =  assignment.fourth_ministry?.type + ' - ' + (parseInt(assignment.fourth_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner')
+          }
+
+          return type
+        },
+
         showAssignments(assignments) {
 
             var roles=[];
@@ -126,37 +164,32 @@ export default {
                 roles.push('Bible Reader')
             }
 
-            if(
-                parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ||
-                parseInt(assignments.first_partner_member_id) == parseInt(this.member_id)
-            ) {
-                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.first_effective_ministries_id)
-                // roles.push(type[0]['type'] + ' - ' + role)
-                let type = ministryStore.ministries[(assignments.first_effective_ministries_id - 1)]
-                let role = parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type.type + ' - ' + role)
-            }
+            // if(
+            //     parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ||
+            //     parseInt(assignments.first_partner_member_id) == parseInt(this.member_id)
+            // ) {
+            //     let type = ministryStore.ministries[(assignments.first_effective_ministries_id - 1)]
+            //     let role = parseInt(assignments.first_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
+            //     roles.push(type.type + ' - ' + role)
+            // }
 
-            if(
-                parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ||
-                parseInt(assignments.second_partner_member_id) == parseInt(this.member_id)
-            ) {
-                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.second_effective_ministries_id)
-                let type = ministryStore.ministries[(assignments.second_effective_ministries_id - 1)]
-                let role = parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type.type + ' - ' + role)
-            }
+            // if(
+            //     parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ||
+            //     parseInt(assignments.second_partner_member_id) == parseInt(this.member_id)
+            // ) {
+            //     let type = ministryStore.ministries[(assignments.second_effective_ministries_id - 1)]
+            //     let role = parseInt(assignments.second_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
+            //     roles.push(type.type + ' - ' + role)
+            // }
 
-            if(
-                parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ||
-                parseInt(assignments.third_partner_member_id) == parseInt(this.member_id)
-            ) {
-                // let type = ministryStore.ministries.filter(assignment => assignment.id === assignments.third_effective_ministries_id)
-                // roles.push(type[0]['type'] + ' - ' + role)
-                let type = ministryStore.ministries[(assignments.third_effective_ministries_id - 1)]
-                let role = parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
-                roles.push(type.type + ' - ' + role)
-            }
+            // if(
+            //     parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ||
+            //     parseInt(assignments.third_partner_member_id) == parseInt(this.member_id)
+            // ) {
+            //     let type = ministryStore.ministries[(assignments.third_effective_ministries_id - 1)]
+            //     let role = parseInt(assignments.third_hh_member_id) == parseInt(this.member_id) ? 'Student' : 'Partner'
+            //     roles.push(type.type + ' - ' + role)
+            // }
 
 
             if(
